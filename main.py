@@ -70,7 +70,7 @@ def handle_start(message):
     a.param(**AddUser)
     result = a.transfer()
     print(result)
-    bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(menu))
+    bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
 
 @bot.message_handler(regexp='Ближайшие водоматы')
 def handle_start(message):
@@ -87,7 +87,7 @@ def handle_start(message):
     result = a.transfer()
     print(result)
     result = result["score"] / 400
-    bot.send_message(message.chat.id, str(result) + " литров", reply_markup=generator_menu(menu))
+    bot.send_message(message.chat.id, str(result) + " литров", reply_markup=generator_menu(main_menu_list))
 
 
 @bot.message_handler(regexp='Оставить отзыв')
@@ -97,7 +97,7 @@ def handle_start(message):
 
 def feedback(message):
     if message.text == "Назад":
-        bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(menu))
+        bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
     else:
         a = Method("recall")
         recall = {
@@ -107,7 +107,7 @@ def feedback(message):
         a.param(**recall)
         result = a.transfer()
         print(result)
-        bot.send_message(message.chat.id, text_review_answer, reply_markup=generator_menu(menu))
+        bot.send_message(message.chat.id, text_review_answer, reply_markup=generator_menu(main_menu_list))
 
 
 @bot.message_handler(regexp='Подключиться к водомату')
@@ -121,7 +121,7 @@ def response(param):
 
 def startWM(message):
     if message.sticker:
-        bot.send_message(message.chat.id, command_error, reply_markup=generator_menu(menu))
+        bot.send_message(message.chat.id, command_error, reply_markup=generator_menu(main_menu_list))
     elif message.text.isdigit():
         a = Method("start")
         Start = {
@@ -134,11 +134,11 @@ def startWM(message):
         if result["situation"]:
             bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(stop_menu_list))
         else:
-            bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(menu))
+            bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
     elif message.text != "Назад":
-        bot.send_message(message.chat.id, command_error, reply_markup=generator_menu(menu))
+        bot.send_message(message.chat.id, command_error, reply_markup=generator_menu(main_menu_list))
     else:
-        bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(menu))
+        bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
 
 
 @bot.message_handler(regexp='Остановить')
@@ -150,17 +150,17 @@ def handle_start(message):
     a.param(**Stop)
     result = a.transfer()
     print(result)
-    bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(menu))
+    bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
 
 
 @bot.message_handler(regexp='Личный кабинет')
 def handle_start(message):
-    sent = bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(menu[message.text]))
+    sent = bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(personal_menu_list))
 
 
 @bot.message_handler(regexp='Назад')
 def handle_start(message):
-    sent = bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(menu))
+    sent = bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(main_menu_list))
 
 
 # # Снимаем вебхук перед повторной установкой (избавляет от некоторых проблем)
