@@ -21,7 +21,7 @@ def server():
 
 def stop(param):
 	telegram = param['telegram']
-	bot.send_message(telegram, text_welcome, reply_markup=generator_menu(main_menu_list))
+	bot.send_message(telegram, text_welcome)
 	return 'Success'
 
 def dispatch(param):
@@ -34,7 +34,7 @@ def dispatch(param):
 def upscore(param):
 	telegram = param['telegram']
 	bot.edited_message()
-	bot.send_message(telegram, text_welcome, reply_markup=generator_menu(main_menu_list))
+	bot.send_message(telegram, text_welcome)
 	return 'Success'
 
 
