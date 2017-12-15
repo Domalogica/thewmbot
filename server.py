@@ -8,14 +8,13 @@ app = Flask(__name__)
 def server():
     method = request.json.get('method')
     param = request.json.get('param')
-	if method == 'stop':
+    if method == 'stop':
     	response = stop(param)
 	if method == 'dispatch':
     	response = dispatch(param)
 	if method == 'upscore':
 		response = upscore(param)
 	return json.dumps(response)
-
 
 def stop(param):
 	telegram = param['telegram']
