@@ -8,7 +8,7 @@ from flask import Flask
 
 app = Flask(__name__)
 
-@app.route('http://194.67.217.180:8383/server/param', methods=['GET', 'POST'])
+@app.route('/server/param', methods=['GET', 'POST'])
 def server():
     if request.method == 'POST':
         print("POST")
