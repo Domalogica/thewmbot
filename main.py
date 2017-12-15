@@ -249,10 +249,3 @@ cherrypy.config.update({
 # Собственно, запуск!
 cherrypy.quickstart(WebhookServer(), WEBHOOK_URL_PATH, {'/': {}})
 
-
-if __name__ == '__main__':
-    app.run(host='194.67.217.180', port=8383)
-
-
-
-
