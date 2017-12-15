@@ -147,7 +147,7 @@ def startWM(message):
     else:
         bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
 
-@bot.message_handler(egexp='Остановить')
+@bot.message_handler(regexp='Остановить')
 def handle_start(message):
     a = Method("stop")
     Stop = {
