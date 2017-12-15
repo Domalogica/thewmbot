@@ -4,19 +4,20 @@ import telebot
 import requests, json
 from settings import *
 
-token = "380396463:AAHy5oNoYG8-h9Rc465i9fVp1f81VWdxJXU"
+token = "321273335:AAEPNNqf3TFGmmekxF4pKzgDEO90Isl6d3k"
 
-# WEBHOOK_HOST = '194.67.217.180'
-# WEBHOOK_PORT = 8443  # 443, 80, 88 или 8443 (порт должен быть открыт!)
-# WEBHOOK_LISTEN = '0.0.0.0'  # На некоторых серверах придется указывать такой же IP, что и выше
+WEBHOOK_HOST = '194.67.217.180'
+WEBHOOK_PORT = 8443  # 443, 80, 88 или 8443 (порт должен быть открыт!)
+WEBHOOK_LISTEN = '0.0.0.0'  # На некоторых серверах придется указывать такой же IP, что и выше
 
-# WEBHOOK_SSL_CERT = './webhook_cert.pem'  # Путь к сертификату
-# WEBHOOK_SSL_PRIV = './webhook_pkey.pem'  # Путь к приватному ключу
+WEBHOOK_SSL_CERT = './webhook_cert.pem'  # Путь к сертификату
+WEBHOOK_SSL_PRIV = './webhook_pkey.pem'  # Путь к приватному ключу
 
-# WEBHOOK_URL_BASE = "https://%s:%s" % (WEBHOOK_HOST, WEBHOOK_PORT)
-# WEBHOOK_URL_PATH = "/%s/" % token
+WEBHOOK_URL_BASE = "https://%s:%s" % (WEBHOOK_HOST, WEBHOOK_PORT)
+WEBHOOK_URL_PATH = "/%s/" % token
 
 bot = telebot.TeleBot(token)
+
 
 # # Наш вебхук-сервер
 # class WebhookServer(object):
@@ -48,6 +49,9 @@ class Method:
         self.request["param"] = kwargs
         return True
 
+
+
+
 def generator_menu(menu_list, dop=None):
     user_markup = telebot.types.ReplyKeyboardMarkup()
     for item in menu_list:
@@ -56,8 +60,7 @@ def generator_menu(menu_list, dop=None):
         user_markup.row(dop)
     return user_markup
 
-def getMessage():
-    bot.send_message(message.chat.id, "Hi")
+
 
 @bot.message_handler(commands=['start'])
 def handle_start(message):
@@ -72,10 +75,12 @@ def handle_start(message):
     print(result)
     bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
 
+
 @bot.message_handler(regexp='Ближайшие водоматы')
 def handle_start(message):
     bot.send_message(message.chat.id, wada, reply_markup=generator_menu(back_menu_list))
     bot.send_message(message.chat.id, f, reply_markup=generator_menu(back_menu_list))
+
 
 @bot.message_handler(regexp='Баланс')
 def handle_start(message):
@@ -94,6 +99,7 @@ def handle_start(message):
 def handle_start(message):
     sent = bot.send_message(message.chat.id, text_review, reply_markup=generator_menu(back_menu_list))
     bot.register_next_step_handler(sent, feedback)
+
 
 def feedback(message):
     if message.text == "Назад":
@@ -115,6 +121,7 @@ def handle_start(message):
     sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
     bot.register_next_step_handler(sent, startWM)
 
+
 def response(param):
     return param["param"]
 
@@ -132,7 +139,7 @@ def startWM(message):
         result = a.transfer()
         print(result)
         if result["situation"]:
-            bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(stop_menu_list))
+            bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(stop_menu_list + back_menu_list))
         else:
             bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
     elif message.text != "Назад":
@@ -140,8 +147,7 @@ def startWM(message):
     else:
         bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
 
-
-@bot.message_handler(regexp='Остановить')
+@bot.message_handler(egexp='Остановить')
 def handle_start(message):
     a = Method("stop")
     Stop = {
@@ -155,30 +161,84 @@ def handle_start(message):
 
 @bot.message_handler(regexp='Личный кабинет')
 def handle_start(message):
-    sent = bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(personal_menu_list))
+    bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(personal_menu_list + back_menu_list))
 
 
 @bot.message_handler(regexp='Назад')
 def handle_start(message):
-    sent = bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(main_menu_list))
+    bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(main_menu_list))
 
 
-# # Снимаем вебхук перед повторной установкой (избавляет от некоторых проблем)
-# bot.remove_webhook()
+@bot.message_handler(regexp='Статистика')
+def handle_start(message):
+    a = Method("monitoring")
+    monitoring = {
+        "telegram": message.from_user.id
+    }
+    a.param(**monitoring)
+    result = a.transfer()
+    print(result)
+    bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(stat + back_menu_list))
 
-# # Ставим заново вебхук
-# bot.set_webhook(url=WEBHOOK_URL_BASE + WEBHOOK_URL_PATH,
-#                 certificate=open(WEBHOOK_SSL_CERT, 'r'))
 
-# # Указываем настройки сервера CherryPy
-# cherrypy.config.update({
-#     'server.socket_host': WEBHOOK_LISTEN,
-#     'server.socket_port': WEBHOOK_PORT,
-#     'server.ssl_module': 'builtin',
-#     'server.ssl_certificate': WEBHOOK_SSL_CERT,
-#     'server.ssl_private_key': WEBHOOK_SSL_PRIV
-# })
+@bot.message_handler(regexp='Моя статистика')
+def handle_start(message):
+    bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(my_stat + back_menu_list))
 
-# # Собственно, запуск!
-# cherrypy.quickstart(WebhookServer(), WEBHOOK_URL_PATH, {'/': {}})
-bot.polling(none_stop=True, interval = 0)
+
+
+@bot.message_handler(regexp='Статистика по водоматам')
+def handle_start(message):
+    bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(stat_menu + back_menu_list))
+
+
+
+@bot.message_handler(regexp='Количество продаж за сутки')
+def handle_start(message):
+    bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(stat + back_menu_list))
+
+
+@bot.message_handler(regexp='Количество продаж через бот')
+def handle_start(message):
+    bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(stat + back_menu_list))
+
+
+@bot.message_handler(regexp='Обратная связь')
+def handle_start(message):
+    bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(feedback_menu + back_menu_list))
+
+
+@bot.message_handler(content_types=['location'])
+def handle_start(message):
+    a = Method("geostation")
+    geostation = {
+        "telegram": message.from_user.id,
+        "latitude": message.location.latitude,
+        "longitude": message.location.longitude
+    }
+    a.param(**geostation)
+    result = a.transfer()
+    print(result)
+    bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
+    print(message.location.latitude + " " + message.location.longitude)
+
+
+
+# Снимаем вебхук перед повторной установкой (избавляет от некоторых проблем)
+bot.remove_webhook()
+
+# Ставим заново вебхук
+bot.set_webhook(url=WEBHOOK_URL_BASE + WEBHOOK_URL_PATH,
+                certificate=open(WEBHOOK_SSL_CERT, 'r'))
+
+# Указываем настройки сервера CherryPy
+cherrypy.config.update({
+    'server.socket_host': WEBHOOK_LISTEN,
+    'server.socket_port': WEBHOOK_PORT,
+    'server.ssl_module': 'builtin',
+    'server.ssl_certificate': WEBHOOK_SSL_CERT,
+    'server.ssl_private_key': WEBHOOK_SSL_PRIV
+})
+
+# Собственно, запуск!
+cherrypy.quickstart(WebhookServer(), WEBHOOK_URL_PATH, {'/': {}})
