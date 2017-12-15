@@ -1,8 +1,11 @@
 from flask import Flask, request, json
 from settings import *
+import telebot
 
 app = Flask(__name__)
 
+token = "321273335:AAEPNNqf3TFGmmekxF4pKzgDEO90Isl6d3k"
+bot = telebot.TeleBot(token)
 
 @app.route('/server/param', methods=['POST'])
 def server():
