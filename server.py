@@ -11,5 +11,5 @@ def server():
     else:
         print("GET")
 
-if __name__ == '__main__':
+def run():
     app.run(host='194.67.217.180', port=8383)

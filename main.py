@@ -6,7 +6,7 @@ from settings import *
 import threading
 from server import *
 
-t = threading.Thread(target=server)
+t = threading.Thread(target=run)
 t.start()
 
 
