@@ -4,9 +4,9 @@ import cherrypy
 import requests, json
 from settings import *
 import threading
-import server
+import server 
 
-t = threading.Thread(target=run)
+t = threading.Thread(target=server.run)
 t.start()
 
 
