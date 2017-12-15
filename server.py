@@ -10,8 +10,8 @@ def server():
     param = request.json.get('param')
     if method == 'stop':
     	response = stop(param)
-	if method == 'dispatch':
-		response = dispatch(param)
+    if method == 'dispatch':
+       response = dispatch(param)
 	if method == 'upscore':
 		response = upscore(param)
 	return json.dumps(response)
