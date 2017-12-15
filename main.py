@@ -5,6 +5,7 @@ import requests, json
 from settings import *
 from flask import Flask
 
+app = Flask(__name__)
 
 app.run(host='194.67.217.180', port=8383)
 
