@@ -8,7 +8,6 @@ def server():
     if request.method == 'POST':
         print("POST")
         return json.dumps("POST")
-
     else:
         print("GET")
         return json.dumps("GET")
