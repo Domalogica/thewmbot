@@ -11,9 +11,9 @@ def server():
     if method == 'stop':
     	response = stop(param)
     if method == 'dispatch':
-       response = dispatch(param)
+        response = dispatch(param)
 	if method == 'upscore':
-       response = upscore(param)
+		response = upscore(param)
 	return json.dumps(response)
 
 def stop(param):
