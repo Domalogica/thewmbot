@@ -3,6 +3,17 @@ import telebot
 import cherrypy
 import requests, json
 from settings import *
+from flask import Flask
+
+
+app = Flask(__name__)
+
+@app.route('/server/param', methods=['GET', 'POST'])
+def server():
+    if request.method == 'POST':
+        print("POST")
+    else:
+        print("GET")
 
 token = "321273335:AAEPNNqf3TFGmmekxF4pKzgDEO90Isl6d3k"
 
@@ -242,3 +253,7 @@ cherrypy.config.update({
 
 # Собственно, запуск!
 cherrypy.quickstart(WebhookServer(), WEBHOOK_URL_PATH, {'/': {}})
+
+
+if __name__ == '__main__':
+    app.run()
