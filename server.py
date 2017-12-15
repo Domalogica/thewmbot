@@ -1,51 +1,41 @@
 from flask import Flask, request, json
+from settings import *
 
 app = Flask(__name__)
 
 
-@app.route('/server/param', methods=['GET', 'POST'])
+@app.route('/server/param', methods=['POST'])
 def server():
-    if request.method == 'POST':
-        print(request)
-        return json.dumps("POST")
-    else:
-        print(request)
-        return json.dumps("GET")
+    method = request.json.get('method')
+    param = request.json.get('param')
+    if method == 'stop':
+        response = stop(param)
+	if method == 'dispatch':
+		response = dispatch(param)
+	if method == 'upscore':
+		response = upscore(param)
+	return json.dumps(response)
+
+
+def stop(param):
+	telegram = param['telegram']
+	bot.send_message(telegram, text_welcome, reply_markup=generator_menu(main_menu_list))
+	return 'Success'
+
+def dispatch(param):
+	telegram = param['telegram']
+	message = param['message']
+	for ID in telegram:
+		bot.send_message(ID, message)
+	return 'Success'
+
+def upscore(param):
+	telegram = param['telegram']
+	bot.edited_message()
+	bot.send_message(telegram, text_welcome, reply_markup=generator_menu(main_menu_list))
+	return 'Success'
+
+
 
 def run():
     app.run(host='194.67.217.180', port=8383)
-
-
-# @app.route("/bot/param", methods=["POST"])
-# def Bot():
-
-#     response = {'method': 'not exist, error method'}
-
-#     method = request.json.get('method')
-#     param = request.json.get('param')
-
-#     if method == 'addUser':
-#         response = AddUser.addUser(param)
-
-#     if method == 'start':
-#         response = Start.start(param.get('telegram'), param.get('wm'))
-
-#     if method == 'stop':
-#         response = Stop.stop(int(param.get('telegram')), {'sender': 'bot'})
-
-#     if method == 'setSettings':
-#         response = SetSettings.setSettings(int(request.json.get('wm')), param)
-
-#     if method == 'score':
-#         response = module.get_score(param['telegram'])
-
-#     if method == 'recall':
-#         response = module.recalls(param)
-
-#     if method == 'get_location':
-#         response = module.get_location(param.get('city'))
-
-#     if method == 'recommends':
-#         response = module.get_location(param.get('city'))
-
-#     return json.dumps(response)
