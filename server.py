@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route('/server/param', methods=['POST'])
 def server():
 	method = request.json.get('method')
- 	param = request.json.get('param')
+	param = request.json.get('param')
 	if method == 'stop':
 		response = stop(param)
  	if method == 'dispatch':
