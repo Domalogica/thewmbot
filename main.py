@@ -8,7 +8,7 @@ from flask import Flask
 
 app = Flask(__name__)
 
-@app.route('/server/param', methods=['GET', 'POST'])
+@app.route('http://194.67.217.180:8383/server/param', methods=['GET', 'POST'])
 def server():
     if request.method == 'POST':
         print("POST")
@@ -255,5 +255,6 @@ cherrypy.config.update({
 cherrypy.quickstart(WebhookServer(), WEBHOOK_URL_PATH, {'/': {}})
 
 
+
 if __name__ == '__main__':
-    app.run()
+    app.run(host='194.67.217.180', port=8383)
