@@ -3,18 +3,11 @@ import telebot
 import cherrypy
 import requests, json
 from settings import *
-from flask import Flask
+import threading
 
-app = Flask(__name__)
+t = threading.Thread(target=server)
+t.start()
 
-app.run(host='194.67.217.180', port=8383)
-
-@app.route('/server/param', methods=['GET', 'POST'])
-def server():
-    if request.method == 'POST':
-        print("POST")
-    else:
-        print("GET")
 
 token = "321273335:AAEPNNqf3TFGmmekxF4pKzgDEO90Isl6d3k"
 
@@ -256,8 +249,8 @@ cherrypy.config.update({
 cherrypy.quickstart(WebhookServer(), WEBHOOK_URL_PATH, {'/': {}})
 
 
-
-
+if __name__ == '__main__':
+    app.run(host='194.67.217.180', port=8383)
 
 
 
