@@ -51,7 +51,7 @@ class Method:
         try:
             response = requests.post('http://194.67.217.180:8484/bot/param', json=self.request)
         except ConnectionError as e:
-            response = {'param': "Сервер временно не работает", 'situation': 'False'}
+            response = {'param': "Нет связи", 'situation': False}
         else:
             response = json.loads(response.content.decode("utf-8"))
         print(response)
@@ -147,7 +147,7 @@ def startWM(message):
         a.param(**Start)
         result = a.transfer()
         print(result)
-        if result["situation"]:
+        if result["situation"] :
             bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(stop_menu_list))
         else:
             bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
