@@ -53,6 +53,7 @@ class Method:
             response = {'param': "Сервер временно не работает"}
         else:
             response = json.loads(response.content.decode("utf-8"))
+        print(response)
         return response
 
     def param(self, **kwargs):
