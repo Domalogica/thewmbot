@@ -203,6 +203,21 @@ def handle_start(message):
     bot.send_message(message.chat.id, location, reply_markup=generator_menu(back_menu_list))
 
 
+@bot.message_handler(content_types=['location'])
+def handle_start(message):
+    a = Method("recommends")
+    recommends = {
+        "telegram": message.from_user.id,
+        "place_X": message.location.latitude,
+        "place_Y": message.location.longitude
+    }
+    a.param(**recommends)
+    result = a.transfer()
+    print(result)
+    bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
+    print(message.location.latitude + " " + message.location.longitude)
+
+
 @bot.message_handler(regexp='Количество продаж за сутки')
 def handle_start(message):
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(stat + back_menu_list))
@@ -216,21 +231,6 @@ def handle_start(message):
 @bot.message_handler(regexp='Обратная связь')
 def handle_start(message):
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(feedback_menu + back_menu_list))
-
-
-@bot.message_handler(content_types=['location'])
-def handle_start(message):
-    a = Method("geostation")
-    geostation = {
-        "telegram": message.from_user.id,
-        "latitude": message.location.latitude,
-        "longitude": message.location.longitude
-    }
-    a.param(**geostation)
-    result = a.transfer()
-    print(result)
-    bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
-    print(message.location.latitude + " " + message.location.longitude)
 
 
 
