@@ -198,6 +198,10 @@ def handle_start(message):
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(stat_menu + back_menu_list))
 
 
+@bot.message_handler(regexp='Рекомендовать место')
+def handle_start(message):
+    bot.send_message(message.chat.id, location, reply_markup=generator_menu(back_menu_list))
+
 
 @bot.message_handler(regexp='Количество продаж за сутки')
 def handle_start(message):
