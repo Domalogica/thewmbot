@@ -20,8 +20,14 @@ def server():
 	return json.loads(response.content.decode("utf-8"))
 
 
+
+def response(param):
+    return param["param"]
+    
+
 def stop(param):
-	bot.send_message(param["telegram"], param["param"])
+	param = response(param)
+	bot.send_message(param["telegram"], param["data"])
 	return 'Success'
 
 def dispatch(param):
