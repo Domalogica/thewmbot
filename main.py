@@ -242,7 +242,7 @@ bot.remove_webhook()
 
 # Ставим заново вебхук
 bot.set_webhook(url=WEBHOOK_URL_BASE + WEBHOOK_URL_PATH,
-              telebot.  certificate=open(WEBHOOK_SSL_CERT, 'r'))
+                certificate=open(WEBHOOK_SSL_CERT, 'r'))
 
 # Указываем настройки сервера CherryPy
 cherrypy.config.update({
