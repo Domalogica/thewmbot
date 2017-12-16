@@ -6,6 +6,7 @@ from settings import *
 import threading
 import server 
 from requests.exceptions import ConnectionError
+import re
 
 t = threading.Thread(target=server.run)
 t.start()
@@ -51,7 +52,7 @@ class Method:
         try:
             response = requests.post('http://194.67.217.180:8484/bot/param', json=self.request)
         except ConnectionError as e:
-            response = {'param': "Извините, нет связи с водоматом", 'situation': False}
+            response = {'param': "Извините, произошла ошибка, мы работаем над её устранением. Пожалуйста, повторите попытку позже.", 'situation': False}
         else:
             response = json.loads(response.content.decode("utf-8"))
         print(response)
@@ -178,7 +179,7 @@ def handle_start(message):
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(main_menu_list))
 
 
-@bot.message_handler(regexp='Статистика')
+@bot.message_handler(regexp='^Статистика$')
 def handle_start(message):
     a = Method("monitoring")
     monitoring = {
