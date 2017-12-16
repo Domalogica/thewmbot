@@ -215,7 +215,6 @@ def handle_start(message):
     result = a.transfer()
     print(result)
     bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
-    print(message.location.latitude + " " + message.location.longitude)
 
 
 @bot.message_handler(regexp='Количество продаж за сутки')
