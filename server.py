@@ -17,11 +17,14 @@ def server():
 		response = dispatch(param)
 	if method == 'upscore':
 		response = upscore(param)
-	return json.dumps(response)
+	return json.loads(response.content.decode("utf-8"))
+
+def response(param):
+    return param["param"]
 
 def stop(param):
 	telegram = param['telegram']
-	bot.send_message(telegram, text_welcome)
+	bot.send_message(telegram, response(param))
 	return 'Success'
 
 def dispatch(param):
