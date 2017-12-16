@@ -234,6 +234,7 @@ def handle_start(message):
     keypad = telebot.types.KeyboardButton()
     button = telebot.types.KeyboardButton(text='Рекомендовать место', request_location=True)
     keypad.add(button)
+    
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(feedback_menu + back_menu_list))
 
 
