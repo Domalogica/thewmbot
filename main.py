@@ -49,7 +49,7 @@ class Method:
     def transfer(self):
         try:
             response = requests.post('http://194.67.217.180:8484/bot/param', json=self.request)
-        except ConnectionError:
+        except ConnectionError as e:
             response = {'param': "Сервер временно не работает"}
         else:
             response = json.loads(response.content.decode("utf-8"))
