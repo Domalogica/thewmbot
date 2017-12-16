@@ -208,8 +208,8 @@ def handle_start(message):
     a = Method("recommends")
     recommends = {
         "telegram": message.from_user.id,
-        "place_X": message.location.latitude,
-        "place_Y": message.location.longitude
+        "X": message.location.latitude,
+        "Y": message.location.longitude
     }
     a.param(**recommends)
     result = a.transfer()
