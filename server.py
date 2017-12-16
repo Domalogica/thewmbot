@@ -21,7 +21,7 @@ def server():
 	if method == 'upscore':
 		response = upscore(param)
 	response = eval(response)
-	return json.loads(response.content.decode("utf-8"))
+	return json.demps(response)
 
 
 def generator_menu(menu_list, dop=None):
