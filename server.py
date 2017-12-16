@@ -20,7 +20,6 @@ def server():
 		response = dispatch(param)
 	if method == 'upscore':
 		response = upscore(param)
-	response = eval(response)
 	return json.demps(response)
 
 
