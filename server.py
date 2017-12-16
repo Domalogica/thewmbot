@@ -20,6 +20,7 @@ def server():
 		response = dispatch(param)
 	if method == 'upscore':
 		response = upscore(param)
+	response = eval(response)
 	return json.loads(response.content.decode("utf-8"))
 
 
