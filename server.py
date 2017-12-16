@@ -24,13 +24,7 @@ def server():
 
 
 
-def response(param):
-	print(param)
-    return param["param"]
-
-
 def stop(param):
-	param = response(param)
 	bot.send_message(param["telegram"], param["data"], reply_markup=generator_menu(main_menu_list))
 	return 'Success'
 
