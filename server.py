@@ -19,12 +19,9 @@ def server():
 		response = upscore(param)
 	return json.loads(response.content.decode("utf-8"))
 
-def response(param):
-    return param["param"]
 
 def stop(param):
-	telegram = param['telegram']
-	bot.send_message(telegram, response(param))
+	bot.send_message(param["telegram"], param["param"])
 	return 'Success'
 
 def dispatch(param):
