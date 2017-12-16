@@ -5,6 +5,7 @@ import requests, json
 from settings import *
 import threading
 import server 
+from requests.exceptions import ConnectionError
 
 t = threading.Thread(target=server.run)
 t.start()
