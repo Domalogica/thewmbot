@@ -25,6 +25,7 @@ def server():
 
 
 def response(param):
+	print(param)
     return param["param"]
 
 
