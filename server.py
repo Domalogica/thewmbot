@@ -23,6 +23,14 @@ def server():
 	return json.loads(response.content.decode("utf-8"))
 
 
+def generator_menu(menu_list, dop=None):
+    user_markup = telebot.types.ReplyKeyboardMarkup()
+    for item in menu_list:
+        user_markup.row(item)
+    if dop is not None:
+        user_markup.row(dop)
+    return user_markup
+
 
 def stop(param):
 	bot.send_message(param["telegram"], param["data"], reply_markup=generator_menu(main_menu_list))
