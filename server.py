@@ -36,17 +36,15 @@ def stop(param):
 	bot.send_message(param["telegram"], param["data"], reply_markup=generator_menu(main_menu_list))
 	return 'Success'
 
-def dispatch(param):
-	telegram = param['telegram']
-	message = param['message']
-	for ID in telegram:
-		bot.send_message(ID, message)
-	return 'Success'
+# def dispatch(param):
+# 	telegram = param['telegram']
+# 	message = param['message']
+# 	for ID in param['telegram']:
+# 		bot.send_message(ID, message)
+# 	return 'Success'
 
 def upscore(param):
-	telegram = param['telegram']
-	bot.edited_message()
-	bot.send_message(telegram, text_welcome)
+	bot.send_message(param["telegram"], param["data"])
 	return 'Success'
 
 

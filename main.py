@@ -198,9 +198,11 @@ def handle_start(message):
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(stat_menu + back_menu_list))
 
 
-@bot.message_handler(regexp='Рекомендовать место')
-def handle_start(message):
-    bot.send_message(message.chat.id, location, reply_markup=generator_menu(back_menu_list))
+# @bot.message_handler(regexp='Рекомендовать место')
+# def handle_start(message):
+#     button = types.KeyboardButton(text='Рекомендовать место', request_location=True)
+#     keypad.add(button)
+#     bot.send_message(message.chat.id, location, reply_markup=generator_menu(back_menu_list))
 
 
 @bot.message_handler(content_types=['location'])
@@ -229,6 +231,8 @@ def handle_start(message):
 
 @bot.message_handler(regexp='Обратная связь')
 def handle_start(message):
+    button = types.KeyboardButton(text='Рекомендовать место', request_location=True)
+    keypad.add(button)
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(feedback_menu + back_menu_list))
 
 
