@@ -20,7 +20,7 @@ def server():
 		response = dispatch(param)
 	if method == 'upscore':
 		response = upscore(param)
-	return json.demps(response)
+	return json.dumps(response)
 
 
 def generator_menu(menu_list, dop=None):
