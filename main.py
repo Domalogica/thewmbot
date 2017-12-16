@@ -231,8 +231,9 @@ def handle_start(message):
 
 @bot.message_handler(regexp='Обратная связь')
 def handle_start(message):
+    keyboard = telebot.types.KeyboardMarkup()
     button = telebot.types.KeyboardButton(text='Рекомендовать место', request_location=True)
-    telebot.keypad.add(button)
+    keypad.add(button)
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(feedback_menu + back_menu_list))
 
 
