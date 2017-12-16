@@ -47,14 +47,17 @@ class Method:
         self.request.update({"method": method})
 
     def transfer(self):
-        response = requests.post('http://194.67.217.180:8484/bot/param', json=self.request)
-        response = json.loads(response.content.decode("utf-8"))
+        try:
+            response = requests.post('http://194.67.217.180:8484/bot/param', json=self.request)
+        except ConnectionError:
+            response = {'param': "Сервер временно не работает"}
+        else:
+            response = json.loads(response.content.decode("utf-8"))
         return response
 
     def param(self, **kwargs):
         self.request["param"] = kwargs
         return True
-
 
 
 
@@ -65,8 +68,6 @@ def generator_menu(menu_list, dop=None):
     if dop is not None:
         user_markup.row(dop)
     return user_markup
-
-
 
 @bot.message_handler(commands=['start'])
 def handle_start(message):
