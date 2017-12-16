@@ -11,6 +11,9 @@ bot = telebot.TeleBot(token)
 def server():
 	method = request.json.get('method')
 	param = request.json.get('param')
+	print(method)
+	print("\n")
+	print(param)
 	if method == 'stop':
 		response = stop(param)
 	if method == 'dispatch':
