@@ -6,8 +6,11 @@ from settings import *
 import threading
 import server 
 from requests.exceptions import ConnectionError
-import re
+import logging
 
+logging.basicConfig(filename='thewmboot.log', level=logging.INFO)
+
+logging.info('Started')
 t = threading.Thread(target=server.run)
 t.start()
 
@@ -263,4 +266,6 @@ cherrypy.config.update({
 
 # Собственно, запуск!
 cherrypy.quickstart(WebhookServer(), WEBHOOK_URL_PATH, {'/': {}})
+
+logging.info('Finished')
 
