@@ -8,7 +8,7 @@ import server
 from requests.exceptions import ConnectionError
 import logging
 
-logging.basicConfig(filename='thewmboot.log', level=logging.INFO)
+logging.basicConfig(filename='thewmbot.log', level=logging.INFO)
 
 logging.info('Started')
 t = threading.Thread(target=server.run)
