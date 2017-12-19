@@ -8,9 +8,9 @@ import server
 from requests.exceptions import ConnectionError
 import logging
 
-logging.basicConfig(filename='thewmbot.log', level=logging.INFO)
+logging.basicConfig(format = u'%(levelname)-8s [%(asctime)s] %(message)s', level = logging.DEBUG, filename = u'out.log')
 
-logging.info('Started')
+
 t = threading.Thread(target=server.run)
 t.start()
 
@@ -54,7 +54,10 @@ class Method:
     def transfer(self):
         try:
             response = requests.post('http://194.67.217.180:8484/bot/param', json=self.request)
+            logging.debug(response)
         except ConnectionError as e:
+            logging.error(self.request)
+            logging.error(u'ConnectionError')
             response = {'param': "Извините, произошла ошибка, мы работаем над её устранением. Пожалуйста, повторите попытку позже.", 'situation': False}
         else:
             response = json.loads(response.content.decode("utf-8"))
@@ -82,15 +85,14 @@ def handle_start(message):
         "telegram": message.from_user.id,
         "username": message.chat.first_name
     }
-    print(AddUser)
     a.param(**AddUser)
     result = a.transfer()
-    print(result)
     bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
 
 
 @bot.message_handler(regexp='Ближайшие водоматы')
 def handle_start(message):
+    logging.info(message.text)
     bot.send_message(message.chat.id, wada, reply_markup=generator_menu(back_menu_list))
     bot.send_message(message.chat.id, f, reply_markup=generator_menu(back_menu_list))
 
@@ -105,16 +107,19 @@ def handle_start(message):
     result = a.transfer()
     print(result)
     result = result["score"] / 400
+    logging.info(message.text)
     bot.send_message(message.chat.id, str(result) + " литров", reply_markup=generator_menu(main_menu_list))
 
 
 @bot.message_handler(regexp='Оставить отзыв')
 def handle_start(message):
+    logging.info(message.text)
     sent = bot.send_message(message.chat.id, text_review, reply_markup=generator_menu(back_menu_list))
     bot.register_next_step_handler(sent, feedback)
 
 
 def feedback(message):
+    logging.info(message.text)
     if message.text == "Назад":
         bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
     else:
@@ -131,6 +136,7 @@ def feedback(message):
 
 @bot.message_handler(regexp='Подключиться к водомату')
 def handle_start(message):
+    logging.info(message.text)
     sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
     bot.register_next_step_handler(sent, startWM)
 
@@ -140,6 +146,7 @@ def response(param):
 
 
 def startWM(message):
+    logging.info(message.text)
     if message.sticker:
         bot.send_message(message.chat.id, command_error, reply_markup=generator_menu(main_menu_list))
     elif message.text.isdigit():
@@ -162,6 +169,7 @@ def startWM(message):
 
 @bot.message_handler(regexp='Остановить')
 def handle_start(message):
+    logging.info(message.text)
     a = Method("stop")
     Stop = {
         "telegram": message.from_user.id
@@ -174,16 +182,19 @@ def handle_start(message):
 
 @bot.message_handler(regexp='Личный кабинет')
 def handle_start(message):
+    logging.info(message.text)
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(personal_menu_list + back_menu_list))
 
 
 @bot.message_handler(regexp='Назад')
 def handle_start(message):
+    logging.info(message.text)
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(main_menu_list))
 
 
 @bot.message_handler(regexp='^Статистика$')
 def handle_start(message):
+    logging.info(message.text)
     a = Method("monitoring")
     monitoring = {
         "telegram": message.from_user.id
@@ -196,12 +207,14 @@ def handle_start(message):
 
 @bot.message_handler(regexp='Моя статистика')
 def handle_start(message):
+    logging.info(message.text)
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(my_stat + back_menu_list))
 
 
 
 @bot.message_handler(regexp='Статистика по водоматам')
 def handle_start(message):
+    logging.info(message.text)
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(stat_menu + back_menu_list))
 
 
@@ -220,6 +233,7 @@ def handle_start(message):
         "X": message.location.latitude,
         "Y": message.location.longitude
     }
+    logging.info(message.text)
     a.param(**recommends)
     result = a.transfer()
     print(result)
@@ -228,22 +242,24 @@ def handle_start(message):
 
 @bot.message_handler(regexp='Количество продаж за сутки')
 def handle_start(message):
+    logging.info(message.text)
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(stat + back_menu_list))
 
 
 @bot.message_handler(regexp='Количество продаж через бот')
 def handle_start(message):
+    logging.info(message.text)
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(stat + back_menu_list))
 
 
 @bot.message_handler(regexp='Обратная связь')
 def handle_start(message):
+    logging.info(message.text)
     keypad = generator_menu(feedback_menu)
     button = telebot.types.KeyboardButton(text='Рекомендовать место', request_location=True)
     keypad.add(button)
     button = telebot.types.KeyboardButton(text='Назад')
     keypad.add(button)
-
     bot.send_message(message.chat.id, text_get, reply_markup=keypad)
 
 
