@@ -54,7 +54,7 @@ class Method:
     def transfer(self):
         try:
             response = requests.post('http://194.67.217.180:8484/bot/param', json=self.request)
-            logging.debug(response)
+            logging.debug(response.text)
         except ConnectionError as e:
             logging.error(self.request)
             logging.error(u'ConnectionError')
