@@ -147,6 +147,16 @@ def handle_start(message):
     sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
     bot.register_next_step_handler(sent, startWM)
 
+@bot.callback_query_handler(func=lambda c: c.data)
+def pages(c):
+    a = Method("start")
+    Start = {
+        "telegram": message.from_user.id,
+        "wm": int(c.data)
+    }
+    a.param(**Start)
+    result = a.transfer()
+    print(result)
 
 def response(param):
     return param["param"]
