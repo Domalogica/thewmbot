@@ -1,2 +1,0 @@
-DEBUG    [2017-12-20 14:18:52,750] Starting new HTTPS connection (1): api.telegram.org
-DEBUG    [2017-12-20 14:18:53,322] https://api.telegram.org:443 "GET /bot380396463:AAHy5oNoYG8-h9Rc465i9fVp1f81VWdxJXU/setWebhook?url= HTTP/1.1" 200 68
