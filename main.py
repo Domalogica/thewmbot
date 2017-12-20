@@ -149,6 +149,7 @@ def handle_start(message):
 
 @bot.callback_query_handler(func=lambda c: c.data)
 def pages(c):
+    print(c.data)
     a = Method("start")
     Start = {
         "telegram": message.from_user.id,
