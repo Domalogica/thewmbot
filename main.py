@@ -137,19 +137,19 @@ def feedback(message):
 @bot.message_handler(regexp='Подключиться к водомату')
 def handle_start(message):
     logging.info(message.text)
-    items = [521, 321, 123]
+    items = [521, 321, 121]
     keypad = telebot.types.InlineKeyboardMarkup()
     for r in items:
         button = telebot.types.InlineKeyboardButton(text=r, callback_data=r)
         keypad.add(button)
-
-    bot.send_message(message.chat.id, "Быстрое подключение", reply_markup=keypad)
+    if 
+    sent = bot.send_message(message.chat.id, "Быстрое подключение", reply_markup=keypad)
+    bot.register_next_step_handler(sent, callback_data)
     sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
     bot.register_next_step_handler(sent, startWM)
 
-@bot.callback_query_handler(func=lambda call: True)
-def handle_start(call):
-    print(call.data)
+
+def callback_data(call):
     a = Method("start")
     Start = {
         "telegram": call.message.chat.id,
@@ -162,6 +162,7 @@ def handle_start(call):
         bot.send_message(call.message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
     else:
         bot.send_message(call.message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
+    return True
 
 def response(param):
     return param["param"]
@@ -188,6 +189,7 @@ def startWM(message):
         bot.send_message(message.chat.id, command_error, reply_markup=generator_menu(main_menu_list))
     else:
         bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
+    return True
 
 @bot.message_handler(regexp='Остановить')
 def handle_start(message):
