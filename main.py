@@ -140,7 +140,7 @@ def handle_start(message):
     items = [521, 321, 123]
     keypad = telebot.types.InlineKeyboardMarkup()
     for r in items:
-        button = telebot.types.InlineKeyboardButton(text=r, callback_data='521')
+        button = telebot.types.InlineKeyboardButton(text=r, callback_data=r)
         keypad.add(button)
 
     bot.send_message(message.chat.id, "Быстрое подключение", reply_markup=keypad)
@@ -148,7 +148,7 @@ def handle_start(message):
     bot.register_next_step_handler(sent, startWM)
 
 @bot.callback_query_handler(func=lambda c: c.data)
-def pages(c):
+def handle_start(c):
     print(c.data)
     a = Method("start")
     Start = {
