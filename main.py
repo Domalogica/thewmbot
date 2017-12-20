@@ -141,10 +141,7 @@ def handle_start(message):
     keypad = telebot.types.InlineKeyboardMarkup()
     button = telebot.types.InlineKeyboardButton(text="521", callback_data='521')
     keypad.add(button)
-
-    keyboard = types.InlineKeyboardMarkup()
-    url_button = types.InlineKeyboardButton(text="Перейти на Яндекс", url="https://ya.ru")
-    keyboard.add(url_button)
+    
     bot.send_message(message.chat.id, text_id, reply_markup=keypad)
     sent = bot.send_message(message.chat.id, text_id, reply_markup=keypad)
     bot.register_next_step_handler(sent, startWM)
