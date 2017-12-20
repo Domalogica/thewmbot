@@ -143,11 +143,11 @@ def handle_start(message):
         button = telebot.types.InlineKeyboardButton(text=r, callback_data=r)
         keypad.add(button)
     bot.send_message(message.chat.id, "Быстрое подключение", reply_markup=keypad)
-    bot.register_next_step_handler(sent, callback_data)
+    
     sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
     bot.register_next_step_handler(sent, startWM)
 
-
+@bot.callback_query_handler(func=lambda call: True)
 def callback_data(call):
     print(call.data)
     a = Method("start")
