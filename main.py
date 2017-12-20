@@ -10,7 +10,7 @@ import logging
 
 logging.basicConfig(format = u'%(levelname)-8s [%(asctime)s] %(message)s', level = logging.DEBUG, filename = u'out.log')
 
-
+logging.info('Started')
 t = threading.Thread(target=server.run)
 t.start()
 
@@ -139,7 +139,7 @@ def handle_start(message):
     logging.info(message.text)
 
     keypad = telebot.types.InlineKeyboardMarkup()
-    button = telebot.types.InlineKeyboardButton(text="521", url="https://ya.ru")
+    button = telebot.types.InlineKeyboardButton(text="521", callback_data='521')
     keypad.add(button)
 
     sent = bot.send_message(message.chat.id, text_id, reply_markup=keypad)
@@ -289,4 +289,3 @@ cherrypy.config.update({
 cherrypy.quickstart(WebhookServer(), WEBHOOK_URL_PATH, {'/': {}})
 
 logging.info('Finished')
-
