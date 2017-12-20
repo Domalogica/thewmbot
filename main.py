@@ -152,7 +152,7 @@ def handle_start(c):
     print(c.data)
     a = Method("start")
     Start = {
-        "telegram": message.from_user.id,
+        "telegram": 12,
         "wm": int(c.data)
     }
     a.param(**Start)
