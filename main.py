@@ -148,12 +148,12 @@ def handle_start(message):
     bot.register_next_step_handler(sent, startWM)
 
 @bot.callback_query_handler(func=lambda call: True)
-def handle_start(c):
-    print(c.data)
+def handle_start(call):
+    print(call.data)
     a = Method("start")
     Start = {
         "telegram": call.message.chat.id,
-        "wm": int(c.data)
+        "wm": int(call.data)
     }
     a.param(**Start)
     result = a.transfer()
