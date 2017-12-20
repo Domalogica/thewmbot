@@ -169,7 +169,7 @@ def response(param):
 
 
 def startWM(message):
-    print(message)
+    print(message.data)
     logging.info(message.text)
     if message.sticker:
         bot.send_message(message.chat.id, command_error, reply_markup=generator_menu(main_menu_list))
