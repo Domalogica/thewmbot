@@ -168,7 +168,7 @@ def response(param):
 
 
 def startWM(message):
-    if message.text != "Оставить":
+    if message.text != "Остановить":
         logging.info(message.text)
         if message.sticker:
             bot.send_message(message.chat.id, command_error, reply_markup=generator_menu(main_menu_list))
