@@ -147,21 +147,21 @@ def handle_start(message):
     sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
     bot.register_next_step_handler(sent, startWM)
 
-@bot.callback_query_handler(func=lambda c: c.data)
+@bot.callback_query_handler(func=lambda call: True)
 def handle_start(c):
     print(c.data)
     a = Method("start")
     Start = {
-        "telegram": 12,
+        "telegram": call.message.chat.id,
         "wm": int(c.data)
     }
     a.param(**Start)
     result = a.transfer()
     print(result)
     if result["situation"]:
-        bot.send_message(message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
+        bot.send_message(call.message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
     else:
-        bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
+        bot.send_message(call.message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
 
 def response(param):
     return param["param"]
