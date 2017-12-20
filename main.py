@@ -145,7 +145,8 @@ def handle_start(message):
     bot.send_message(message.chat.id, "Быстрое подключение", reply_markup=keypad)
     
     sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
-    bot.register_next_step_handler(sent, startWM)
+    if message.text != "Оставить":
+        bot.register_next_step_handler(sent, startWM)
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_data(call):
@@ -190,7 +191,6 @@ def startWM(message):
         bot.send_message(message.chat.id, command_error, reply_markup=generator_menu(main_menu_list))
     else:
         bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
-    return True 
 
 @bot.message_handler(regexp='Остановить')
 def handle_start(message):
