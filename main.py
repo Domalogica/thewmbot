@@ -141,9 +141,9 @@ def handle_start(message):
     keypad = telebot.types.InlineKeyboardMarkup()
     button = telebot.types.InlineKeyboardButton(text="521", callback_data='521')
     keypad.add(button)
-    
+
     bot.send_message(message.chat.id, text_id, reply_markup=keypad)
-    sent = bot.send_message(message.chat.id, text_id, reply_markup=keypad)
+    sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
     bot.register_next_step_handler(sent, startWM)
 
 
