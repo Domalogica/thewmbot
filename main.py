@@ -137,8 +137,8 @@ def feedback(message):
 @bot.message_handler(regexp='Подключиться к водомату')
 def handle_start(message):
     logging.info(message.text)
-
-    keypad = generator_menu(back_menu_list)
+    
+    keypad = telebot.types.InlineKeyboardMarkup()
     
     button = telebot.types.InlineKeyboardButton(text="521", url="https://ya.ru")
 
