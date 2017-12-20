@@ -149,6 +149,7 @@ def handle_start(message):
 
 
 def callback_data(call):
+    print(call.data)
     a = Method("start")
     Start = {
         "telegram": call.message.chat.id,
