@@ -142,7 +142,6 @@ def handle_start(message):
     for r in items:
         button = telebot.types.InlineKeyboardButton(text=r, callback_data=r)
         keypad.add(button)
-    if 
     sent = bot.send_message(message.chat.id, "Быстрое подключение", reply_markup=keypad)
     bot.register_next_step_handler(sent, callback_data)
     sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
@@ -189,7 +188,7 @@ def startWM(message):
         bot.send_message(message.chat.id, command_error, reply_markup=generator_menu(main_menu_list))
     else:
         bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
-    return True
+    return True 
 
 @bot.message_handler(regexp='Остановить')
 def handle_start(message):
