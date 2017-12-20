@@ -196,6 +196,7 @@ def handle_start(message):
     Stop = {
         "telegram": message.from_user.id
     }
+    print(message.from_user.id)
     a.param(**Stop)
     result = a.transfer()
     print(result)
