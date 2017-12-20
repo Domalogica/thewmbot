@@ -137,11 +137,9 @@ def feedback(message):
 @bot.message_handler(regexp='Подключиться к водомату')
 def handle_start(message):
     logging.info(message.text)
-    
-    keypad = telebot.types.InlineKeyboardMarkup()
-    
-    button = telebot.types.InlineKeyboardButton(text="521", url="https://ya.ru")
 
+    keypad = telebot.types.InlineKeyboardMarkup()
+    button = telebot.types.InlineKeyboardButton(text="521", url="https://ya.ru")
     keypad.add(button)
 
     sent = bot.send_message(message.chat.id, text_id, reply_markup=keypad)
