@@ -157,6 +157,10 @@ def pages(c):
     a.param(**Start)
     result = a.transfer()
     print(result)
+    if result["situation"]:
+        bot.send_message(message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
+    else:
+        bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
 
 def response(param):
     return param["param"]
@@ -175,7 +179,7 @@ def startWM(message):
         a.param(**Start)
         result = a.transfer()
         print(result)
-        if result["situation"] :
+        if result["situation"]:
             bot.send_message(message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
         else:
             bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
