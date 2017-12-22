@@ -9,14 +9,14 @@ bot = telebot.TeleBot(token)
 
 @app.route('/server/param', methods=['POST'])
 def server():
-	method = request.json.get('method')
-	print(method)
-	if method == 'stop':
-		response = stop(method)
-	if method == 'dispatch':
-		response = dispatch(method)
-	if method["method"] == 'start':
-		response = start(method)
+	param = request.json.get('param')
+	print(param)
+	if param["method"] == 'stop':
+		response = stop(param)
+	if param == 'dispatch':
+		response = dispatch(param)
+	if param["method"] == 'start':
+		response = start(param)
 	return json.dumps(response)
 
 
@@ -29,8 +29,8 @@ def generator_menu(menu_list, dop=None):
     return user_markup
 
 
-def stop(method):
-	bot.send_message(method["telegram"], method["param"], reply_markup=generator_menu(main_menu_list))
+def stop(param):
+	bot.send_message(param["telegram"], param["param"], reply_markup=generator_menu(main_menu_list))
 	return 'Success'
 
 # def dispatch(param):
@@ -40,8 +40,11 @@ def stop(method):
 # 		bot.send_message(ID, message)
 # 	return 'Success'
 
-def start(method):
-	bot.send_message(method["telegram"], method["score"])
+def start(param):
+	print(param["score"])
+	print('\n')
+	print(param["telegram"])
+	bot.send_message(param["telegram"], param["score"])
 	return 'Success'
 
 
