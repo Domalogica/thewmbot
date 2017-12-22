@@ -15,7 +15,7 @@ def server():
 		response = stop(method)
 	if method == 'dispatch':
 		response = dispatch(method)
-	if method == 'start':
+	if method["method"] == 'start':
 		response = start(method)
 	return json.dumps(response)
 
