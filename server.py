@@ -12,11 +12,11 @@ def server():
 	method = request.json.get('method')
 	print(method)
 	if method == 'stop':
-		response = stop(param)
+		response = stop(method)
 	if method == 'dispatch':
-		response = dispatch(param)
+		response = dispatch(method)
 	if method == 'start':
-		response = start(param)
+		response = start(method)
 	return json.dumps(response)
 
 
@@ -29,8 +29,8 @@ def generator_menu(menu_list, dop=None):
     return user_markup
 
 
-def stop(param):
-	bot.send_message(param["telegram"], param["param"], reply_markup=generator_menu(main_menu_list))
+def stop(method):
+	bot.send_message(method["telegram"], method["param"], reply_markup=generator_menu(main_menu_list))
 	return 'Success'
 
 # def dispatch(param):
@@ -40,8 +40,8 @@ def stop(param):
 # 		bot.send_message(ID, message)
 # 	return 'Success'
 
-def start(param):
-	bot.send_message(param["telegram"], param["score"])
+def start(method):
+	bot.send_message(method["telegram"], method["score"])
 	return 'Success'
 
 
