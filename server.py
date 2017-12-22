@@ -33,7 +33,7 @@ def generator_menu(menu_list, dop=None):
 
 
 def stop(param):
-	bot.send_message(param["param"]["inf"]["telegram"], param["param"]["inf"], reply_markup=generator_menu(main_menu_list))
+	bot.send_message(param["telegram"], param["param"], reply_markup=generator_menu(main_menu_list))
 	return 'Success'
 
 # def dispatch(param):
@@ -44,7 +44,7 @@ def stop(param):
 # 	return 'Success'
 
 def start(param):
-	bot.send_message(param["param"]["inf"]["telegram"], param["param"]["score"])
+	bot.send_message(param["telegram"], param["score"])
 	return 'Success'
 
 
