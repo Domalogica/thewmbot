@@ -18,11 +18,11 @@ def server():
 		response = stop(param)
 	if method == 'dispatch':
 		response = dispatch(param)
-	if method == 'upscore':
-		response = upscore(param)
+	if method == 'start':
+		response = start(param)
 	return json.dumps(response)
 
-
+param = {'method': 'start', 'param': '', 'situation': False, 'score': ''}
 def generator_menu(menu_list, dop=None):
     user_markup = telebot.types.ReplyKeyboardMarkup()
     for item in menu_list:
@@ -43,8 +43,8 @@ def stop(param):
 # 		bot.send_message(ID, message)
 # 	return 'Success'
 
-def upscore(param):
-	bot.send_message(param["telegram"], param["data"])
+def start(param):
+	bot.send_message(param["telegram"], param["score"])
 	return 'Success'
 
 
