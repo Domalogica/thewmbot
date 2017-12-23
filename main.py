@@ -150,7 +150,8 @@ def handle_start(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_data(call):
-    message_id.update(call.message.chat.id : {'message_id': call.message.message_id})
+    print(call.message.chat.id)
+    # message_id.update(call.message.chat.id: {'message_id': call.message.message_id})
     a = Method("start")
     Start = {
         "telegram": call.message.chat.id,
