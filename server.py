@@ -11,6 +11,7 @@ bot = telebot.TeleBot(token)
 
 @app.route('/server/param', methods=['POST'])
 def server():
+	response = {'method': 'error'}
 	param = request.json
 	print(param)
 	print(000000000000000)
@@ -20,6 +21,8 @@ def server():
 		response = dispatch(param)
 	if param["method"] == 'start':
 		response = start(param)
+	print(response)
+	print(type(response))
 	return json.dumps(response)
 
 
