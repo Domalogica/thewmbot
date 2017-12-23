@@ -12,7 +12,7 @@ bot = telebot.TeleBot(token)
 @app.route('/server/param', methods=['POST'])
 def server():
 	param = request.json.get('method')
-	print(param)
+	print(param["method"])
 	print(000000000000000)
 	if param["method"] == 'stop':
 		response = stop(param)
