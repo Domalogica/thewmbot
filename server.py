@@ -14,15 +14,12 @@ def server():
 	response = {'method': 'error'}
 	param = request.json
 	print(param)
-	print(000000000000000)
 	if param["method"] == 'stop':
 		response = stop(param)
 	if param["method"] == 'dispatch':
 		response = dispatch(param)
 	if param["method"] == 'start':
 		response = start(param)
-	print(response)
-	print(type(response))
 	return json.dumps(response)
 
 
