@@ -14,9 +14,9 @@ def server():
 	param = request.json
 	print(param)
 	print(000000000000000)
-	if param == 'stop':
+	if param["method"] == 'stop':
 		response = stop(param)
-	if param == 'dispatch':
+	if param["method"] == 'dispatch':
 		response = dispatch(param)
 	if param["method"] == 'start':
 		response = start(param)
@@ -36,7 +36,7 @@ def generator_menu(menu_list, dop=None):
 
 def stop(param):
 	bot.send_message(param["telegram"], param["param"], reply_markup=generator_menu(main_menu_list))
-	return 'Success'
+	return {'Success'}
 
 # def dispatch(param):
 # 	telegram = param['telegram']
@@ -51,7 +51,7 @@ def start(param):
 	print(param["telegram"])
 	bot.edit_message_text(chat_id=param["telegram"], message_id=message.message_id, text=param["score"])
 	main.message_id.pop(param["telegram"])
-	return 'Success'
+	return {'Success'}
 
 
 
