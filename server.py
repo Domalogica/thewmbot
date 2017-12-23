@@ -1,6 +1,7 @@
 from flask import Flask, request, json
 from settings import *
 import telebot
+import main
 
 app = Flask(__name__)
 
@@ -44,7 +45,8 @@ def start(param):
 	print(param["score"])
 	print('\n')
 	print(param["telegram"])
-	bot.send_message(param["telegram"], param["score"])
+	bot.edit_message_text(chat_id=param["telegram"], message_id=message.message_id, text=param["score"])
+	main.message_id.pop(param["telegram"])
 	return 'Success'
 
 

@@ -29,6 +29,7 @@ WEBHOOK_URL_PATH = "/%s/" % token
 
 bot = telebot.TeleBot(token)
 
+message_id = {}
 
 # Наш вебхук-сервер
 class WebhookServer(object):
@@ -149,6 +150,8 @@ def handle_start(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_data(call):
+    print(call)
+    # message_id.update(call.message.chat.id:{'message_id': call.message_id})
     a = Method("start")
     Start = {
         "telegram": call.message.chat.id,
