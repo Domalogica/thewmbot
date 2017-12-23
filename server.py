@@ -2,6 +2,8 @@ from flask import Flask, request, json
 from settings import *
 import telebot
 
+from main import message_id
+
 app = Flask(__name__)
 
 token = "321273335:AAEPNNqf3TFGmmekxF4pKzgDEO90Isl6d3k"
@@ -27,6 +29,8 @@ def generator_menu(menu_list, dop=None):
     if dop is not None:
         user_markup.row(dop)
     return user_markup
+
+
 
 
 def stop(param):
