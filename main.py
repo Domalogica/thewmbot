@@ -140,18 +140,18 @@ def handle_start(message):
     logging.info(message.text)
     items = [521, 321, 121]
     keypad = telebot.types.InlineKeyboardMarkup()
+    sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
+    bot.register_next_step_handler(sent, startWM)
     for r in items:
         button = telebot.types.InlineKeyboardButton(text=r, callback_data=r)
         keypad.add(button)
-    bot.send_message(message.chat.id, "Быстрое подключение", reply_markup=keypad)
+    bot.send_message(message.chat.id, "Выберите ID Водомата", reply_markup=keypad)
     
-    sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
-    bot.register_next_step_handler(sent, startWM)
-
+    
 @bot.callback_query_handler(func=lambda call: True)
 def callback_data(call):
     print(call.message.chat.id)
-    # message_id.update(call.message.chat.id: {'message_id': call.message.message_id})
+    message_id.update(call.message.chat.id: {'message_id': call.message.message_id})
     a = Method("start")
     Start = {
         "telegram": call.message.chat.id,
