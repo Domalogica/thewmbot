@@ -180,7 +180,9 @@ def startWM(message):
         else:
             print(result)
             bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
-    elif message.text != "Назад":
+    elif message.text == "Назад":
+        bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
+    else:
         bot.send_message(message.chat.id, command_error, reply_markup=generator_menu(main_menu_list))
 
 
