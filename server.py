@@ -35,7 +35,7 @@ def generator_menu(menu_list, dop=None):
 
 def stop(param):
 	bot.send_message(param["param"]["telegram"], param["param"]["data"], reply_markup=generator_menu(main_menu_list))
-	return {'Success'}
+	return ['Success']
 
 # def dispatch(param):
 # 	telegram = param['telegram']
@@ -47,7 +47,7 @@ def stop(param):
 def start(param):
 	bot.edit_message_text(chat_id=param["telegram"], message_id=message.message_id, text=param["score"])
 	main.message_id.pop(param["telegram"])
-	return {'Success'}
+	return ['Success']
 
 
 
