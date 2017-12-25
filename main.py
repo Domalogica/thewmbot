@@ -166,55 +166,26 @@ def response(param):
     return param["param"]
 
 def startWM(message):
-    if message.text.isdigit():
-        a = Method("start")
-        Start = {
-            "telegram": message.from_user.id,
-            "wm": int(message.text)
-        }
-        a.param(**Start)
-        result = a.transfer()
-        if result["situation"]:
-            print(result)
-            bot.send_message(message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
-        else:
-            print(result)
-            bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
-    elif message.text == "Назад":
-        bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
+    if message.sticker:
+        bot.send_message(message.chat.id, command_error, reply_markup=generator_menu(main_menu_list))
+    else:
+        if message.text.isdigit():
+            a = Method("start")
+            Start = {
+                "telegram": message.from_user.id,
+                "wm": int(message.text)
+            }
+            a.param(**Start)
+            result = a.transfer()
+            if result["situation"]:
+                print(result)
+                bot.send_message(message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
+            else:
+                print(result)
+                bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
+        elif message.text == "Назад":
+            bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
 
-
-
-
-    # if message.text != "Остановить":
-    #     logging.info(message.text)
-    #     if message.sticker:
-    #         bot.send_message(message.chat.id, command_error, reply_markup=generator_menu(main_menu_list))
-    #     elif message.text.isdigit():
-    #         a = Method("start")
-    #         Start = {
-    #             "telegram": message.from_user.id,
-    #             "wm": int(message.text)
-    #         }
-    #         a.param(**Start)
-    #         result = a.transfer()
-    #         if result["situation"]:
-    #             bot.send_message(message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
-    #         else:
-    #             bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
-    #     elif message.text != "Назад":
-    #         bot.send_message(message.chat.id, command_error, reply_markup=generator_menu(main_menu_list))
-    #     else:
-    #         bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
-    # else:
-    #     logging.info(message.text)
-    #     a = Method("stop")
-    #     Stop = {
-    #         "telegram": message.from_user.id
-    #     }
-    #     a.param(**Stop)
-    #     result = a.transfer()
-    #     bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
 
 @bot.message_handler(regexp='Остановить')
 def handle_start(message):
