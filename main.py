@@ -142,6 +142,7 @@ def handle_start(message):
         keypad.add(button)
     bot.send_message(message.chat.id, "Выберите ID Водомата", reply_markup=keypad)
     sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
+    print(sent)
     bot.register_next_step_handler(sent, startWM)
     
     
