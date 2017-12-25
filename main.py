@@ -137,12 +137,12 @@ def handle_start(message):
     logging.info(message.text)
     items = [521, 321, 121]
     keypad = telebot.types.InlineKeyboardMarkup()
-    sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
-    startWM(message)
     for r in items:
         button = telebot.types.InlineKeyboardButton(text=r, callback_data=r)
         keypad.add(button)
     bot.send_message(message.chat.id, "Выберите ID Водомата", reply_markup=keypad)
+    sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
+    startWM(message)
     
     
 @bot.callback_query_handler(func=lambda call: True)
