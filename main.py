@@ -175,8 +175,10 @@ def startWM(message):
         a.param(**Start)
         result = a.transfer()
         if result["situation"]:
+            print(result)
             bot.send_message(message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
         else:
+            print(result)
             bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
     elif message.text != "Назад":
         bot.send_message(message.chat.id, command_error, reply_markup=generator_menu(main_menu_list))
