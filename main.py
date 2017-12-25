@@ -150,10 +150,6 @@ def handle_start(message):
     
 @bot.callback_query_handler(func=lambda call: True)
 def callback_data(call):
-    print(call.message.chat.id)
-    chatID = call.message.chat.id
-    print(chatID)
-    # message_id.update(chatID: {'message_id': call.message.message_id})
     a = Method("start")
     Start = {
         "telegram": call.message.chat.id,
@@ -161,11 +157,13 @@ def callback_data(call):
     }
     a.param(**Start)
     result = a.transfer()
-    print(result)
     if result["situation"]:
         bot.send_message(call.message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
     else:
         bot.send_message(call.message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
+    chatID = call.message.chat.id
+    print(chatID)
+    # message_id.update(chatID: {'message_id': call.message.message_id})
 
 def response(param):
     return param["param"]
