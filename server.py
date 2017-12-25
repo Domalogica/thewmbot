@@ -13,7 +13,6 @@ bot = telebot.TeleBot(token)
 def server():
 	response = {'method': 'error'}
 	param = request.json
-	print(param)
 	if param["method"] == 'stop':
 		response = stop(param)
 	if param["method"] == 'dispatch':
@@ -46,9 +45,6 @@ def stop(param):
 # 	return 'Success'
 
 def start(param):
-	print(param["score"])
-	print('\n')
-	print(param["telegram"])
 	bot.edit_message_text(chat_id=param["telegram"], message_id=message.message_id, text=param["score"])
 	main.message_id.pop(param["telegram"])
 	return {'Success'}
