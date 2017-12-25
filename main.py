@@ -153,7 +153,7 @@ def callback_data(call):
     print(call.message.chat.id)
     chatID = call.message.chat.id
     print(chatID)
-    message_id.update(chatID: {'message_id': call.message.message_id})
+    # message_id.update(chatID: {'message_id': call.message.message_id})
     a = Method("start")
     Start = {
         "telegram": call.message.chat.id,
