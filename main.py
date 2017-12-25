@@ -62,7 +62,6 @@ class Method:
             response = {'param': "Извините, произошла ошибка, мы работаем над её устранением. Пожалуйста, повторите попытку позже.", 'situation': False}
         else:
             response = json.loads(response.content.decode("utf-8"))
-        print(response)
         return response
 
     def param(self, **kwargs):
@@ -106,7 +105,6 @@ def handle_start(message):
     }
     a.param(**Score)
     result = a.transfer()
-    print(result)
     result = result["score"] / 400
     logging.info(message.text)
     bot.send_message(message.chat.id, str(result) + " литров", reply_markup=generator_menu(main_menu_list))
@@ -131,7 +129,6 @@ def feedback(message):
         }
         a.param(**recall)
         result = a.transfer()
-        print(result)
         bot.send_message(message.chat.id, text_review_answer, reply_markup=generator_menu(main_menu_list))
 
 
@@ -182,7 +179,6 @@ def startWM(message):
             }
             a.param(**Start)
             result = a.transfer()
-            print(result)
             if result["situation"]:
                 bot.send_message(message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
             else:
@@ -197,10 +193,8 @@ def startWM(message):
         Stop = {
             "telegram": message.from_user.id
         }
-        print(message.from_user.id)
         a.param(**Stop)
         result = a.transfer()
-        print(result)
         bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
 
 @bot.message_handler(regexp='Остановить')
@@ -210,10 +204,8 @@ def handle_start(message):
     Stop = {
         "telegram": message.from_user.id
     }
-    print(message.from_user.id)
     a.param(**Stop)
     result = a.transfer()
-    print(result)
     bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
 
 
@@ -238,7 +230,6 @@ def handle_start(message):
     }
     a.param(**monitoring)
     result = a.transfer()
-    print(result)
     bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(stat + back_menu_list))
 
 
@@ -273,7 +264,6 @@ def handle_start(message):
     logging.info(message.text)
     a.param(**recommends)
     result = a.transfer()
-    print(result)
     bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
 
 
