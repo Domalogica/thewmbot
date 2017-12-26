@@ -52,12 +52,7 @@ def stop(param):
 
 
 def start(param):
-	print(param)
 	bot.send_message(param["param"]["telegram"], text_get, reply_markup=generator_menu(stop_menu_list))
-	userID = message.from_user.id
-	message_id.update({userID: {'message_id': message.chat.id}})
-
-	print(message_id)
 	return ['Success']
 
 def status(param):
@@ -70,3 +65,10 @@ def status(param):
 
 def run():
     app.run(host='194.67.217.180', port=8383)
+
+
+
+
+
+
+
