@@ -52,8 +52,9 @@ def stop(param):
 
 def start(param):
 	bot.send_message(param["param"]["telegram"], text_get)
-    chatID = param["param"]["telegram"]
-    server.message_id.update({chatID: {'message_id': message.message_id}})
+	print(message)
+    # chatID = param["param"]["telegram"]
+    # server.message_id.update({chatID: {'message_id': message.message_id}})
 	return ['Success']
 
 def status(param):
