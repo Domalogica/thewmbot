@@ -13,6 +13,7 @@ bot = telebot.TeleBot(token)
 def server():
 	response = {'method': 'error'}
 	param = request.json
+	print(param)
 	if param["method"] == 'stop':
 		response = stop(param)
 	if param["method"] == 'dispatch':
