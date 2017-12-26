@@ -65,7 +65,7 @@ def status(param):
 	print(message_id)
 	telegram = param["param"]["telegram"]
 	print(message_id[telegram]['message_id'])
-	bot.edit_message_text(chat_id=param["param"]["telegram"], message_id=message_id[telegram]['message_id'], text=text_water+param["param"]["score"])
+	bot.edit_message_text(chat_id=param["param"]["telegram"], message_id=message_id[telegram]['message_id'], text=param["param"]["score"])
 	message_id.pop(param["param"]["telegram"])
 	return ['Success']
 
