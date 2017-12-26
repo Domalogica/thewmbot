@@ -175,8 +175,8 @@ def startWM(message):
         result = a.transfer()
         if result["situation"]:
             bot.send_message(message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
-            chatID = call.message.chat.id
-            server.message_id.update({chatID: {'message_id': call.message.message_id}})
+            chatID = message.chat.id
+            server.message_id.update({chatID: {'message_id': message.message_id}})
         else:
             bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
     elif message.text == "Назад":
