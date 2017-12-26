@@ -45,6 +45,7 @@ def stop(param):
 # 	return 'Success'
 
 def start(param):
+	print(param)
 	bot.edit_message_text(chat_id=param["telegram"], message_id=message.message_id, text=param["score"])
 	main.message_id.pop(param["telegram"])
 	return ['Success']
