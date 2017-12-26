@@ -9,7 +9,6 @@ from requests.exceptions import ConnectionError
 import logging
 
 
-
 logging.basicConfig(format = u'%(levelname)-8s [%(asctime)s] %(message)s', level = logging.DEBUG, filename = u'out.log')
 
 logging.info('Started')
@@ -158,9 +157,6 @@ def callback_data(call):
         bot.send_message(call.message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
     else:
         bot.send_message(call.message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
-    chatID = call.message.from_user.id
-    server.message_id.update({chatID: {'message_id': call.message.message_id}})
-    print(server.message_id)
 
 def response(param):
     return param["param"]
