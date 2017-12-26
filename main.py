@@ -169,7 +169,6 @@ def startWM(message):
             "wm": int(message.text)
         }
         a.param(**Start)
-        result = a.transfer()
     elif message.text == "Назад":
         bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
 
