@@ -1,7 +1,9 @@
 from flask import Flask, request, json
 from settings import *
 import telebot 
-from main import message_id
+import main
+
+message_id = {}
 
 app = Flask(__name__)
 
