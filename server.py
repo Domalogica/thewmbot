@@ -62,7 +62,7 @@ def stop(param):
 # 	return ['Success']
 
 def status(param):
-	print(message_id)
+	print(message_id[param["param"]["telegram"]]["message_id"])
 	bot.edit_message_text(chat_id=param["param"]["telegram"], message_id=message_id[param["param"]["telegram"]]["message_id"], text=text_water+param["param"]["score"])
 	message_id.pop(param["param"]["telegram"])
 	return ['Success']
