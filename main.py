@@ -158,8 +158,7 @@ def callback_data(call):
         bot.send_message(call.message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
     else:
         bot.send_message(call.message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
-    chatID = call.message.from_user.id
-    print(call.message)
+    chatID = call.message.chat.id
     server.message_id.update({chatID: {'message_id': call.message.message_id}})
 
 def response(param):
