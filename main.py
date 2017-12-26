@@ -8,6 +8,9 @@ import server
 from requests.exceptions import ConnectionError
 import logging
 
+
+message_id = {}
+
 logging.basicConfig(format = u'%(levelname)-8s [%(asctime)s] %(message)s', level = logging.DEBUG, filename = u'out.log')
 
 logging.info('Started')
@@ -28,8 +31,6 @@ WEBHOOK_URL_BASE = "https://%s:%s" % (WEBHOOK_HOST, WEBHOOK_PORT)
 WEBHOOK_URL_PATH = "/%s/" % token
 
 bot = telebot.TeleBot(token)
-
-message_id = {}
 
 # Наш вебхук-сервер
 class WebhookServer(object):
