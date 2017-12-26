@@ -62,6 +62,7 @@ def stop(param):
 # 	return ['Success']
 
 def status(param):
+	print(param)
 	print(message_id)
 	telegram = param["param"]["telegram"]
 	print(message_id[telegram]['message_id'])
