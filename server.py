@@ -51,6 +51,7 @@ def stop(param):
 
 
 def start(param):
+	print("START")
 	bot.send_message(param["param"]["telegram"], text_get)
 	print("START")
     # chatID = param["param"]["telegram"]
