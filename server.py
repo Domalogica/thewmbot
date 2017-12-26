@@ -18,6 +18,8 @@ def server():
 		response = stop(param)
 	if param["method"] == 'dispatch':
 		response = dispatch(param)
+	if param["method"] == 'status':
+		response = start(param)
 	if param["method"] == 'start':
 		response = start(param)
 	return json.dumps(response)
