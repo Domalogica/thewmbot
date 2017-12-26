@@ -52,7 +52,7 @@ def stop(param):
 
 def start(param):
 	bot.send_message(param["param"]["telegram"], text_get)
-	print(0010010001)
+	print(10101001010010)
     # chatID = param["param"]["telegram"]
     # server.message_id.update({chatID: {'message_id': message.message_id}})
 	return ['Success']
