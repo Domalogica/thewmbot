@@ -1,6 +1,7 @@
 from flask import Flask, request, json
 from settings import *
-import telebot
+import telebot 
+import main
 
 # from main import message_id
 
@@ -9,7 +10,6 @@ app = Flask(__name__)
 token = "321273335:AAEPNNqf3TFGmmekxF4pKzgDEO90Isl6d3k"
 bot = telebot.TeleBot(token)
 
-message_id = {}
 
 @app.route('/server/param', methods=['POST'])
 def server():
@@ -39,7 +39,7 @@ def generator_menu(menu_list, dop=None):
 
 def stop(param):
 	bot.send_message(param["param"]["telegram"], param["param"]["data"], reply_markup=generator_menu(main_menu_list))
-	message_id.pop(param["param"]["telegram"])
+	main.message_id.pop(param["param"]["telegram"])
 	return ['Success']
 
 # def dispatch(param):
@@ -56,9 +56,9 @@ def start(param):
 	return ['Success']
 
 def status(param):
-	print(message_id)
-	bot.edit_message_text(chat_id=param["param"]["telegram"], message_id=message_id[param["param"]["telegram"]]["message_id"], text=param["param"]["score"])
-	message_id.pop(param["param"]["telegram"])
+	print(main.message_id)
+	bot.edit_message_text(chat_id=param["param"]["telegram"], message_id=main.message_id[param["param"]["telegram"]]["message_id"], text=param["param"]["score"])
+	main.message_id.pop(param["param"]["telegram"])
 	return ['Success']
 
 
