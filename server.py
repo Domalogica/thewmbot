@@ -1,7 +1,6 @@
 from flask import Flask, request, json
 from settings import *
-import telebot 
-import main
+import telebot
 
 message_id = {}
 
