@@ -15,7 +15,6 @@ message_id = {}
 def server():
 	response = {'method': 'error'}
 	param = request.json
-	print(param)
 	if param["method"] == 'stop':
 		response = stop(param)
 	if param["method"] == 'dispatch':
@@ -57,6 +56,8 @@ def start(param):
 	bot.send_message(param["param"]["telegram"], text_get, reply_markup=generator_menu(stop_menu_list))
 	userID = message.from_user.id
 	message_id.update({userID: {'message_id': message.chat.id}})
+
+	print(message_id)
 	return ['Success']
 
 def status(param):
