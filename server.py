@@ -20,8 +20,6 @@ def server():
 		response = dispatch(param)
 	if param["method"] == 'status':
 		response = status(param)
-	if param["method"] == 'start':
-		response = start(param)
 	return json.dumps(response)
 
 
@@ -50,18 +48,18 @@ def stop(param):
 
 
 
-def start(param):
-	print(param)
-	if result["situation"]:
-	    bot.send_message(message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
-	else:
-	    bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
-	print("START")
-	bot.send_message(param["param"]["telegram"], text_get)
-	print("START")
-    # chatID = param["param"]["telegram"]
-    # server.message_id.update({chatID: {'message_id': message.message_id}})
-	return ['Success']
+# def start(param):
+# 	print(param)
+# 	if result["situation"]:
+# 	    bot.send_message(message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
+# 	else:
+# 	    bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
+# 	print("START")
+# 	bot.send_message(param["param"]["telegram"], text_get)
+# 	print("START")
+#     # chatID = param["param"]["telegram"]
+#     # server.message_id.update({chatID: {'message_id': message.message_id}})
+# 	return ['Success']
 
 def status(param):
 	print(message_id)
