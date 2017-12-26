@@ -9,6 +9,8 @@ app = Flask(__name__)
 token = "321273335:AAEPNNqf3TFGmmekxF4pKzgDEO90Isl6d3k"
 bot = telebot.TeleBot(token)
 
+message_id = {}
+
 @app.route('/server/param', methods=['POST'])
 def server():
 	response = {'method': 'error'}
@@ -19,7 +21,7 @@ def server():
 	if param["method"] == 'dispatch':
 		response = dispatch(param)
 	if param["method"] == 'status':
-		response = start(param)
+		response = status(param)
 	if param["method"] == 'start':
 		response = start(param)
 	return json.dumps(response)
@@ -38,6 +40,7 @@ def generator_menu(menu_list, dop=None):
 
 def stop(param):
 	bot.send_message(param["param"]["telegram"], param["param"]["data"], reply_markup=generator_menu(main_menu_list))
+	main.message_id.pop(param["param"]["telegram"])
 	return ['Success']
 
 # def dispatch(param):
@@ -47,9 +50,18 @@ def stop(param):
 # 		bot.send_message(ID, message)
 # 	return 'Success'
 
+
+
 def start(param):
 	print(param)
-	bot.edit_message_text(chat_id=param["param"]["telegram"], message_id=message.message_id, text=param["param"]["score"])
+	bot.send_message(param["param"]["telegram"], text_get, reply_markup=generator_menu(stop_menu_list))
+	userID = message.from_user.id
+	message_id.update({userID: {'message_id': message.chat.id}})
+	return ['Success']
+
+def status(param):
+	print(param)
+	bot.edit_message_text(chat_id=param["param"]["telegram"], message_id=message_id[param["param"]["telegram"]]["message_id"], text=param["param"]["score"])
 	main.message_id.pop(param["param"]["telegram"])
 	return ['Success']
 

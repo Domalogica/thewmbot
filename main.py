@@ -29,7 +29,6 @@ WEBHOOK_URL_PATH = "/%s/" % token
 
 bot = telebot.TeleBot(token)
 
-message_id = {}
 
 # Наш вебхук-сервер
 class WebhookServer(object):
@@ -158,8 +157,6 @@ def callback_data(call):
         bot.send_message(call.message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
     else:
         bot.send_message(call.message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
-    chatID = call.message.chat.id
-    message_id.update({chatID: {'message_id': call.message.message_id}})
 
 def response(param):
     return param["param"]
