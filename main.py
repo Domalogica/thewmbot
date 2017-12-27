@@ -155,7 +155,14 @@ def callback_data(call):
     a.param(**Start)
     result = a.transfer()
     if result["situation"]:
-        bot.send_message(call.message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
+        a = Method("score")
+        Score = {
+            "telegram": message.from_user.id
+        }
+        a.param(**Score)
+        result1 = a.transfer()
+        result1 = result1["score"] / 400
+        bot.send_message(call.message.chat.id, response(result) + text_water + str(result1) + " литров", reply_markup=generator_menu(stop_menu_list))
     else:
         bot.send_message(call.message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
     chatID = call.message.chat.id
@@ -174,7 +181,14 @@ def startWM(message):
         a.param(**Start)
         result = a.transfer()
         if result["situation"]:
-            send = bot.send_message(message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
+        a = Method("score")
+        Score = {
+            "telegram": message.from_user.id
+        }
+        a.param(**Score)
+        result1 = a.transfer()
+        result1 = result1["score"] / 400
+        bot.send_message(call.message.chat.id, response(result) + text_water + str(result1) + " литров", reply_markup=generator_menu(stop_menu_list))
             chatID = message.chat.id
             server.message_id.update({chatID: {'message_id': send.message_id}})
         else:
@@ -192,6 +206,14 @@ def handle_start(message):
     }
     a.param(**Stop)
     result = a.transfer()
+    a = Method("score")
+    Score = {
+        "telegram": message.from_user.id
+    }
+    a.param(**Score)
+    result1 = a.transfer()
+    result1 = result1["score"] / 400
+    bot.send_message(call.message.chat.id, response(result) + text_water + str(result1) + " литров", reply_markup=generator_menu(stop_menu_list))
     bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
 
 

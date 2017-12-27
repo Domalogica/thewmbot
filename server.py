@@ -18,8 +18,8 @@ def server():
 		response = stop(param)
 	if param["method"] == 'dispatch':
 		response = dispatch(param)
-	if param["method"] == 'status':
-		response = status(param)
+	# if param["method"] == 'status':
+	# 	response = status(param)
 	return json.dumps(response)
 
 
@@ -61,16 +61,16 @@ def stop(param):
 #     # server.message_id.update({chatID: {'message_id': message.message_id}})
 # 	return ['Success']
 
-def status(param):
-	telegram = param["param"]["telegram"]
-	print(param)
-	print(message_id[telegram]['message_id'])
-	liters = str(param["param"]["score"] / 400) + " литров"
-	bot.delete_message(chat_id=telegram, message_id=message_id[telegram]['message_id'])
-	send = bot.send_message(param["param"]["telegram"], text_water + liters, reply_markup=generator_menu(stop_menu_list))
-	chatID = telegram
-	message_id.update({chatID: {'message_id': send.message_id}})
-	return ['Success']
+# def status(param):
+# 	telegram = param["param"]["telegram"]
+# 	print(param)
+# 	print(message_id[telegram]['message_id'])
+# 	liters = str(param["param"]["score"] / 400) + " литров"
+# 	bot.delete_message(chat_id=telegram, message_id=message_id[telegram]['message_id'])
+# 	send = bot.send_message(param["param"]["telegram"], text_water + liters, reply_markup=generator_menu(stop_menu_list))
+# 	chatID = telegram
+# 	message_id.update({chatID: {'message_id': send.message_id}})
+# 	return ['Success']
 
 
 
