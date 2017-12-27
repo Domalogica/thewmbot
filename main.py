@@ -191,7 +191,7 @@ def startWM(message):
             result1 = a.transfer()
             result1 = str(result1["score"] / 400)
             print(result1)
-            bot.send_message(call.message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
+            bot.send_message(message.chat.id, response(result) + text_water, reply_markup=generator_menu(stop_menu_list))
             chatID = message.chat.id
             server.message_id.update({chatID: {'message_id': send.message_id}})
         else:
