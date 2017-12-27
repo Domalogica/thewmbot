@@ -157,7 +157,7 @@ def callback_data(call):
     if result["situation"]:
         a = Method("score")
         Score = {
-            "telegram": message.from_user.id
+            "telegram": call.message.from_user.id
         }
         a.param(**Score)
         result1 = a.transfer()
