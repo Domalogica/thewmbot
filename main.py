@@ -161,7 +161,7 @@ def callback_data(call):
         }
         a.param(**Score)
         result1 = a.transfer()
-        result1 = result1["score"] / 400
+        result1 = str(result1["score"] / 400)
         bot.send_message(call.message.chat.id, response(result) + text_water + str(result1)[:5:] + " литров", reply_markup=generator_menu(stop_menu_list))
     else:
         bot.send_message(call.message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
@@ -187,7 +187,7 @@ def startWM(message):
             }
             a.param(**Score)
             result1 = a.transfer()
-            result1 = result1["score"] / 400
+            result1 = str(result1["score"] / 400)
             send = bot.send_message(message.chat.id, response(result) + text_water + str(result1)[:5:] + " литров", reply_markup=generator_menu(stop_menu_list))
             chatID = message.chat.id
             server.message_id.update({chatID: {'message_id': send.message_id}})
