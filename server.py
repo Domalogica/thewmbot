@@ -65,8 +65,9 @@ def status(param):
 	telegram = param["param"]["telegram"]
 	print(param)
 	print(message_id[telegram]['message_id'])
+	liters = str(param["param"]["score"] / 400) + " литров"
 	bot.delete_message(chat_id=telegram, message_id=message_id[telegram]['message_id'])
-	send = bot.send_message(param["param"]["telegram"], param["param"]["score"], reply_markup=generator_menu(stop_menu_list))
+	send = bot.send_message(param["param"]["telegram"], text_water + liters, reply_markup=generator_menu(stop_menu_list))
 	chatID = telegram
 	message_id.update({chatID: {'message_id': send.message_id}})
 	return ['Success']
