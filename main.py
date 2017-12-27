@@ -157,7 +157,7 @@ def callback_data(call):
     if result["situation"]:
         a = Method("score")
         Score = {
-            "telegram": call.message.from_user.id
+            "telegram": call.message.chat.id
         }
         a.param(**Score)
         result1 = a.transfer()
@@ -174,7 +174,7 @@ def startWM(message):
     if message.text.isdigit():
         a = Method("start")
         Start = {
-            "telegram": message.from_user.id,
+            "telegram": message.chat.id,
             "wm": int(message.text)
         }
         a.param(**Start)
@@ -182,7 +182,7 @@ def startWM(message):
         if result["situation"]:
             a = Method("score")
             Score = {
-                "telegram": message.from_user.id
+                "telegram": message.chat.id
             }
             a.param(**Score)
             result1 = a.transfer()
@@ -198,13 +198,13 @@ def startWM(message):
     elif message.text == "Остановить":
         a = Method("stop")
         Stop = {
-            "telegram": message.from_user.id
+            "telegram": message.chat.id
         }
         a.param(**Stop)
         result = a.transfer()
         a = Method("score")
         Score = {
-            "telegram": message.from_user.id
+            "telegram": message.chat.id
         }
         a.param(**Score)
         result1 = a.transfer()
@@ -218,13 +218,13 @@ def handle_start(message):
     logging.info(message.text)
     a = Method("stop")
     Stop = {
-        "telegram": message.from_user.id
+        "telegram": message.chat.id
     }
     a.param(**Stop)
     result = a.transfer()
     a = Method("score")
     Score = {
-        "telegram": message.from_user.id
+        "telegram": message.chat.id
     }
     a.param(**Score)
     result1 = a.transfer()
@@ -250,7 +250,7 @@ def handle_start(message):
     logging.info(message.text)
     a = Method("monitoring")
     monitoring = {
-        "telegram": message.from_user.id
+        "telegram": message.chat.id
     }
     a.param(**monitoring)
     result = a.transfer()
@@ -281,7 +281,7 @@ def handle_start(message):
 def handle_start(message):
     a = Method("recommends")
     recommends = {
-        "telegram": message.from_user.id,
+        "telegram": message.chat.id,
         "X": message.location.latitude,
         "Y": message.location.longitude
     }
