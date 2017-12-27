@@ -196,7 +196,21 @@ def startWM(message):
     elif message.text == "Назад":
         bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
     elif message.text == "Остановить":
-        bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
+        a = Method("stop")
+        Stop = {
+            "telegram": message.from_user.id
+        }
+        a.param(**Stop)
+        result = a.transfer()
+        a = Method("score")
+        Score = {
+            "telegram": message.from_user.id
+        }
+        a.param(**Score)
+        result1 = a.transfer()
+        result1 = str(result1["score"] / 400)
+        bot.send_message(message.chat.id, "Ваш баланс: " + str(result1)[:5:] + " литров", reply_markup=generator_menu(stop_menu_list))
+        bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
 
 
 @bot.message_handler(regexp='Остановить')
