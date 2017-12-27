@@ -65,10 +65,10 @@ def status(param):
 	telegram = param["param"]["telegram"]
 	print(param)
 	print(message_id[telegram]['message_id'])
-	send = bot.send_message(param["param"]["telegram"], param["param"]["data"], reply_markup=generator_menu(main_menu_list))
+	bot.delete_message(chat_id=telegram, message_id=message_id[telegram]['message_id'])
+	send = bot.send_message(param["param"]["telegram"], param["param"]["score"], reply_markup=generator_menu(stop_menu_list))
 	chatID = telegram
-	server.message_id.update({chatID: {'message_id': send.message_id}})
-	bot.delete_message(chat_id=telegram, message_id=message_id[telegram]['message_id'], text=param["param"]["score"])
+	message_id.update({chatID: {'message_id': send.message_id}})
 	return ['Success']
 
 
