@@ -167,7 +167,7 @@ def callback_data(call):
         bot.send_message(call.message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
 
 def response(param):
-    return param["param"]
+    return param["status"]
 
 def startWM(message):
     if message.text.isdigit():

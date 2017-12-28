@@ -35,7 +35,7 @@ def generator_menu(menu_list, dop=None):
 
 
 def stop(param):
-	bot.send_message(param["param"]["telegram"], param["param"]["data"], reply_markup=generator_menu(main_menu_list))
+	bot.send_message(param["param"]["telegram"], param["param"]["status"], reply_markup=generator_menu(main_menu_list))
 	# message_id.pop(param["param"]["telegram"])
 	return ['Success']
 
