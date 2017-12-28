@@ -135,7 +135,7 @@ def feedback(message):
 @bot.message_handler(regexp='Подключиться к водомату')
 def handle_start(message):
     logging.info(message.text)
-    items = [521, 321, 121]
+    items = [521, 321, 121, 621]
     keypad = telebot.types.InlineKeyboardMarkup()
     for r in items:
         button = telebot.types.InlineKeyboardButton(text=r, callback_data=r)
