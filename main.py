@@ -164,7 +164,6 @@ def handle_start(message):
     }
     a.param(**get_last_connection)
     result = a.transfer()
-    print(result["wm"])
     wm = result["wm"]
     if wm != 0 and wm.isdigit:
         sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu([wm] + back_menu_list))
@@ -172,7 +171,6 @@ def handle_start(message):
     else:
         sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
         bot.register_next_step_handler(sent, startWM)
-    
     
 # @bot.callback_query_handler(func=lambda call: True)
 # def callback_data(call):
