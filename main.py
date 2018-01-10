@@ -164,7 +164,7 @@ def handle_start(message):
     }
     a.param(**get_last_connection)
     result = a.transfer()
-    print(result)
+    print(result["wm"])
     wm = result["wm"]
     if wm != 0:
         sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(wm + back_menu_list))
