@@ -47,6 +47,27 @@ class WebhookServer(object):
         else:
             raise cherrypy.HTTPError(403)
 
+class MethodGet:
+    def __init__(self, method):
+        self.request = {"method": "", "param": {}}
+        self.request.update({"method": method})
+
+    def transfer(self):
+        try:
+            response = requests.get('http://194.67.217.180:8484/Get_Information', json=self.request)
+            logging.debug(response.text)
+        except ConnectionError as e:
+            logging.error(self.request)
+            logging.error(u'ConnectionError')
+            response = {'param': "Извините, произошла ошибка, мы работаем над её устранением. Пожалуйста, повторите попытку позже.", 'situation': False}
+        else:
+            response = json.loads(response.content.decode("utf-8"))
+        return response
+
+    def param(self, **kwargs):
+        self.request["param"] = kwargs
+        return True
+
 class Method:
     def __init__(self, method):
         self.request = {"method": "", "param": {}}
@@ -135,7 +156,7 @@ def feedback(message):
 @bot.message_handler(regexp='Подключиться к водомату')
 def handle_start(message):
     logging.info(message.text)
-    a = Method("get_last_connection")
+    a = MethodGet("get_last_connection")
     get_last_connection = {
         "telegram": message.from_user.id
     }
