@@ -56,7 +56,7 @@ class MethodGet:
         try:
             response = requests.get('http://194.67.217.180:8484/Get_Information', json=self.request)
             logging.debug(response.text)
-            print(response["wm"])
+            print(response.content.decode("utf-8"))
         except ConnectionError as e:
             logging.error(self.request)
             logging.error(u'ConnectionError')
