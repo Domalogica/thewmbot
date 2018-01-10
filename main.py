@@ -135,14 +135,19 @@ def feedback(message):
 @bot.message_handler(regexp='Подключиться к водомату')
 def handle_start(message):
     logging.info(message.text)
-    # items = [521, 321, 121, 621]
-    # keypad = telebot.types.InlineKeyboardMarkup()
-    # for r in items:
-    #     button = telebot.types.InlineKeyboardButton(text=r, callback_data=r)
-    #     keypad.add(button)
-    # bot.send_message(message.chat.id, "Выберите ID Водомата", reply_markup=keypad)
-    sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
-    bot.register_next_step_handler(sent, startWM)
+    a = Method("get_last_connection")
+    get_last_connection = {
+        "telegram": message.from_user.id
+    }
+    a.param(**get_last_connection)
+    result = a.transfer()
+    wm = result["wm"]
+    if wm:
+        sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list + wm))
+        bot.register_next_step_handler(sent, startWM)
+    else:
+        sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
+        bot.register_next_step_handler(sent, startWM)
     
     
 # @bot.callback_query_handler(func=lambda call: True)
