@@ -166,7 +166,7 @@ def handle_start(message):
     result = a.transfer()
     print(result["wm"])
     wm = result["wm"]
-    if wm != 0:
+    if wm != 0 and wm.isdigit:
         sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu([wm] + back_menu_list))
         bot.register_next_step_handler(sent, startWM)
     else:
