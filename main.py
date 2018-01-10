@@ -54,6 +54,7 @@ class MethodGet:
 
     def transfer(self):
         try:
+            print(self.request)
             response = requests.get('http://194.67.217.180:8484/Get_Information', json=self.request)
             logging.debug(response.text)
             print(response.content.decode("utf-8"))
