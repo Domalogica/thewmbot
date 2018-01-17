@@ -196,12 +196,13 @@ def handle_start(message):
 def response(param):
     return param["status"]
 
+
 def startWM(message):
     if message.text.isdigit():
         a = Method("start")
         Start = {
             "telegram": message.chat.id,
-            "username": message.user.name,
+            "username": message.chat.first_name,
             "wm": int(message.text)
         }
         a.param(**Start)
@@ -221,22 +222,6 @@ def startWM(message):
             bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
     elif message.text == "Назад":
         bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
-    # elif message.text == "Остановить":
-    #     a = Method("stop")
-    #     Stop = {
-    #         "telegram": message.chat.id
-    #     }
-    #     a.param(**Stop)
-    #     result = a.transfer()
-    #     a = Method("score")
-    #     Score = {
-    #         "telegram": message.chat.id
-    #     }
-    #     a.param(**Score)
-    #     result1 = a.transfer()
-    #     result1 = str(result1["score"] / 400)
-    #     bot.send_message(message.chat.id, "Ваш баланс: " + str(result1)[:5:] + " литров", reply_markup=generator_menu(stop_menu_list))
-    #     bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
 
 
 @bot.message_handler(regexp='Остановить')
