@@ -148,6 +148,7 @@ def feedback(message):
         a = Method("recall")
         recall = {
             "telegram": message.from_user.id,
+            "username": message.chat.first_name,
             "review": message.text
         }
         a.param(**recall)
@@ -229,7 +230,8 @@ def handle_start(message):
     logging.info(message.text)
     a = Method("stop")
     Stop = {
-        "telegram": message.chat.id
+        "telegram": message.chat.id,
+        "username": message.chat.first_name
     }
     a.param(**Stop)
     result = a.transfer()
@@ -293,6 +295,7 @@ def handle_start(message):
     a = Method("recommends")
     recommends = {
         "telegram": message.chat.id,
+        "username": message.chat.first_name,
         "X": message.location.latitude,
         "Y": message.location.longitude
     }
