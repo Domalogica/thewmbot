@@ -201,6 +201,7 @@ def startWM(message):
         a = Method("start")
         Start = {
             "telegram": message.chat.id,
+            "username": message.user.name,
             "wm": int(message.text)
         }
         a.param(**Start)
