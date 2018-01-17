@@ -261,13 +261,10 @@ def handle_start(message):
 @bot.message_handler(regexp='^Статистика$')
 def handle_start(message):
     logging.info(message.text)
-    a = Method("monitoring")
-    monitoring = {
-        "telegram": message.chat.id
-    }
+    a = MethodGet("statistic")
     a.param(**monitoring)
     result = a.transfer()
-    bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(stat + back_menu_list))
+    bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(back_menu_list))
 
 
 @bot.message_handler(regexp='Моя статистика')
