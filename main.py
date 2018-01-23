@@ -194,6 +194,7 @@ def handle_start(message):
 #         bot.send_message(call.message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
 
 def response(param):
+    print(param)
     return param["status"]
 
 
