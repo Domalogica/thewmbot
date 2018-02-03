@@ -283,22 +283,6 @@ def handle_start(message):
 @bot.message_handler(regexp='За сутки')
 def handle_start(message):
     logging.info(message.text)
-    try:
-        response = requests.get('http://194.67.217.180:8484/get_state', json=data1)
-        response = json.loads(response.content.decode("utf-8"))
-        # Write to the sheet of the workbook 
-        j = 0
-        for x in response:
-            i = 0;
-            x = x.values()
-            for item in x:
-                sheet1.write(j, i, str(item))
-                i+=1
-            j+=1
-    except Exception as e:
-        print(e)
-
-
     #за сутки
     before = datetime.today() - timedelta(days=1)
     before = str(before)[:19]
@@ -320,16 +304,8 @@ def handle_start(message):
       }
     }
 
-    book.save("state.xls")
-    path = os.curdir + "/state.xls"
-    bot.send_document(message.chat.id, open(path, 'rb'), reply_markup=generator_menu(back_menu_list))
-
-
-@bot.message_handler(regexp='За неделю')
-def handle_start(message):
-    logging.info(message.text)
     try:
-        response = requests.get('http://194.67.217.180:8484/get_state', json=data1)
+        response = requests.get('http://194.67.217.180:8484/get_state', json=data)
         response = json.loads(response.content.decode("utf-8"))
         # Write to the sheet of the workbook 
         j = 0
@@ -342,6 +318,16 @@ def handle_start(message):
             j+=1
     except Exception as e:
         print(e)
+
+    book.save("state.xls")
+    path = os.curdir + "/state.xls"
+    bot.send_document(message.chat.id, open(path, 'rb'), reply_markup=generator_menu(back_menu_list))
+
+
+@bot.message_handler(regexp='За неделю')
+def handle_start(message):
+    logging.info(message.text)
+
 
     #за неделю
     before = datetime.today() - timedelta(days=7)
@@ -362,6 +348,21 @@ def handle_start(message):
       'to': now
       }
     }
+
+    try:
+        response = requests.get('http://194.67.217.180:8484/get_state', json=data)
+        response = json.loads(response.content.decode("utf-8"))
+        # Write to the sheet of the workbook 
+        j = 0
+        for x in response:
+            i = 0;
+            x = x.values()
+            for item in x:
+                sheet1.write(j, i, str(item))
+                i+=1
+            j+=1
+    except Exception as e:
+        print(e)
 
     book.save("state.xls")
     path = os.curdir + "/state.xls"
