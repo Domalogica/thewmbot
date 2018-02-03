@@ -251,8 +251,8 @@ def handle_start(message):
     logging.info(message.text)
     a = MethodGet("get_admins")
     result = a.transfer()
-    print(result["param"])
-    if message.chat.id in result["param"]:
+    print(result)
+    if message.chat.id in result:
         for uid in result:
             bot.send_message(uid, text_get, reply_markup=generator_menu(personal_menu_list + admin_menu_list + back_menu_list))
     else:
