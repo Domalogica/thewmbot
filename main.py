@@ -13,6 +13,10 @@ from datetime import datetime, timedelta
 
 
 
+def response(param):
+    print(param)
+    return param["status"]
+
 logging.basicConfig(format = u'%(levelname)-8s [%(asctime)s] %(message)s', level = logging.DEBUG, filename = u'out.log')
 
 logging.info('Started')
@@ -196,9 +200,6 @@ def handle_start(message):
 #     else:
 #         bot.send_message(call.message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
 
-def response(param):
-    print(param)
-    return param["status"]
 
 
 def startWM(message):
