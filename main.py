@@ -317,7 +317,7 @@ def handle_start(message):
 
     book.save("state.xls")
     path = os.curdir + "state.xls"
-    bot.send_document(message.chat.id, path, reply_markup=generator_menu(back_menu_list))
+    bot.send_document(message.chat.id, open(path, 'rb'), reply_markup=generator_menu(back_menu_list))
 
 
 @bot.message_handler(regexp='Активные водоматы')
