@@ -264,6 +264,18 @@ def handle_start(message):
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(main_menu_list))
 
 
+@bot.message_handler(regexp='Админ панель')
+def handle_start(message):
+    logging.info(message.text)
+    a = MethodGet("get_admins")
+    result = a.transfer()
+    print(result['param'])
+    if message.chat.id in result['param']:
+        bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(admin_menu_stat + back_menu_list))
+    else:
+        bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(main_menu_list))
+
+
 @bot.message_handler(regexp='^Статистика$')
 def handle_start(message):
     logging.info(message.text)
