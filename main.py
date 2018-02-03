@@ -9,23 +9,7 @@ from requests.exceptions import ConnectionError
 import logging
 import xlwt
 import os
-
-# Initialize a workbook 
-book = xlwt.Workbook(encoding="utf-8")
-
-# Add a sheet to the workbook 
-sheet1 = book.add_sheet("Python Sheet 1") 
-
-
-
-data1 = {
-  'method': 'get_state',
-  'param':{
-  'from': "2018-01-11 18:37:38",
-  'to': "2018-01-12 18:37:38"
-  }
-}
-
+from datetime import datetime, timedelta
 
 
 
@@ -295,8 +279,110 @@ def handle_start(message):
         bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(main_menu_list))
 
 
+
+@bot.message_handler(regexp='За сутки')
+def handle_start(message):
+    logging.info(message.text)
+    try:
+        response = requests.get('http://194.67.217.180:8484/get_state', json=data1)
+        response = json.loads(response.content.decode("utf-8"))
+        # Write to the sheet of the workbook 
+        j = 0
+        for x in response:
+            i = 0;
+            x = x.values()
+            for item in x:
+                sheet1.write(j, i, str(item))
+                i+=1
+            j+=1
+    except Exception as e:
+        print(e)
+
+
+    #за сутки
+    before = datetime.today() - timedelta(days=1)
+    before = str(now)[:19]
+    now = datetime.today()
+
+    # Initialize a workbook 
+    book = xlwt.Workbook(encoding="utf-8")
+
+    # Add a sheet to the workbook 
+    sheet1 = book.add_sheet("Python Sheet 1") 
+
+
+
+    data = {
+      'method': 'get_state',
+      'param':{
+      'from': before,
+      'to': now
+      }
+    }
+
+    book.save("state.xls")
+    path = os.curdir + "/state.xls"
+    bot.send_document(message.chat.id, open(path, 'rb'), reply_markup=generator_menu(back_menu_list))
+
+
+@bot.message_handler(regexp='За неделю')
+def handle_start(message):
+    logging.info(message.text)
+    try:
+        response = requests.get('http://194.67.217.180:8484/get_state', json=data1)
+        response = json.loads(response.content.decode("utf-8"))
+        # Write to the sheet of the workbook 
+        j = 0
+        for x in response:
+            i = 0;
+            x = x.values()
+            for item in x:
+                sheet1.write(j, i, str(item))
+                i+=1
+            j+=1
+    except Exception as e:
+        print(e)
+
+    #за неделю
+    before = datetime.today() - timedelta(days=7)
+    before = str(now)[:19]
+    now = datetime.today()
+
+    # Initialize a workbook 
+    book = xlwt.Workbook(encoding="utf-8")
+
+    # Add a sheet to the workbook 
+    sheet1 = book.add_sheet("Python Sheet 1") 
+
+
+    data = {
+      'method': 'get_state',
+      'param':{
+      'from': before,
+      'to': now
+      }
+    }
+
+    book.save("state.xls")
+    path = os.curdir + "/state.xls"
+    bot.send_document(message.chat.id, open(path, 'rb'), reply_markup=generator_menu(back_menu_list))
+
+
 @bot.message_handler(regexp='^Статистика$')
 def handle_start(message):
+    logging.info(message.text)
+    bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(my_stat + back_menu_list))
+
+
+@bot.message_handler(regexp='^Текущее состояние$')
+def handle_start(message):
+    logging.info(message.text)
+    a = MethodGet("statistic")
+    result = a.transfer()
+    bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(back_menu_list))
+
+
+
     logging.info(message.text)
     a = MethodGet("statistic")
     result = a.transfer()
@@ -315,6 +401,7 @@ def handle_start(message):
     except Exception as e:
         print(e)
 
+    
     book.save("state.xls")
     path = os.curdir + "/state.xls"
     print(path)
@@ -328,12 +415,6 @@ def handle_start(message):
     result = a.transfer()
     bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(back_menu_list))
 
-
-
-@bot.message_handler(regexp='Моя статистика')
-def handle_start(message):
-    logging.info(message.text)
-    bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(my_stat + back_menu_list))
 
 
 
