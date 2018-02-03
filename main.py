@@ -353,7 +353,12 @@ def handle_start(message):
         response = requests.get('http://194.67.217.180:8484/get_state', json=data)
         response = json.loads(response.content.decode("utf-8"))
         # Write to the sheet of the workbook 
-        j = 0
+        sheet1.write(0, 0, "Номер водомата")
+        sheet1.write(0, 1, "Продажи")
+        sheet1.write(0, 2, "Наличка в водомате")
+        sheet1.write(0, 3, "Дата/время")
+        j = 1
+        print(response)
         for x in response:
             i = 0;
             x = x.values()
