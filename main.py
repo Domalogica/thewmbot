@@ -8,6 +8,7 @@ import server
 from requests.exceptions import ConnectionError
 import logging
 import xlwt
+import os
 
 # Initialize a workbook 
 book = xlwt.Workbook(encoding="utf-8")
@@ -315,7 +316,8 @@ def handle_start(message):
         print(e)
 
     book.save("state.xls")
-    bot.send_document(message.chat.id, "state.xls", reply_markup=generator_menu(back_menu_list))
+    path = os.curdir + "state.xls"
+    bot.send_document(message.chat.id, path, reply_markup=generator_menu(back_menu_list))
 
 
 @bot.message_handler(regexp='Активные водоматы')
