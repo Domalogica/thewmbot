@@ -361,9 +361,11 @@ def handle_start(message):
         print(response)
         for x in response:
             i = 0;
-            x = x.values()
             for item in x:
-                sheet1.write(j, i, str(item))
+                sheet1.write(j, i, str(item["wm"]))
+                sheet1.write(j, i, str(item["totalPaid"]))
+                sheet1.write(j, i, str(item["totalHardCash"]))
+                sheet1.write(j, i, str(item["updated"]))
                 i+=1
             j+=1
     except Exception as e:
