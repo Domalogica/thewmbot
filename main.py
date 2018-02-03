@@ -394,8 +394,7 @@ def handle_start(message):
     logging.info(message.text)
     a = MethodGet("statistic")
     result = a.transfer()
-    print(result)
-    bot.send_message(message.chat.id, result["status"], reply_markup=generator_menu(back_menu_list))
+    bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(back_menu_list))
 
 
 @bot.message_handler(regexp='Активные водоматы')
