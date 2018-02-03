@@ -315,7 +315,6 @@ def handle_start(message):
         j = 1
         for x in response:
             i = 0;
-            print(x)
             sheet1.write(j, i, str(x["wm"]))
             i+=1
             sheet1.write(j, i, str(x["totalPaid"]))
@@ -368,7 +367,6 @@ def handle_start(message):
         j = 1
         for x in response:
             i = 0;
-            print(x)
             sheet1.write(j, i, str(x["wm"]))
             i+=1
             sheet1.write(j, i, str(x["totalPaid"]))
