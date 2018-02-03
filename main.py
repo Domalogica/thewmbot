@@ -317,6 +317,7 @@ def handle_start(message):
             i = 0;
             print(x)
             for item in x:
+                print(item)
                 sheet1.write(j, i, str(item["wm"]))
                 sheet1.write(j, i, str(item["totalPaid"]))
                 sheet1.write(j, i, str(item["totalHardCash"]))
