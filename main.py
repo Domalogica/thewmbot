@@ -316,9 +316,12 @@ def handle_start(message):
         for x in response:
             i = 0;
             print(x)
-            sheet1.write(j, i, str(item["wm"]))i=+1
-            sheet1.write(j, i, str(item["totalPaid"]))i=+1
-            sheet1.write(j, i, str(item["totalHardCash"]))i=+1
+            sheet1.write(j, i, str(item["wm"]))
+            i+=1
+            sheet1.write(j, i, str(item["totalPaid"]))
+            i+=1
+            sheet1.write(j, i, str(item["totalHardCash"]))
+            i+=1
             sheet1.write(j, i, str(item["updated"]))
             j+=1
     except Exception as e:
@@ -366,9 +369,12 @@ def handle_start(message):
         for x in response:
             i = 0;
             print(x)
-            sheet1.write(j, i, str(item["wm"]))i=+1
-            sheet1.write(j, i, str(item["totalPaid"]))i=+1
-            sheet1.write(j, i, str(item["totalHardCash"]))i=+1
+            sheet1.write(j, i, str(item["wm"]))
+            i+=1
+            sheet1.write(j, i, str(item["totalPaid"]))
+            i+=1
+            sheet1.write(j, i, str(item["totalHardCash"]))
+            i+=1
             sheet1.write(j, i, str(item["updated"]))
             j+=1
     except Exception as e:
