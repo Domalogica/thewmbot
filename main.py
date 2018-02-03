@@ -301,8 +301,8 @@ def handle_start(message):
 
     #за сутки
     before = datetime.today() - timedelta(days=1)
-    before = str(now)[:19]
-    now = datetime.today()
+    before = str(before)[:19]
+    now = str(datetime.today())[:19]
 
     # Initialize a workbook 
     book = xlwt.Workbook(encoding="utf-8")
@@ -345,8 +345,8 @@ def handle_start(message):
 
     #за неделю
     before = datetime.today() - timedelta(days=7)
-    before = str(now)[:19]
-    now = datetime.today()
+    before = str(before)[:19]
+    now = str(datetime.today())[:19]
 
     # Initialize a workbook 
     book = xlwt.Workbook(encoding="utf-8")
