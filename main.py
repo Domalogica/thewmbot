@@ -249,7 +249,14 @@ def handle_start(message):
 @bot.message_handler(regexp='Личный кабинет')
 def handle_start(message):
     logging.info(message.text)
-    bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(personal_menu_list + back_menu_list))
+    a = MethodGet("get_admins")
+    result = a.transfer()
+    print(result)
+    if 1:
+        for uid in result:
+            bot.send_message(uid, text_get, reply_markup=generator_menu(personal_menu_list + admin_menu_list + back_menu_list))
+    else:
+        bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(personal_menu_list + back_menu_list))
 
 
 @bot.message_handler(regexp='Назад')
