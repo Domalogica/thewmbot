@@ -14,7 +14,6 @@ from datetime import datetime, timedelta
 
 
 def response(param):
-    print(param)
     return param["status"]
 
 logging.basicConfig(format = u'%(levelname)-8s [%(asctime)s] %(message)s', level = logging.DEBUG, filename = u'out.log')
@@ -395,8 +394,8 @@ def handle_start(message):
     logging.info(message.text)
     a = MethodGet("statistic")
     result = a.transfer()
-    print(response(result))
-    bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(back_menu_list))
+    print(result)
+    bot.send_message(message.chat.id, result["status"], reply_markup=generator_menu(back_menu_list))
 
 
 
