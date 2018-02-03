@@ -389,7 +389,7 @@ def handle_start(message):
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(my_stat + back_menu_list))
 
 
-@bot.message_handler(regexp='^Текущее состояние$')
+@bot.message_handler(regexp='Текущее состояние')
 def handle_start(message):
     logging.info(message.text)
     a = MethodGet("statistic")
