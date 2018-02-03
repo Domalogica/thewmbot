@@ -266,12 +266,12 @@ def handle_start(message):
     bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(back_menu_list))
 
 
-# @bot.message_handler(regexp='Активные водоматы')
-# def handle_start(message):
-#     logging.info(message.text)
-#     a = MethodGet("connected_vodomats")
-#     result = a.transfer()
-#     bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(back_menu_list))
+@bot.message_handler(regexp='Активные водоматы')
+def handle_start(message):
+    logging.info(message.text)
+    a = MethodGet("connected_vodomats")
+    result = a.transfer()
+    bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(back_menu_list))
 
 
 
