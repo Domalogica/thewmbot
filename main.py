@@ -7,6 +7,24 @@ import threading
 import server 
 from requests.exceptions import ConnectionError
 import logging
+import xlwt
+
+# Initialize a workbook 
+book = xlwt.Workbook(encoding="utf-8")
+
+# Add a sheet to the workbook 
+sheet1 = book.add_sheet("Python Sheet 1") 
+
+
+
+data1 = {
+  'method': 'get_state',
+  'param':{
+  'from': "2018-01-11 18:37:38",
+  'to': "2018-01-12 18:37:38"
+  }
+}
+
 
 
 
@@ -281,7 +299,23 @@ def handle_start(message):
     logging.info(message.text)
     a = MethodGet("statistic")
     result = a.transfer()
-    bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(back_menu_list))
+    try:
+        response = requests.get('http://194.67.217.180:8484/get_state', json=data1)
+        response = json.loads(response.content.decode("utf-8"))
+        # Write to the sheet of the workbook 
+        j = 0
+        for x in response:
+            i = 0;
+            x = x.values()
+            for item in x:
+                sheet1.write(j, i, str(item))
+                i+=1
+            j+=1
+    except Exception as e:
+        print(e)
+
+    book.save("state.xls")
+    bot.send_document(message.chat.id, "state.xls", reply_markup=generator_menu(back_menu_list))
 
 
 @bot.message_handler(regexp='Активные водоматы')
