@@ -316,7 +316,7 @@ def handle_start(message):
         print(e)
 
     book.save("state.xls")
-    path = os.curdir + "state.xls"
+    path = os.curdir + "/state.xls"
     print(path)
     bot.send_document(message.chat.id, open(path, 'rb'), reply_markup=generator_menu(back_menu_list))
 
