@@ -341,7 +341,7 @@ def handle_start(message):
                 i+=1
                 sheet1.write(j, i, str(x["totalHardCash"]))
                 i+=1
-                sheet1.write(j, i, str(x["updated"]))
+                sheet1.write(j, i, str(x["updated"][0].x["updated"][1].x["updated"][2]))
                 j+=1
                 di.update({x["wm"]: {"totalPaid": x["totalPaid"], "totalHardCash": x["totalHardCash"]}})
                 print(di)
