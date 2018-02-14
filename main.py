@@ -317,9 +317,9 @@ def handle_start(message):
         d = "0"
         j = 1
         di = {
-            "wm": None,
-            "totalPaid": None,
-            "totalHardCash": None
+            "wm": 0,
+            "totalPaid": 0,
+            "totalHardCash": 0
         }
         for x in response:
             try:
