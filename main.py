@@ -321,7 +321,7 @@ def handle_start(message):
 
         for x in response:
             try:
-                if di[x["wm"]] and x["totalPaid"] != di[x['wm']]["totalPaid"] and x["totalHardCash"] != di[x['wm']]["totalHardCash"]:
+                if di[x["wm"]] and x["totalPaid"] != di[x['wm']]["totalPaid"] or x["totalHardCash"] != di[x['wm']]["totalHardCash"]:
                     i = 0;
                     sheet1.write(j, i, str(x["wm"]))
                     i+=1
