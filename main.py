@@ -316,7 +316,11 @@ def handle_start(message):
         c = "0"
         d = "0"
         j = 1
-        di = {"wm": response[0]["wm"], "totalPaid": response[0]["totalPaid"], "totalHardCash": response[0]["totalHardCash"]}
+        di = {
+            "wm": None,
+            "totalPaid": None,
+            "totalHardCash": None
+        }
         for x in response:
             try:
                 if di[x["wm"]]:
@@ -346,6 +350,8 @@ def handle_start(message):
                 j+=1
                 d
                 di["wm"].updated(x["wm"])
+                di["totalPaid"].updated(x["totalPaid"])
+                di["totalHardCash"].updated(x["totalHardCash"])
 
 
 
