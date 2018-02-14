@@ -319,13 +319,13 @@ def handle_start(message):
         for x in response:
             if b != x["totalPaid"] and c != x["totalHardCash"]:
                 i = 0;
-                sheet1.write(j, i, str(a))
+                sheet1.write(j, i, str(x["wm"]))
                 i+=1
-                sheet1.write(j, i, str(b))
+                sheet1.write(j, i, str(x["totalPaid"]))
                 i+=1
-                sheet1.write(j, i, str(c))
+                sheet1.write(j, i, str(x["totalHardCash"]))
                 i+=1
-                sheet1.write(j, i, str(d))
+                sheet1.write(j, i, str(x["updated"]))
                 j+=1
             a = x["wm"]
             b = x["totalPaid"]
