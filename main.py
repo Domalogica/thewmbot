@@ -279,7 +279,6 @@ def handle_start(message):
         bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(main_menu_list))
 
 
-
 @bot.message_handler(regexp='За сутки')
 def handle_start(message):
     logging.info(message.text)
