@@ -316,7 +316,7 @@ def handle_start(message):
         c = "0"
         d = "0"
         j = 1
-        di = {"wm": response[0]["wm"], "totalPaid": [response[0]["totalPaid"], "totalHardCash": response[0]["totalHardCash"]]}
+        di = {"wm": response[0]["wm"], "totalPaid": response[0]["totalPaid"], "totalHardCash": response[0]["totalHardCash"]}
         for x in response:
             try:
                 if di[x["wm"]]:
