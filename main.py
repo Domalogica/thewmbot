@@ -336,8 +336,8 @@ def handle_start(message):
                         i+=1
                         sheet1.write(j, i, str(x["updated"]))
                         j+=1
-                        di["totalPaid"] = x["totalPaid"]
-                        di["totalHardCash"] = x["totalHardCash"]
+                        di["totalPaid"].update(x["totalPaid"])
+                        di["totalHardCash"].update(x["totalHardCash"])
             except KeyError:
                 i = 0;
                 sheet1.write(j, i, str(x["wm"]))
@@ -348,9 +348,9 @@ def handle_start(message):
                 i+=1
                 sheet1.write(j, i, str(x["updated"]))
                 j+=1
-                di["wm"] = x["wm"]
-                di["totalPaid"] = x["totalPaid"]
-                di["totalHardCash"] = x["totalHardCash"]
+                di["wm"].update(x["wm"])
+                di["totalPaid"].update(x["totalPaid"])
+                di["totalHardCash"].update(x["totalHardCash"])
 
 
 
