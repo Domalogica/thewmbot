@@ -316,9 +316,8 @@ def handle_start(message):
         c = "0"
         d = "0"
         j = 1
-        ID = x["wm"]
         for x in response:
-            if ID == x["wm"] and b != x["totalPaid"] and c != x["totalHardCash"]:
+            if b != x["totalPaid"] and c != x["totalHardCash"]:
                 i = 0;
                 sheet1.write(j, i, str(a))
                 i+=1
