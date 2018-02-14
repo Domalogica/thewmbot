@@ -321,21 +321,18 @@ def handle_start(message):
 
         for x in response:
             try:
-                if di[x["wm"]]:
-                    if x["totalPaid"] == di[x['wm']]["totalPaid"] and x["totalHardCash"] == di[x['wm']]["totalHardCash"]:
-                        pass
-                    else:
-                        i = 0;
-                        sheet1.write(j, i, str(x["wm"]))
-                        i+=1
-                        sheet1.write(j, i, str(x["totalPaid"]))
-                        i+=1
-                        sheet1.write(j, i, str(x["totalHardCash"]))
-                        i+=1
-                        sheet1.write(j, i, str(x["updated"]))
-                        j+=1
-                        di["wm"].update({"totalPaid": x["totalPaid"]})
-                        di["wm"].update({"totalHardCash": x["totalHardCash"]})
+                if di[x["wm"]] and x["totalPaid"] != di[x['wm']]["totalPaid"] and x["totalHardCash"] != di[x['wm']]["totalHardCash"]:
+                    i = 0;
+                    sheet1.write(j, i, str(x["wm"]))
+                    i+=1
+                    sheet1.write(j, i, str(x["totalPaid"]))
+                    i+=1
+                    sheet1.write(j, i, str(x["totalHardCash"]))
+                    i+=1
+                    sheet1.write(j, i, str(x["updated"]))
+                    j+=1
+                di["wm"].update({"totalPaid": x["totalPaid"]})
+                di["wm"].update({"totalHardCash": x["totalHardCash"]})
             except KeyError:
                 i = 0;
                 sheet1.write(j, i, str(x["wm"]))
