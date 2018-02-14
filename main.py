@@ -22,7 +22,6 @@ logging.info('Started')
 t = threading.Thread(target=server.run)
 t.start()
 
-
 token = "380396463:AAHy5oNoYG8-h9Rc465i9fVp1f81VWdxJXU"
 
 WEBHOOK_HOST = '194.67.217.180'
@@ -332,7 +331,7 @@ def handle_start(message):
             b = x["totalPaid"]
             c = x["totalHardCash"]
             d = x["updated"]
-            
+
     except Exception as e:
         print(e)
 
