@@ -332,6 +332,7 @@ def handle_start(message):
             b = x["totalPaid"]
             c = x["totalHardCash"]
             d = x["updated"]
+            
     except Exception as e:
         print(e)
 
