@@ -108,6 +108,7 @@ def generator_menu(menu_list, dop=None):
 
 @bot.message_handler(commands=['start'])
 def handle_start(message):
+    print("hello World")
     a = Method("addUser")
     AddUser = {
         "telegram": message.from_user.id,
