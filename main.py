@@ -316,11 +316,11 @@ def handle_start(message):
         c = "0"
         d = "0"
         j = 1
-        di = {response[0]["wm"]: [response[0]["totalPaid"], response[0]["totalHardCash"]]}
+        di = {"wm": response[0]["wm"], "totalPaid": [response[0]["totalPaid"], "totalHardCash": response[0]["totalHardCash"]]}
         for x in response:
             try:
                 if di[x["wm"]]:
-                    if x["totalPaid"] in di[x["wm"]] and x["totalHardCash"]:
+                    if x["totalPaid"] == di["totalPaid"] and x["totalHardCash"] == di["totalHardCash"]:
                         pass
                     else:
                         i = 0;
@@ -332,7 +332,8 @@ def handle_start(message):
                         i+=1
                         sheet1.write(j, i, str(x["updated"]))
                         j+=1
-                        di[x["wm"]].updated(x["totalPaid"], x["totalHardCash"])
+                        di["totalPaid"].updated(x["totalPaid"])
+                        di["totalHardCash"].updated(x["totalHardCash"])
             except KeyError:
                 i = 0;
                 sheet1.write(j, i, str(x["wm"]))
@@ -343,7 +344,8 @@ def handle_start(message):
                 i+=1
                 sheet1.write(j, i, str(x["updated"]))
                 j+=1
-                di.updated({[x["wm"]]: [x["totalPaid"], x["totalHardCash"]]})
+                d
+                di["wm"].updated(x["wm"])
 
 
 
