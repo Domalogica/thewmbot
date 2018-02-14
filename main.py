@@ -6,8 +6,8 @@ from settings import *
 import threading
 import server 
 from requests.exceptions import ConnectionError
-# import logging
-# import xlwt
+import logging
+import xlwt
 import os
 from datetime import datetime, timedelta
 
@@ -16,42 +16,42 @@ from datetime import datetime, timedelta
 def response(param):
     return param["status"]
 
-# logging.basicConfig(format = u'%(levelname)-8s [%(asctime)s] %(message)s', level = logging.DEBUG, filename = u'out.log')
+logging.basicConfig(format = u'%(levelname)-8s [%(asctime)s] %(message)s', level = logging.DEBUG, filename = u'out.log')
 
-# logging.info('Started')
-# t = threading.Thread(target=server.run)
-# t.start()
+logging.info('Started')
+t = threading.Thread(target=server.run)
+t.start()
 
 
-token = "321273335:AAEPNNqf3TFGmmekxF4pKzgDEO90Isl6d3k"
+# token = "321273335:AAEPNNqf3TFGmmekxF4pKzgDEO90Isl6d3k"
 
-WEBHOOK_HOST = '194.67.217.180'
-WEBHOOK_PORT = 8443  # 443, 80, 88 или 8443 (порт должен быть открыт!)
-WEBHOOK_LISTEN = '0.0.0.0'  # На некоторых серверах придется указывать такой же IP, что и выше
+# WEBHOOK_HOST = '194.67.217.180'
+# WEBHOOK_PORT = 8443  # 443, 80, 88 или 8443 (порт должен быть открыт!)
+# WEBHOOK_LISTEN = '0.0.0.0'  # На некоторых серверах придется указывать такой же IP, что и выше
 
-WEBHOOK_SSL_CERT = './webhook_cert.pem'  # Путь к сертификату
-WEBHOOK_SSL_PRIV = './webhook_pkey.pem'  # Путь к приватному ключу
+# WEBHOOK_SSL_CERT = './webhook_cert.pem'  # Путь к сертификату
+# WEBHOOK_SSL_PRIV = './webhook_pkey.pem'  # Путь к приватному ключу
 
-WEBHOOK_URL_BASE = "https://%s:%s" % (WEBHOOK_HOST, WEBHOOK_PORT)
-WEBHOOK_URL_PATH = "/%s/" % token
+# WEBHOOK_URL_BASE = "https://%s:%s" % (WEBHOOK_HOST, WEBHOOK_PORT)
+# WEBHOOK_URL_PATH = "/%s/" % token
 
 bot = telebot.TeleBot(token)
 
 # Наш вебхук-сервер
-class WebhookServer(object):
-    @cherrypy.expose
-    def index(self):
-        if 'content-length' in cherrypy.request.headers and \
-                        'content-type' in cherrypy.request.headers and \
-                        cherrypy.request.headers['content-type'] == 'application/json':
-            length = int(cherrypy.request.headers['content-length'])
-            json_string = cherrypy.request.body.read(length).decode("utf-8")
-            update = telebot.types.Update.de_json(json_string)
-            # Эта функция обеспечивает проверку входящего сообщения
-            bot.process_new_updates([update])
-            return ''
-        else:
-            raise cherrypy.HTTPError(403)
+# class WebhookServer(object):
+#     @cherrypy.expose
+#     def index(self):
+#         if 'content-length' in cherrypy.request.headers and \
+#                         'content-type' in cherrypy.request.headers and \
+#                         cherrypy.request.headers['content-type'] == 'application/json':
+#             length = int(cherrypy.request.headers['content-length'])
+#             json_string = cherrypy.request.body.read(length).decode("utf-8")
+#             update = telebot.types.Update.de_json(json_string)
+#             # Эта функция обеспечивает проверку входящего сообщения
+#             bot.process_new_updates([update])
+#             return ''
+#         else:
+#             raise cherrypy.HTTPError(403)
 
 class MethodGet:
     def __init__(self, method):
@@ -62,10 +62,10 @@ class MethodGet:
         try:
             print(self.request)
             response = requests.get('http://194.67.217.180:8484/get_state', json=self.request)
-            # logging.debug(response.text)
+            logging.debug(response.text)
         except ConnectionError as e:
-            # logging.error(self.request)
-            # logging.error(u'ConnectionError')
+            logging.error(self.request)
+            logging.error(u'ConnectionError')
             response = {'param': "Извините, произошла ошибка, мы работаем над её устранением. Пожалуйста, повторите попытку позже.", 'situation': False}
         else:
             response = json.loads(response.content.decode("utf-8"))
@@ -83,10 +83,10 @@ class Method:
     def transfer(self):
         try:
             response = requests.post('http://194.67.217.180:8484/bot/param', json=self.request)
-            # logging.debug(response.text)
+            logging.debug(response.text)
         except ConnectionError as e:
-            # logging.error(self.request)
-            # logging.error(u'ConnectionError')
+            logging.error(self.request)
+            logging.error(u'ConnectionError')
             response = {'param': "Извините, произошла ошибка, мы работаем над её устранением. Пожалуйста, повторите попытку позже.", 'situation': False}
         else:
             response = json.loads(response.content.decode("utf-8"))
@@ -120,7 +120,7 @@ def handle_start(message):
 
 @bot.message_handler(regexp='Ближайшие водоматы')
 def handle_start(message):
-    # logging.info(message.text)
+    logging.info(message.text)
     bot.send_message(message.chat.id, wada, reply_markup=generator_menu(back_menu_list))
     bot.send_message(message.chat.id, f, reply_markup=generator_menu(back_menu_list))
 
@@ -134,19 +134,19 @@ def handle_start(message):
     a.param(**Score)
     result = a.transfer()
     result = result["score"] / 400
-    # logging.info(message.text)
+    logging.info(message.text)
     bot.send_message(message.chat.id, str(result)[:5:] + " литров", reply_markup=generator_menu(main_menu_list))
 
 
 @bot.message_handler(regexp='Оставить отзыв')
 def handle_start(message):
-    # logging.info(message.text)
+    logging.info(message.text)
     sent = bot.send_message(message.chat.id, text_review, reply_markup=generator_menu(back_menu_list))
     bot.register_next_step_handler(sent, feedback)
 
 
 def feedback(message):
-    # logging.info(message.text)
+    logging.info(message.text)
     if message.text == "Назад":
         bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
     else:
@@ -163,7 +163,7 @@ def feedback(message):
 
 @bot.message_handler(regexp='Подключиться к водомату')
 def handle_start(message):
-    # logging.info(message.text)
+    logging.info(message.text)
     a = MethodGet("get_last_connection")
     get_last_connection = {
         "telegram": message.from_user.id
@@ -230,7 +230,7 @@ def startWM(message):
 
 @bot.message_handler(regexp='Остановить')
 def handle_start(message):
-    # logging.info(message.text)
+    logging.info(message.text)
     a = Method("stop")
     Stop = {
         "telegram": message.chat.id,
@@ -251,7 +251,7 @@ def handle_start(message):
 
 @bot.message_handler(regexp='Личный кабинет')
 def handle_start(message):
-    # logging.info(message.text)
+    logging.info(message.text)
     a = MethodGet("get_admins")
     result = a.transfer()
     print(result['param'])
@@ -263,13 +263,13 @@ def handle_start(message):
 
 @bot.message_handler(regexp='Назад')
 def handle_start(message):
-    # logging.info(message.text)
+    logging.info(message.text)
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(main_menu_list))
 
 
 @bot.message_handler(regexp='Админ панель')
 def handle_start(message):
-    # logging.info(message.text)
+    logging.info(message.text)
     a = MethodGet("get_admins")
     result = a.transfer()
     print(result['param'])
@@ -281,7 +281,7 @@ def handle_start(message):
 
 @bot.message_handler(regexp='За сутки')
 def handle_start(message):
-    # logging.info(message.text)
+    logging.info(message.text)
     #за сутки
     before = datetime.today() - timedelta(days=1)
     before = str(before)[:19]
@@ -332,7 +332,7 @@ def handle_start(message):
 
 @bot.message_handler(regexp='За неделю')
 def handle_start(message):
-    # logging.info(message.text)
+    logging.info(message.text)
 
 
     #за неделю
@@ -384,13 +384,13 @@ def handle_start(message):
 
 @bot.message_handler(regexp='^Статистика$')
 def handle_start(message):
-    # logging.info(message.text)
+    logging.info(message.text)
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(my_stat + back_menu_list))
 
 
 @bot.message_handler(regexp='Текущее состояние')
 def handle_start(message):
-    # logging.info(message.text)
+    logging.info(message.text)
     a = MethodGet("statistic")
     result = a.transfer()
     bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(back_menu_list))
@@ -398,7 +398,7 @@ def handle_start(message):
 
 @bot.message_handler(regexp='Активные водоматы')
 def handle_start(message):
-    # logging.info(message.text)
+    logging.info(message.text)
     a = MethodGet("connected_vodomats")
     result = a.transfer()
     bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(back_menu_list))
@@ -408,7 +408,7 @@ def handle_start(message):
 
 @bot.message_handler(regexp='Статистика по водоматам')
 def handle_start(message):
-    # logging.info(message.text)
+    logging.info(message.text)
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(stat_menu + back_menu_list))
 
 
@@ -428,7 +428,7 @@ def handle_start(message):
         "X": message.location.latitude,
         "Y": message.location.longitude
     }
-    # logging.info(message.text)
+    logging.info(message.text)
     a.param(**recommends)
     result = a.transfer()
     bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
@@ -436,19 +436,19 @@ def handle_start(message):
 
 @bot.message_handler(regexp='Количество продаж за сутки')
 def handle_start(message):
-    # logging.info(message.text)
+    logging.info(message.text)
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(stat + back_menu_list))
 
 
 @bot.message_handler(regexp='Количество продаж через бот')
 def handle_start(message):
-    # logging.info(message.text)
+    logging.info(message.text)
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(stat + back_menu_list))
 
 
 @bot.message_handler(regexp='Обратная связь')
 def handle_start(message):
-    # logging.info(message.text)
+    logging.info(message.text)
     keypad = generator_menu(feedback_menu)
     button = telebot.types.KeyboardButton(text='Рекомендовать место', request_location=True)
     keypad.add(button)
@@ -459,22 +459,27 @@ def handle_start(message):
 
 
 # Снимаем вебхук перед повторной установкой (избавляет от некоторых проблем)
-bot.remove_webhook()
+# bot.remove_webhook()
 
 # Ставим заново вебхук
-bot.set_webhook(url=WEBHOOK_URL_BASE + WEBHOOK_URL_PATH,
-                certificate=open(WEBHOOK_SSL_CERT, 'r'))
+# bot.set_webhook(url=WEBHOOK_URL_BASE + WEBHOOK_URL_PATH,
+#                 certificate=open(WEBHOOK_SSL_CERT, 'r'))
 
 # Указываем настройки сервера CherryPy
-cherrypy.config.update({
-    'server.socket_host': WEBHOOK_LISTEN,
-    'server.socket_port': WEBHOOK_PORT,
-    'server.ssl_module': 'builtin',
-    'server.ssl_certificate': WEBHOOK_SSL_CERT,
-    'server.ssl_private_key': WEBHOOK_SSL_PRIV
-})
+# cherrypy.config.update({
+#     'server.socket_host': WEBHOOK_LISTEN,
+#     'server.socket_port': WEBHOOK_PORT,
+#     'server.ssl_module': 'builtin',
+#     'server.ssl_certificate': WEBHOOK_SSL_CERT,
+#     'server.ssl_private_key': WEBHOOK_SSL_PRIV
+# })
 
 # Собственно, запуск!
-cherrypy.quickstart(WebhookServer(), WEBHOOK_URL_PATH, {'/': {}})
+# cherrypy.quickstart(WebhookServer(), WEBHOOK_URL_PATH, {'/': {}})
 
-# logging.info('Finished')
+
+
+logging.info('Finished')
+
+
+bot.polling(none_stop=True, interval = 0)
