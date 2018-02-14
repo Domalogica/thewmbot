@@ -316,8 +316,24 @@ def handle_start(message):
         c = "0"
         d = "0"
         j = 1
+        di = {response[0]["wm"]: [response[0]["totalPaid"], response[0]["totalHardCash"]]}
         for x in response:
-            if b != x["totalPaid"] and c != x["totalHardCash"]:
+            try:
+                if di[x["wm"]]:
+                    if x["totalPaid"] in di[x["wm"]] and x["totalHardCash"]:
+                        pass
+                    else:
+                        i = 0;
+                        sheet1.write(j, i, str(x["wm"]))
+                        i+=1
+                        sheet1.write(j, i, str(x["totalPaid"]))
+                        i+=1
+                        sheet1.write(j, i, str(x["totalHardCash"]))
+                        i+=1
+                        sheet1.write(j, i, str(x["updated"]))
+                        j+=1
+                        di[x["wm"]].updated(x["totalPaid"], x["totalHardCash"])
+            except KeyError:
                 i = 0;
                 sheet1.write(j, i, str(x["wm"]))
                 i+=1
@@ -327,10 +343,26 @@ def handle_start(message):
                 i+=1
                 sheet1.write(j, i, str(x["updated"]))
                 j+=1
-            a = x["wm"]
-            b = x["totalPaid"]
-            c = x["totalHardCash"]
-            d = x["updated"]
+                di.updated([x["wm"]]: [x["totalPaid"], x["totalHardCash"]])
+
+
+
+
+
+            # if b != x["totalPaid"] and c != x["totalHardCash"]:
+            #     i = 0;
+            #     sheet1.write(j, i, str(x["wm"]))
+            #     i+=1
+            #     sheet1.write(j, i, str(x["totalPaid"]))
+            #     i+=1
+            #     sheet1.write(j, i, str(x["totalHardCash"]))
+            #     i+=1
+            #     sheet1.write(j, i, str(x["updated"]))
+            #     j+=1
+            # a = x["wm"]
+            # b = x["totalPaid"]
+            # c = x["totalHardCash"]
+            # d = x["updated"]
     except Exception as e:
         print(e)
 
