@@ -316,6 +316,7 @@ def handle_start(message):
         c = "0"
         d = "0"
         j = 1
+        print(response)
         for x in response:
             if b != x["totalPaid"] and c != x["totalHardCash"]:
                 i = 0;
