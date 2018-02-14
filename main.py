@@ -345,6 +345,7 @@ def handle_start(message):
                 j+=1
                 di.update({x["wm"]: {"totalPaid": x["totalPaid"]}})
                 di.update({x["wm"]: {"totalHardCash": x["totalHardCash"]}})
+                print(di)
 
 
 
