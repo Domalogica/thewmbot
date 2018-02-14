@@ -459,7 +459,7 @@ def handle_start(message):
 
 
 # Снимаем вебхук перед повторной установкой (избавляет от некоторых проблем)
-# bot.remove_webhook()
+bot.remove_webhook()
 
 # Ставим заново вебхук
 # bot.set_webhook(url=WEBHOOK_URL_BASE + WEBHOOK_URL_PATH,
