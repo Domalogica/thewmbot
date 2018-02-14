@@ -313,26 +313,16 @@ def handle_start(message):
         sheet1.write(0, 2, "Наличка в водомате")
         sheet1.write(0, 3, "Дата/время")
         j = 1
-        a = "0"
-        b = "0"
-        c = "0"
-        d = "0"
         for x in response:
-            if b != x["totalPaid"] and c != x["totalHardCash"]:
-                i = 0;
-                sheet1.write(j, i, str(x["wm"]))
-                i+=1
-                sheet1.write(j, i, str(x["totalPaid"]))
-                i+=1
-                sheet1.write(j, i, str(x["totalHardCash"]))
-                i+=1
-                sheet1.write(j, i, str(x["updated"]))
-                j+=1
-            a = x["wm"]
-            b = x["totalPaid"]
-            c = x["totalHardCash"]
-            d = x["updated"]
-            
+            i = 0;
+            sheet1.write(j, i, str(x["wm"]))
+            i+=1
+            sheet1.write(j, i, str(x["totalPaid"]))
+            i+=1
+            sheet1.write(j, i, str(x["totalHardCash"]))
+            i+=1
+            sheet1.write(j, i, str(x["updated"]))
+            j+=1
     except Exception as e:
         print(e)
 
