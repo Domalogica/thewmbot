@@ -316,15 +316,13 @@ def handle_start(message):
         c = "0"
         d = "0"
         j = 1
-        di = {
-            "wm": 0,
-            "totalPaid": 0,
-            "totalHardCash": 0
-        }
+        
+        di = {}
+
         for x in response:
             try:
                 if di[x["wm"]]:
-                    if x["totalPaid"] == di["totalPaid"] and x["totalHardCash"] == di["totalHardCash"]:
+                    if x["totalPaid"] == di[x['wm']].["totalPaid"] and x["totalHardCash"] == di[x['wm']].["totalHardCash"]:
                         pass
                     else:
                         i = 0;
@@ -336,8 +334,7 @@ def handle_start(message):
                         i+=1
                         sheet1.write(j, i, str(x["updated"]))
                         j+=1
-                        di["totalPaid"].update(x["totalPaid"])
-                        di["totalHardCash"].update(x["totalHardCash"])
+                        di.update({x["wm"]: {"totalPaid":x["totalPaid"]}, {"totalHardCash": x["totalHardCash"]}})
             except KeyError:
                 i = 0;
                 sheet1.write(j, i, str(x["wm"]))
@@ -348,9 +345,7 @@ def handle_start(message):
                 i+=1
                 sheet1.write(j, i, str(x["updated"]))
                 j+=1
-                di["wm"].update(x["wm"])
-                di["totalPaid"].update(x["totalPaid"])
-                di["totalHardCash"].update(x["totalHardCash"])
+                di.update({x["wm"]: {"totalPaid":x["totalPaid"]}, {"totalHardCash": x["totalHardCash"]}})
 
 
 
