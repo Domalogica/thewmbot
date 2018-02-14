@@ -23,7 +23,7 @@ t = threading.Thread(target=server.run)
 t.start()
 
 
-# token = "321273335:AAEPNNqf3TFGmmekxF4pKzgDEO90Isl6d3k"
+token = "321273335:AAEPNNqf3TFGmmekxF4pKzgDEO90Isl6d3k"
 
 # WEBHOOK_HOST = '194.67.217.180'
 # WEBHOOK_PORT = 8443  # 443, 80, 88 или 8443 (порт должен быть открыт!)
