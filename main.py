@@ -322,7 +322,7 @@ def handle_start(message):
         for x in response:
             try:
                 if di[x["wm"]]:
-                    if x["totalPaid"] == di[x['wm']].["totalPaid"] and x["totalHardCash"] == di[x['wm']].["totalHardCash"]:
+                    if x["totalPaid"] == di[x['wm']]["totalPaid"] and x["totalHardCash"] == di[x['wm']]["totalHardCash"]:
                         pass
                     else:
                         i = 0;
