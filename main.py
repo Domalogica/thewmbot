@@ -410,21 +410,36 @@ def handle_start(message):
         c = "0"
         d = "0"
         j = 1
+        
+        di = {}
+
         for x in response:
-            if b != x["totalPaid"] and c != x["totalHardCash"]:
+            try:
+                if di[x["wm"]]:
+                    if x["totalPaid"] != di[x['wm']]["totalPaid"] or x["totalHardCash"] != di[x['wm']]["totalHardCash"]:
+                        i = 0;
+                        sheet1.write(j, i, str(x["wm"]))
+                        i+=1
+                        sheet1.write(j, i, str(x["totalPaid"]))
+                        i+=1
+                        sheet1.write(j, i, str(x["totalHardCash"]))
+                        i+=1
+                        sheet1.write(j, i, str(x["updated"][0]) + "." + str(x["updated"][1]) + "." + str(x["updated"][2]) + " " + str(x["updated"][3]) + ":" + str(x["updated"][4]))
+                        j+=1
+                        di[x['wm']].update({"totalPaid": x["totalPaid"], "totalHardCash": x["totalHardCash"]})
+            except KeyError:
                 i = 0;
-                sheet1.write(j, i, str(a))
+                sheet1.write(j, i, str(x["wm"]))
                 i+=1
-                sheet1.write(j, i, str(b))
+                sheet1.write(j, i, str(x["totalPaid"]))
                 i+=1
-                sheet1.write(j, i, str(c))
+                sheet1.write(j, i, str(x["totalHardCash"]))
                 i+=1
-                sheet1.write(j, i, str(d))
+                sheet1.write(j, i, str(x["updated"][0]) + "." + str(x["updated"][1]) + "." + str(x["updated"][2]) + " " + str(x["updated"][3]) + ":" + str(x["updated"][4]))
                 j+=1
-            a = x["wm"]
-            b = x["totalPaid"]
-            c = x["totalHardCash"]
-            d = x["updated"]
+                di.update({x["wm"]: {"totalPaid": x["totalPaid"], "totalHardCash": x["totalHardCash"]}})
+                print(di)
+
     except Exception as e:
         print(e)
 
