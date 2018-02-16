@@ -397,6 +397,9 @@ def handle_start(message):
       }
     }
 
+
+
+
     try:
         response = requests.get('http://194.67.217.180:8484/get_state', json=data)
         response = json.loads(response.content.decode("utf-8"))
@@ -414,6 +417,8 @@ def handle_start(message):
         di = {}
 
         for x in response:
+            print(x)
+            print('\n')
             try:
                 if di[x["wm"]]:
                     if x["totalPaid"] != di[x['wm']]["totalPaid"] or x["totalHardCash"] != di[x['wm']]["totalHardCash"]:
@@ -437,6 +442,12 @@ def handle_start(message):
                 i+=1
                 sheet1.write(j, i, str(x["updated"][0]) + "." + str(x["updated"][1]) + "." + str(x["updated"][2]) + " " + str(x["updated"][3]) + ":" + str(x["updated"][4]))
                 j+=1
+
+
+                sheet1 = book.add_sheet("Python Sheet 1") 
+                sheet1.write(0, 0, "Продажи")
+                sheet1.write(0, 1, "В кассе")
+                sheet1.write(0, 2, "Дата")
                 di.update({x["wm"]: {"totalPaid": x["totalPaid"], "totalHardCash": x["totalHardCash"]}})
                 print(di)
 
