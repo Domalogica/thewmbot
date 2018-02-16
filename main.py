@@ -118,7 +118,7 @@ def handle_start(message):
     bot.send_message(message.chat.id, text_welcome, reply_markup=generator_menu(main_menu_list))
 
 
-@bot.message_handler(regexp='Ближайшие водоматы')
+@bot.message_handler(regexp='Адреса водоматов')
 def handle_start(message):
     logging.info(message.text)
     bot.send_message(message.chat.id, wada, reply_markup=generator_menu(back_menu_list))
