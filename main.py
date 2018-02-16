@@ -320,6 +320,9 @@ def handle_start(message):
         di = {}
 
         for x in response:
+            
+            print(x)
+            print('\n')
             try:
                 if di[x["wm"]]:
                     if x["totalPaid"] != di[x['wm']]["totalPaid"] or x["totalHardCash"] != di[x['wm']]["totalHardCash"]:
@@ -344,7 +347,6 @@ def handle_start(message):
                 sheet1.write(j, i, str(x["updated"][0]) + "." + str(x["updated"][1]) + "." + str(x["updated"][2]) + " " + str(x["updated"][3]) + ":" + str(x["updated"][4]))
                 j+=1
                 di.update({x["wm"]: {"totalPaid": x["totalPaid"], "totalHardCash": x["totalHardCash"]}})
-                print(di)
 
 
 
@@ -417,8 +419,6 @@ def handle_start(message):
         di = {}
 
         for x in response:
-            print(x)
-            print('\n')
             try:
                 if di[x["wm"]]:
                     if x["totalPaid"] != di[x['wm']]["totalPaid"] or x["totalHardCash"] != di[x['wm']]["totalHardCash"]:
