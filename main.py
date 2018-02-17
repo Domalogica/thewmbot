@@ -321,7 +321,7 @@ def handle_start(message):
                     }
                     wmsession.update({session["wm"]: properties})
         except Exception as e:
-            sheet = book.add_sheet(str(wm))
+            sheet = book.add_sheet(wm)
             sheet.write(0, 0, "Продажи")
             sheet.write(0, 1, "Наличка в водомате")
             sheet.write(0, 2, "Дата/время")
@@ -332,7 +332,7 @@ def handle_start(message):
                 "totalHardCash": session["totalHardCash"],
                 "updated": session["updated"]
             }
-            wmsession.update({session["wm"]: properties})
+            wmsession.update({wm: properties})
 
     book.save("state.xls")
     path = os.curdir + "/state.xls"
