@@ -309,10 +309,9 @@ def handle_start(message):
         wm = session["wm"]
         print(type(wm))
         try:
-            if wmsession[wm]:
-                print('test int')
+            print('test try', wmsession[wm])
         except Exception as e:
-            print(e)
+            print(' except text ',e)
 
         try:
             if wmsession[wm]:
