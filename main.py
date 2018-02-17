@@ -310,6 +310,12 @@ def handle_start(message):
         print(type(wm))
         try:
             if wmsession[wm]:
+                print('test int')
+        except Exception as e:
+            print(e)
+
+        try:
+            if wmsession[wm]:
                 if wmsession[wm]["totalPaid"] != session["totalPaid"] or wmsession[wm]["totalHardCash"] != session["totalHardCash"]:
                     index = wmsession[wm]["index"]
                     sheet = wmsession[wm]["sheet"]
