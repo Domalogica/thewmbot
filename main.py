@@ -323,7 +323,8 @@ def handle_start(message):
                     }
                     wmsession.update({session["wm"]: properties})
         except Exception as e:
-            sheet = book.add_sheet(wm)
+            ID = "ID" + str(wm)
+            sheet = book.add_sheet(ID)
             sheet.write(0, 0, "Продажи")
             sheet.write(0, 1, "Наличка в водомате")
             sheet.write(0, 2, "Дата/время")
