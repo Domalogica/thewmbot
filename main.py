@@ -339,7 +339,6 @@ def handle_start(message):
                 "updated": str(session["updated"])
             }
             wmsession.update({wm: properties})
-
             print(wmsession)
 
     book.save("state.xls")
