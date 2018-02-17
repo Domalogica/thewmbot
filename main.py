@@ -322,7 +322,7 @@ def handle_start(message):
                         "totalHardCash": session["totalHardCash"],
                         "updated": str(session["updated"])
                     }
-                    wmsession.update({session["wm"]: properties})
+                    wmsession.update({wm: properties})
         except Exception as e:
             ID = "ID " + str(wm)
             sheet = book.add_sheet(ID)
