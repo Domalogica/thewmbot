@@ -327,9 +327,9 @@ def handle_start(message):
             sheet.write(0, 0, "Продажи")
             sheet.write(0, 1, "Наличка в водомате")
             sheet.write(0, 2, "Дата/время")
-            sheet.write(1, 0, str(wmsession[wm]["totalPaid"]))
-            sheet.write(1, 1, str(wmsession[wm]["totalHardCash"]))
-            sheet.write(1, 2, str(wmsession[wm]["updated"]))
+            sheet.write(1, 0, str(session["totalPaid"]))
+            sheet.write(1, 1, str(session["totalHardCash"]))
+            sheet.write(1, 2, str(session["updated"]))
             properties = {
                 "sheet": sheet,
                 "index": 1,
