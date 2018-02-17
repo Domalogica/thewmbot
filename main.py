@@ -310,16 +310,16 @@ def handle_start(message):
                 if wmsession[wm]["totalPaid"] != session["totalPaid"] or wmsession[wm]["totalHardCash"] != session["totalHardCash"]:
                     properties = {
                         "index": wmsession[wm]["index"] + 1,
-                        "totalPaid": session["totalPaid"],
-                        "totalHardCash": session["totalHardCash"],
+                        "totalPaid": str(session["totalPaid"]),
+                        "totalHardCash": str(session["totalHardCash"]),
                         "updated": str(session["updated"])
                     }
                     wmsession.update({wm: properties})
 
                     index = wmsession[wm]["index"]
                     sheet = wmsession[wm]["sheet"]
-                    sheet.write(index, 0, wmsession[wm]["totalPaid"])
-                    sheet.write(index, 1, wmsession[wm]["totalHardCash"])
+                    sheet.write(index, 0, str(wmsession[wm]["totalPaid"]))
+                    sheet.write(index, 1, str(wmsession[wm]["totalHardCash"]))
                     sheet.write(index, 2, str(wmsession[wm]["updated"]))
         except KeyError as e:
             ID = "ID " + str(wm)
@@ -327,14 +327,14 @@ def handle_start(message):
             sheet.write(0, 0, "Продажи")
             sheet.write(0, 1, "Наличка в водомате")
             sheet.write(0, 2, "Дата/время")
-            sheet.write(1, 0, wmsession[wm]["totalPaid"])
-            sheet.write(1, 1, wmsession[wm]["totalHardCash"])
+            sheet.write(1, 0, str(wmsession[wm]["totalPaid"]))
+            sheet.write(1, 1, str(wmsession[wm]["totalHardCash"]))
             sheet.write(1, 2, str(wmsession[wm]["updated"]))
             properties = {
                 "sheet": sheet,
                 "index": 1,
-                "totalPaid": session["totalPaid"],
-                "totalHardCash": session["totalHardCash"],
+                "totalPaid": str(session["totalPaid"]),
+                "totalHardCash": str(session["totalHardCash"]),
                 "updated": str(session["updated"])
             }
             wmsession.update({wm: properties})
