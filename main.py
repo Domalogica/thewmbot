@@ -294,7 +294,8 @@ def handle_start(message):
     sheet1 = book.add_sheet("Python Sheet 1") 
 
 
-
+    print(before)
+    print(now)
     data = {
       'method': 'get_state',
       'param':{
@@ -320,7 +321,7 @@ def handle_start(message):
         di = {}
 
         for x in response:
-            
+
             print(x)
             print('\n')
             try:
@@ -347,11 +348,7 @@ def handle_start(message):
                 sheet1.write(j, i, str(x["updated"][0]) + "." + str(x["updated"][1]) + "." + str(x["updated"][2]) + " " + str(x["updated"][3]) + ":" + str(x["updated"][4]))
                 j+=1
                 di.update({x["wm"]: {"totalPaid": x["totalPaid"], "totalHardCash": x["totalHardCash"]}})
-
-
-
-
-
+                
             # if b != x["totalPaid"] and c != x["totalHardCash"]:
             #     i = 0;
             #     sheet1.write(j, i, str(x["wm"]))
