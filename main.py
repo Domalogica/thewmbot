@@ -305,17 +305,12 @@ def handle_start(message):
 
     for session in response:
         wm = session["wm"]
-        print(wm)
-        print("__________")
         try:
             if wmsession[wm]:
                 print(wmsession)
                 if wmsession[wm]["totalPaid"] != session["totalPaid"] or wmsession[wm]["totalHardCash"] != session["totalHardCash"]:
                     index = wmsession[wm]["index"]
                     sheet = wmsession[wm]["sheet"]
-                    sheet.write(index, 0, session["totalPaid"])
-                    sheet.write(index, 1, session["totalHardCash"])
-                    sheet.write(index, 2, str(session["updated"]))
                     properties = {
                         "index": wmsession[wm]["index"] + 1,
                         "totalPaid": session["totalPaid"],
@@ -323,6 +318,9 @@ def handle_start(message):
                         "updated": str(session["updated"])
                     }
                     wmsession.update({wm: properties})
+                    sheet.write(index, 0, wmsession[wm]["totalPaid"])
+                    sheet.write(index, 1, wmsession[wm]["totalHardCash"])
+                    sheet.write(index, 2, str(wmsession[wm]["updated"]))
         except Exception as e:
             ID = "ID " + str(wm)
             sheet = book.add_sheet(ID)
