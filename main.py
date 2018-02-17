@@ -10,6 +10,7 @@ import logging
 import xlwt
 import os
 from datetime import datetime, timedelta
+import copy
 
 
 
@@ -323,7 +324,7 @@ def handle_start(message):
                     sheet.write(index, 2, str(wmsession[wm]["updated"]))
         except KeyError as e:
             ID = "ID " + str(wm)
-            sheet = book.add_sheet(ID)
+            sheet = copy.deepcopy(book.add_sheet(ID))
             sheet.write(0, 0, "Продажи")
             sheet.write(0, 1, "Наличка в водомате")
             sheet.write(0, 2, "Дата/время")
@@ -338,7 +339,7 @@ def handle_start(message):
                 "updated": str(session["updated"])
             }
             wmsession.update({wm: properties})
-            
+
             print(wmsession)
 
     book.save("state.xls")
