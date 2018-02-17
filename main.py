@@ -301,7 +301,6 @@ def handle_start(message):
 
     wmsession = {}
 
-
     book = xlwt.Workbook(encoding="utf-8")
 
     for session in response:
