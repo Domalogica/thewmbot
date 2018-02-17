@@ -287,13 +287,6 @@ def handle_start(message):
     before = str(before)[:19]
     now = str(datetime.today())[:19]
 
-    # Initialize a workbook 
-    book = xlwt.Workbook(encoding="utf-8")
-
-    # Add a sheet to the workbook 
-    sheet1 = book.add_sheet("Python Sheet 1") 
-
-
     print(before)
     print(now)
     data = {
@@ -304,67 +297,47 @@ def handle_start(message):
       }
     }
 
-    try:
-        response = requests.get('http://194.67.217.180:8484/get_state', json=data)
-        response = json.loads(response.content.decode("utf-8"))
-        # Write to the sheet of the workbook 
-        sheet1.write(0, 0, "Номер водомата")
-        sheet1.write(0, 1, "Продажи")
-        sheet1.write(0, 2, "Наличка в водомате")
-        sheet1.write(0, 3, "Дата/время")
-        a = "0"
-        b = "0"
-        c = "0"
-        d = "0"
-        j = 1
-        
-        di = {}
+    response = requests.get('http://194.67.217.180:8484/get_state', json=data)
+    response = json.loads(response.content.decode("utf-8"))
+    # Write to the sheet of the workbook 
 
-        for x in response:
+    wmsession = {}
 
-            print(x)
-            print('\n')
-            try:
-                if di[x["wm"]]:
-                    if x["totalPaid"] != di[x['wm']]["totalPaid"] or x["totalHardCash"] != di[x['wm']]["totalHardCash"]:
-                        i = 0;
-                        sheet1.write(j, i, str(x["wm"]))
-                        i+=1
-                        sheet1.write(j, i, str(x["totalPaid"]))
-                        i+=1
-                        sheet1.write(j, i, str(x["totalHardCash"]))
-                        i+=1
-                        sheet1.write(j, i, str(x["updated"][0]) + "." + str(x["updated"][1]) + "." + str(x["updated"][2]) + " " + str(x["updated"][3]) + ":" + str(x["updated"][4]))
-                        j+=1
-                        di[x['wm']].update({"totalPaid": x["totalPaid"], "totalHardCash": x["totalHardCash"]})
-            except KeyError:
-                i = 0;
-                sheet1.write(j, i, str(x["wm"]))
-                i+=1
-                sheet1.write(j, i, str(x["totalPaid"]))
-                i+=1
-                sheet1.write(j, i, str(x["totalHardCash"]))
-                i+=1
-                sheet1.write(j, i, str(x["updated"][0]) + "." + str(x["updated"][1]) + "." + str(x["updated"][2]) + " " + str(x["updated"][3]) + ":" + str(x["updated"][4]))
-                j+=1
-                di.update({x["wm"]: {"totalPaid": x["totalPaid"], "totalHardCash": x["totalHardCash"]}})
-                
-            # if b != x["totalPaid"] and c != x["totalHardCash"]:
-            #     i = 0;
-            #     sheet1.write(j, i, str(x["wm"]))
-            #     i+=1
-            #     sheet1.write(j, i, str(x["totalPaid"]))
-            #     i+=1
-            #     sheet1.write(j, i, str(x["totalHardCash"]))
-            #     i+=1
-            #     sheet1.write(j, i, str(x["updated"]))
-            #     j+=1
-            # a = x["wm"]
-            # b = x["totalPaid"]
-            # c = x["totalHardCash"]
-            # d = x["updated"]
-    except Exception as e:
-        print(e)
+
+    book = xlwt.Workbook(encoding="utf-8")
+
+
+    for session in response:
+        wm = session["wm"]
+        try:
+            if wmsession[wm]:
+                if wmsession["wm"]["totalPaid"] != session["totalPaid"] or wmsession["wm"]["totalHardCash"] != session["totalHardCash"]:
+                    index = wmsession["wm"]["index"]
+                    sheet = wmsession["wm"]["sheet"]
+                    sheet.write(index, 0, session["totalPaid"])
+                    sheet.write(index, 1, session["totalHardCash"])
+                    sheet.write(index, 2, session["updated"])
+                    properties = {
+                        "index": wmsession["wm"]["index"] + 1,
+                        "totalPaid": session["totalPaid"],
+                        "totalHardCash": session["totalHardCash"],
+                        "updated": session["updated"]
+                    }
+                    wmsession.update({session["wm"]: properties})
+            
+        except KeyError:
+            sheet = book.add_sheet(wm)
+            sheet.write(0, 0, "Продажи")
+            sheet.write(0, 1, "Наличка в водомате")
+            sheet.write(0, 2, "Дата/время")
+            properties = {
+                "sheet": sheet,
+                "index": 1,
+                "totalPaid": session["totalPaid"],
+                "totalHardCash": session["totalHardCash"],
+                "updated": session["updated"]
+            }
+            wmsession.update({session["wm"]: properties})
 
     book.save("state.xls")
     path = os.curdir + "/state.xls"
