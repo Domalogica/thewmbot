@@ -304,7 +304,6 @@ def handle_start(message):
 
     book = xlwt.Workbook(encoding="utf-8")
 
-
     for session in response:
         wm = session["wm"]
         try:
