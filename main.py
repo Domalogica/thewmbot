@@ -320,7 +320,7 @@ def handle_start(message):
                     sheet.write(index, 0, wmsession[wm]["totalPaid"])
                     sheet.write(index, 1, wmsession[wm]["totalHardCash"])
                     sheet.write(index, 2, str(wmsession[wm]["updated"]))
-        except Exception as e:
+        except KeyError as e:
             ID = "ID " + str(wm)
             sheet = book.add_sheet(ID)
             sheet.write(0, 0, "Продажи")
