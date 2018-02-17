@@ -306,6 +306,7 @@ def handle_start(message):
     for session in response:
         wm = session["wm"]
         try:
+            print(wmsession)
             if wmsession[wm]:
                 if wmsession[wm]["totalPaid"] != session["totalPaid"] or wmsession[wm]["totalHardCash"] != session["totalHardCash"]:
                     sheet = wmsession[wm]["sheet"]
