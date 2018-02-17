@@ -308,9 +308,22 @@ def handle_start(message):
     for session in response:
         wm = session["wm"]
 
+    
         try:
             if wmsession[wm]:
-                pass
+                if wmsession[wm]["totalPaid"] != session["totalPaid"] or wmsession[wm]["totalHardCash"] != session["totalHardCash"]:
+                    index = wmsession[wm]["index"]
+                    sheet = wmsession[wm]["sheet"]
+                    sheet.write(index, 0, session["totalPaid"])
+                    sheet.write(index, 1, session["totalHardCash"])
+                    sheet.write(index, 2, session["updated"])
+                    properties = {
+                        "index": wmsession[wm]["index"] + 1,
+                        "totalPaid": session["totalPaid"],
+                        "totalHardCash": session["totalHardCash"],
+                        "updated": session["updated"]
+                    }
+                    wmsession.update({session["wm"]: properties})
         except Exception as e:
             sheet = book.add_sheet(wm)
             sheet.write(0, 0, "Продажи")
