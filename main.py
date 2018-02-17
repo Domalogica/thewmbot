@@ -307,7 +307,8 @@ def handle_start(message):
         wm = session["wm"]
         try:
             if wmsession[wm]:
-                print(wmsession[wm]["sheet"])
+                index = wmsession[wm]["index"]
+                sheet = wmsession[wm]["sheet"]
                 if wmsession[wm]["totalPaid"] != session["totalPaid"] or wmsession[wm]["totalHardCash"] != session["totalHardCash"]:
                     properties = {
                         "index": wmsession[wm]["index"] + 1,
@@ -316,8 +317,6 @@ def handle_start(message):
                         "updated": str(session["updated"])
                     }
                     wmsession.update({wm: properties})
-                    index = wmsession[wm]["index"]
-                    sheet = wmsession[wm]["sheet"]
                     sheet.write(index, 0, wmsession[wm]["totalPaid"])
                     sheet.write(index, 1, wmsession[wm]["totalHardCash"])
                     sheet.write(index, 2, str(wmsession[wm]["updated"]))
