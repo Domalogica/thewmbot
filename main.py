@@ -314,7 +314,7 @@ def handle_start(message):
                     sheet = wmsession[wm]["sheet"]
                     sheet.write(index, 0, session["totalPaid"])
                     sheet.write(index, 1, session["totalHardCash"])
-                    sheet.write(index, 2, session["updated"])
+                    sheet.write(index, 2, str(session["updated"]))
                     properties = {
                         "index": wmsession[wm]["index"] + 1,
                         "totalPaid": session["totalPaid"],
