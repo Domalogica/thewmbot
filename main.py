@@ -324,7 +324,7 @@ def handle_start(message):
                     sheet.write(index, 2, str(wmsession[wm]["updated"]))
         except KeyError as e:
             ID = "ID " + str(wm)
-            sheet = copy.deepcopy(book.add_sheet(ID))
+            sheet = (book.add_sheet(ID)).copy()
             sheet.write(0, 0, "Продажи")
             sheet.write(0, 1, "Наличка в водомате")
             sheet.write(0, 2, "Дата/время")
