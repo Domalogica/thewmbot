@@ -306,11 +306,7 @@ def handle_start(message):
     for session in response:
         wm = session["wm"]
         try:
-            print(wmsession[wm])
-            print("_________")
             if wmsession[wm]:
-                print(wmsession[wm])
-                print("_________")
                 if wmsession[wm]["totalPaid"] != session["totalPaid"] or wmsession[wm]["totalHardCash"] != session["totalHardCash"]:
                     properties = {
                         "index": wmsession[wm]["index"] + 1,
