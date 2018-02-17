@@ -319,7 +319,7 @@ def handle_start(message):
                         "updated": str(session["updated"])
                     }
                     wmsession.update({wm: properties})
-                    
+
                     index = wmsession[wm]["index"]
                     sheet = wmsession[wm]["sheet"]
                     sheet.write(index, 0, wmsession[wm]["totalPaid"])
@@ -331,6 +331,9 @@ def handle_start(message):
             sheet.write(0, 0, "Продажи")
             sheet.write(0, 1, "Наличка в водомате")
             sheet.write(0, 2, "Дата/время")
+            sheet.write(1, 0, wmsession[wm]["totalPaid"])
+            sheet.write(1, 1, wmsession[wm]["totalHardCash"])
+            sheet.write(1, 2, str(wmsession[wm]["updated"]))
             properties = {
                 "sheet": sheet,
                 "index": 1,
@@ -339,9 +342,6 @@ def handle_start(message):
                 "updated": str(session["updated"])
             }
             wmsession.update({wm: properties})
-            sheet.write(1, 0, wmsession[wm]["totalPaid"])
-            sheet.write(1, 1, wmsession[wm]["totalHardCash"])
-            sheet.write(1, 2, str(wmsession[wm]["updated"]))
 
     book.save("state.xls")
     path = os.curdir + "/state.xls"
