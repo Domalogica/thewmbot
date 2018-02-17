@@ -306,6 +306,8 @@ def handle_start(message):
     for session in response:
         wm = session["wm"]
         try:
+            print(wmsession[wm])
+            print("_________")
             if wmsession[wm]:
                 print(wmsession[wm])
                 print("_________")
