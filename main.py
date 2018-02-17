@@ -307,11 +307,11 @@ def handle_start(message):
 
     for session in response:
         wm = session["wm"]
-        print(type(wm))
-        try:
-            print('test try', wmsession[wm])
-        except Exception as e:
-            print(' except text ',e)
+        # print(type(wm))
+        # try:
+        #     print('test try', wmsession[wm])
+        # except Exception as e:
+        #     print(' except text ',e)
 
         try:
             if wmsession[wm]:
@@ -328,7 +328,7 @@ def handle_start(message):
                         "updated": session["updated"]
                     }
                     wmsession.update({session["wm"]: properties})
-        except KeyError:
+        except Exception as e:
             sheet = book.add_sheet(wm)
             sheet.write(0, 0, "Продажи")
             sheet.write(0, 1, "Наличка в водомате")
