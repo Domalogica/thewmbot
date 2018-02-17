@@ -287,8 +287,6 @@ def handle_start(message):
     before = str(before)[:19]
     now = str(datetime.today())[:19]
 
-    print(before)
-    print(now)
     data = {
       'method': 'get_state',
       'param':{
@@ -301,7 +299,7 @@ def handle_start(message):
     response = json.loads(response.content.decode("utf-8"))
     # Write to the sheet of the workbook 
 
-    wmsession = {}
+    wmsession = {None}
 
 
     book = xlwt.Workbook(encoding="utf-8")
@@ -311,20 +309,19 @@ def handle_start(message):
         wm = session["wm"]
         try:
             if wmsession[wm]:
-                if wmsession["wm"]["totalPaid"] != session["totalPaid"] or wmsession["wm"]["totalHardCash"] != session["totalHardCash"]:
-                    index = wmsession["wm"]["index"]
-                    sheet = wmsession["wm"]["sheet"]
+                if wmsession[wm]["totalPaid"] != session["totalPaid"] or wmsession[wm]["totalHardCash"] != session["totalHardCash"]:
+                    index = wmsession[wm]["index"]
+                    sheet = wmsession[wm]["sheet"]
                     sheet.write(index, 0, session["totalPaid"])
                     sheet.write(index, 1, session["totalHardCash"])
                     sheet.write(index, 2, session["updated"])
                     properties = {
-                        "index": wmsession["wm"]["index"] + 1,
+                        "index": wmsession[wm]["index"] + 1,
                         "totalPaid": session["totalPaid"],
                         "totalHardCash": session["totalHardCash"],
                         "updated": session["updated"]
                     }
                     wmsession.update({session["wm"]: properties})
-            
         except KeyError:
             sheet = book.add_sheet(wm)
             sheet.write(0, 0, "Продажи")
