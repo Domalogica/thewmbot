@@ -319,11 +319,11 @@ def handle_start(message):
                         "index": wmsession[wm]["index"] + 1,
                         "totalPaid": session["totalPaid"],
                         "totalHardCash": session["totalHardCash"],
-                        "updated": session["updated"]
+                        "updated": str(session["updated"])
                     }
                     wmsession.update({session["wm"]: properties})
         except Exception as e:
-            ID = "ID" + str(wm)
+            ID = "ID " + str(wm)
             sheet = book.add_sheet(ID)
             sheet.write(0, 0, "Продажи")
             sheet.write(0, 1, "Наличка в водомате")
@@ -333,7 +333,7 @@ def handle_start(message):
                 "index": 1,
                 "totalPaid": session["totalPaid"],
                 "totalHardCash": session["totalHardCash"],
-                "updated": session["updated"]
+                "updated": str(session["updated"])
             }
             wmsession.update({wm: properties})
 
