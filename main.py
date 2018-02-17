@@ -305,6 +305,8 @@ def handle_start(message):
 
     for session in response:
         wm = session["wm"]
+        print(wm)
+        print("__________")
         try:
             if wmsession[wm]:
                 if wmsession[wm]["totalPaid"] != session["totalPaid"] or wmsession[wm]["totalHardCash"] != session["totalHardCash"]:
@@ -321,7 +323,7 @@ def handle_start(message):
                     }
                     wmsession.update({session["wm"]: properties})
         except Exception as e:
-            sheet = book.add_sheet("Python")
+            sheet = book.add_sheet(wm)
             sheet.write(0, 0, "Продажи")
             sheet.write(0, 1, "Наличка в водомате")
             sheet.write(0, 2, "Дата/время")
