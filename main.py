@@ -301,9 +301,7 @@ def handle_start(message):
 
     wmsession = {}
 
-
     book = xlwt.Workbook(encoding="utf-8")
-
 
     for session in response:
         wm = session["wm"]
@@ -323,7 +321,7 @@ def handle_start(message):
                     }
                     wmsession.update({session["wm"]: properties})
         except Exception as e:
-            sheet = book.add_sheet(wm)
+            sheet = book.add_sheet(str(wm))
             sheet.write(0, 0, "Продажи")
             sheet.write(0, 1, "Наличка в водомате")
             sheet.write(0, 2, "Дата/время")
