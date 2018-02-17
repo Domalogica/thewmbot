@@ -299,7 +299,7 @@ def handle_start(message):
     response = json.loads(response.content.decode("utf-8"))
     # Write to the sheet of the workbook 
 
-    wmsession = {None}
+    wmsession = {}
 
 
     book = xlwt.Workbook(encoding="utf-8")
