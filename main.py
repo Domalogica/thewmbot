@@ -304,7 +304,6 @@ def handle_start(message):
     sheet = []
     for session in response:
         wm = session["wm"]
-        print(wm)
         try:
             if wmsession[wm]:
                 if wmsession[wm]["totalPaid"] != session["totalPaid"] or wmsession[wm]["totalHardCash"] != session["totalHardCash"]:
@@ -322,6 +321,7 @@ def handle_start(message):
                     wmsession[wm]["sheet"].write(index, 1, str(wmsession[wm]["totalHardCash"]))
                     wmsession[wm]["sheet"].write(index, 2, str(wmsession[wm]["updated"]))
         except KeyError as e:
+            print(wm)
             ID = "ID " + str(wm)
 
             book = xlwt.Workbook(encoding="utf-8")
