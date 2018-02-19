@@ -314,7 +314,6 @@ def handle_start(message):
                         "updated": str(session["updated"])
                     }
                     wmsession.update({wm: properties})
-                    print(wmsession[321][index])
 
                     wmsession[wm]["sheet"].write(index, 0, str(wmsession[wm]["totalPaid"]))
                     wmsession[wm]["sheet"].write(index, 1, str(wmsession[wm]["totalHardCash"]))
