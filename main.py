@@ -301,7 +301,6 @@ def handle_start(message):
     # Write to the sheet of the workbook 
 
     wmsession = {}
-    book = xlwt.Workbook(encoding="utf-8")
     sheet = []
     for session in response:
         wm = session["wm"]
@@ -323,7 +322,8 @@ def handle_start(message):
                     wmsession[wm]["sheet"].write(index, 2, str(wmsession[wm]["updated"]))
         except KeyError as e:
             ID = "ID " + str(wm)
-
+            
+            book = xlwt.Workbook(encoding="utf-8")
             properties = {
                 "sheet": book.add_sheet(ID),
                 "index": 1,
