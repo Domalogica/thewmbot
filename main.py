@@ -324,12 +324,12 @@ def handle_start(message):
         except KeyError as e:
             ID = "ID " + str(wm)
             sheet.append(book.add_sheet(ID))
-            sheet.write(0, 0, "Продажи")
-            sheet.write(0, 1, "Наличка в водомате")
-            sheet.write(0, 2, "Дата/время")
-            sheet.write(1, 0, str(session["totalPaid"]))
-            sheet.write(1, 1, str(session["totalHardCash"]))
-            sheet.write(1, 2, str(session["updated"]))
+            sheet[-1].write(0, 0, "Продажи")
+            sheet[-1].write(0, 1, "Наличка в водомате")
+            sheet[-1].write(0, 2, "Дата/время")
+            sheet[-1].write(1, 0, str(session["totalPaid"]))
+            sheet[-1].write(1, 1, str(session["totalHardCash"]))
+            sheet[-1].write(1, 2, str(session["updated"]))
             properties = {
                 "sheet": sheet[-1],
                 "index": 1,
