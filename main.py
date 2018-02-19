@@ -316,9 +316,9 @@ def handle_start(message):
                     }
                     wmsession.update({wm: properties})
 
-                    wmsession[wm]["sheet"].write(index, 0, str(wmsession[wm]["totalPaid"]))
-                    wmsession[wm]["sheet"].write(index, 1, str(wmsession[wm]["totalHardCash"]))
-                    wmsession[wm]["sheet"].write(index, 2, str(wmsession[wm]["updated"]))
+                    # wmsession[wm]["sheet"].write(index, 0, str(wmsession[wm]["totalPaid"]))
+                    # wmsession[wm]["sheet"].write(index, 1, str(wmsession[wm]["totalHardCash"]))
+                    # wmsession[wm]["sheet"].write(index, 2, str(wmsession[wm]["updated"]))
 
         except KeyError as e:
             ID = "ID " + str(wm)
@@ -339,7 +339,7 @@ def handle_start(message):
             wmsession[wm]["sheet"].write(1, 1, str(wmsession[wm]["totalHardCash"]))
             wmsession[wm]["sheet"].write(1, 2, str(wmsession[wm]["updated"]))
             
-
+    print(wmsession)
     book.save("state.xls")
     path = os.curdir + "/state.xls"
     bot.send_document(message.chat.id, open(path, 'rb'), reply_markup=generator_menu(back_menu_list))
