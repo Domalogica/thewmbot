@@ -341,6 +341,7 @@ def handle_start(message):
             print(wmsession[wm]["index"])
             try:
                 print(wmsession[wm])
+                print(wmsession)
                 wmsession[wm]["sheet"].write(wmsession[wm]["index"], 0, str(wmsession[wm]["totalPaid"]))
                 # wmsession[wm]["sheet"].write(wmsession[wm]["index"], 1, str(wmsession[wm]["totalHardCash"]))
                 # wmsession[wm]["sheet"].write(wmsession[wm]["index"], 2, str(wmsession[wm]["updated"]))
