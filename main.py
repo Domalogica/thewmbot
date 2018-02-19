@@ -323,22 +323,24 @@ def handle_start(message):
                     sheet.write(index, 2, str(wmsession[wm]["updated"]))
         except KeyError as e:
             ID = "ID " + str(wm)
-            fe = book.add_sheet(ID)
-            sheet.append(fe)
-            sheet[-1].write(0, 0, "Продажи")
-            sheet[-1].write(0, 1, "Наличка в водомате")
-            sheet[-1].write(0, 2, "Дата/время")
-            sheet[-1].write(1, 0, str(session["totalPaid"]))
-            sheet[-1].write(1, 1, str(session["totalHardCash"]))
-            sheet[-1].write(1, 2, str(session["updated"]))
+
             properties = {
-                "sheet": sheet[-1],
+                "sheet": book.add_sheet(ID),
                 "index": 1,
                 "totalPaid": str(session["totalPaid"]),
                 "totalHardCash": str(session["totalHardCash"]),
                 "updated": str(session["updated"])
             }
             wmsession.update({wm: properties})
+
+
+            sheet.write(0, 0, "Продажи")
+            sheet.write(0, 1, "Наличка в водомате")
+            sheet.write(0, 2, "Дата/время")
+            sheet.write(1, 0, str(wmsession[wm]["totalPaid"]))
+            sheet.write(1, 1, str(wmsession[wm]["totalHardCash"]))
+            sheet.write(1, 2, str(wmsession[wm]["updated"]))
+            
 
     book.save("state.xls")
     path = os.curdir + "/state.xls"
