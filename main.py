@@ -318,9 +318,9 @@ def handle_start(message):
                     wmsession.update({wm: properties})
 
                     index = wmsession[wm]["index"]
-                    sheet.write(index, 0, str(wmsession[wm]["totalPaid"]))
-                    sheet.write(index, 1, str(wmsession[wm]["totalHardCash"]))
-                    sheet.write(index, 2, str(wmsession[wm]["updated"]))
+                    wmsession[wm]["sheet"].write(index, 0, str(wmsession[wm]["totalPaid"]))
+                    wmsession[wm]["sheet"].write(index, 1, str(wmsession[wm]["totalHardCash"]))
+                    wmsession[wm]["sheet"].write(index, 2, str(wmsession[wm]["updated"]))
         except KeyError as e:
             ID = "ID " + str(wm)
 
@@ -334,12 +334,12 @@ def handle_start(message):
             wmsession.update({wm: properties})
 
 
-            sheet.write(0, 0, "Продажи")
-            sheet.write(0, 1, "Наличка в водомате")
-            sheet.write(0, 2, "Дата/время")
-            sheet.write(1, 0, str(wmsession[wm]["totalPaid"]))
-            sheet.write(1, 1, str(wmsession[wm]["totalHardCash"]))
-            sheet.write(1, 2, str(wmsession[wm]["updated"]))
+            wmsession[wm]["sheet"].write(0, 0, "Продажи")
+            wmsession[wm]["sheet"].write(0, 1, "Наличка в водомате")
+            wmsession[wm]["sheet"].write(0, 2, "Дата/время")
+            wmsession[wm]["sheet"].write(1, 0, str(wmsession[wm]["totalPaid"]))
+            wmsession[wm]["sheet"].write(1, 1, str(wmsession[wm]["totalHardCash"]))
+            wmsession[wm]["sheet"].write(1, 2, str(wmsession[wm]["updated"]))
             
 
     book.save("state.xls")
