@@ -298,7 +298,6 @@ def handle_start(message):
 
     response = requests.get('http://194.67.217.180:8484/get_state', json=data)
     response = json.loads(response.content.decode("utf-8"))
-    # Write to the sheet of the workbook 
 
     wmsession = {}
     sheet = []
