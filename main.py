@@ -323,14 +323,16 @@ def handle_start(message):
         except KeyError as e:
             ID = "ID " + str(wm)
 
+            book = xlwt.Workbook(encoding="utf-8")
             properties = {
-                "sheet": xlwt.Workbook(encoding="utf-8").add_sheet(ID),
+                "sheet": book.add_sheet(ID),
                 "index": 1,
                 "totalPaid": str(session["totalPaid"]),
                 "totalHardCash": str(session["totalHardCash"]),
                 "updated": str(session["updated"])
             }
             wmsession.update({wm: properties})
+            book.save("state.xls")
 
 
             wmsession[wm]["sheet"].write(0, 0, "Продажи")
@@ -341,7 +343,6 @@ def handle_start(message):
             wmsession[wm]["sheet"].write(1, 2, str(wmsession[wm]["updated"]))
             
 
-    book.save("state.xls")
     path = os.curdir + "/state.xls"
     bot.send_document(message.chat.id, open(path, 'rb'), reply_markup=generator_menu(back_menu_list))
 
