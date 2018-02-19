@@ -298,7 +298,8 @@ def handle_start(message):
 
     response = requests.get('http://194.67.217.180:8484/get_state', json=data)
     response = json.loads(response.content.decode("utf-8"))
-
+    
+    book = xlwt.Workbook(encoding="utf-8")
     wmsession = {}
     sheet = []
     for session in response:
@@ -315,7 +316,7 @@ def handle_start(message):
                     }
                     wmsession.update({wm: properties})
                     
-                    
+
                     # wmsession[wm]["sheet"].write(index, 0, str(wmsession[wm]["totalPaid"]))
                     # wmsession[wm]["sheet"].write(index, 1, str(wmsession[wm]["totalHardCash"]))
                     # wmsession[wm]["sheet"].write(index, 2, str(wmsession[wm]["updated"]))
@@ -323,8 +324,6 @@ def handle_start(message):
 
         except KeyError as e:
             ID = "ID " + str(wm)
-
-            book = xlwt.Workbook(encoding="utf-8")
             properties = {
                 "sheet": book.add_sheet(ID),
                 "index": 1,
