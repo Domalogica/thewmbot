@@ -332,7 +332,7 @@ def handle_start(message):
             }
             wmsession.update({wm: properties})
 
-            print(wmsession)
+            print(wmsession[wm]['sheet'])
             wmsession[wm]["sheet"].write(0, 0, "Продажи")
             wmsession[wm]["sheet"].write(0, 1, "Наличка в водомате")
             wmsession[wm]["sheet"].write(0, 2, "Дата/время")
