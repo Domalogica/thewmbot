@@ -318,7 +318,7 @@ def handle_start(message):
                         "updated": str(session["updated"])
                     }
                     wmsession.update({wm: properties})
-                    print(index)
+                    print(wmsession[wm]["sheet"])
         except KeyError as e:
             ID = "ID " + str(wm)
 
