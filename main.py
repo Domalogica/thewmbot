@@ -304,8 +304,23 @@ def handle_start(message):
     for session in response:
         wm = session["wm"]
         try:
-            items = wmsession[wm]
-        except:
+            if wmsession[wm]:
+                if wmsession[wm]["totalPaid"] != session["totalPaid"] or wmsession[wm]["totalHardCash"] != session["totalHardCash"]:
+                    index = wmsession[wm]["index"] + 1
+                    properties = {
+                        "index": index,
+                        "totalPaid": str(session["totalPaid"]),
+                        "totalHardCash": str(session["totalHardCash"]),
+                        "updated": str(session["updated"])
+                    }
+                    wmsession.update({wm: properties})
+                    print(wmsession)
+
+                    wmsession[wm]["sheet"].write(index, 0, str(wmsession[wm]["totalPaid"]))
+                    wmsession[wm]["sheet"].write(index, 1, str(wmsession[wm]["totalHardCash"]))
+                    wmsession[wm]["sheet"].write(index, 2, str(wmsession[wm]["updated"]))
+
+        except KeyError as e:
             ID = "ID " + str(wm)
 
             book = xlwt.Workbook(encoding="utf-8")
@@ -325,49 +340,6 @@ def handle_start(message):
             wmsession[wm]["sheet"].write(1, 0, str(wmsession[wm]["totalPaid"]))
             wmsession[wm]["sheet"].write(1, 1, str(wmsession[wm]["totalHardCash"]))
             wmsession[wm]["sheet"].write(1, 2, str(wmsession[wm]["updated"]))
-
-
-        
-        
-        if wmsession[wm]["totalPaid"] != session["totalPaid"] or wmsession[wm]["totalHardCash"] != session["totalHardCash"]:
-            index = wmsession[wm]["index"] + 1
-            properties = {
-                "index": index,
-                "totalPaid": str(session["totalPaid"]),
-                "totalHardCash": str(session["totalHardCash"]),
-                "updated": str(session["updated"])
-            }
-            wmsession.update({wm: properties})
-            print(wmsession[wm]["index"])
-            try:
-                print(wmsession[wm])
-                print(wmsession)
-                wmsession[wm]["sheet"].write(wmsession[wm]["index"], 0, str(wmsession[wm]["totalPaid"]))
-                # wmsession[wm]["sheet"].write(wmsession[wm]["index"], 1, str(wmsession[wm]["totalHardCash"]))
-                # wmsession[wm]["sheet"].write(wmsession[wm]["index"], 2, str(wmsession[wm]["updated"]))
-            except KeyError:
-                print('aaaaaaaaaaaaaaaaaa')
-
-        # except KeyError as e:
-        #     ID = "ID " + str(wm)
-
-        #     book = xlwt.Workbook(encoding="utf-8")
-        #     properties = {
-        #         "sheet": book.add_sheet(ID),
-        #         "index": 1,
-        #         "totalPaid": str(session["totalPaid"]),
-        #         "totalHardCash": str(session["totalHardCash"]),
-        #         "updated": str(session["updated"])
-        #     }
-        #     wmsession.update({wm: properties})
-
-
-        #     wmsession[wm]["sheet"].write(0, 0, "Продажи")
-        #     wmsession[wm]["sheet"].write(0, 1, "Наличка в водомате")
-        #     wmsession[wm]["sheet"].write(0, 2, "Дата/время")
-        #     wmsession[wm]["sheet"].write(1, 0, str(wmsession[wm]["totalPaid"]))
-        #     wmsession[wm]["sheet"].write(1, 1, str(wmsession[wm]["totalHardCash"]))
-        #     wmsession[wm]["sheet"].write(1, 2, str(wmsession[wm]["updated"]))
             
 
     book.save("state.xls")
