@@ -316,7 +316,7 @@ def handle_start(message):
                         "updated": str(session["updated"])
                     }
                     wmsession.update({wm: properties})
-                    print(wmsession[wm]["index"])
+
 
                     wmsession[wm]["sheet"].write(index, 0, str(wmsession[wm]["totalPaid"]))
                     wmsession[wm]["sheet"].write(index, 1, str(wmsession[wm]["totalHardCash"]))
@@ -333,6 +333,7 @@ def handle_start(message):
                 "updated": str(session["updated"])
             }
             wmsession.update({wm: properties})
+            print(wmsession[wm]["index"])
 
 
             wmsession[wm]["sheet"].write(0, 0, "Продажи")
