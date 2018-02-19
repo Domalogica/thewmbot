@@ -316,11 +316,10 @@ def handle_start(message):
                         "updated": str(session["updated"])
                     }
                     wmsession.update({wm: properties})
-                    
+                    print(wmsession[wm])
                     wmsession[wm]["sheet"].write(index, 0, str(wmsession[wm]["totalPaid"]))
                     wmsession[wm]["sheet"].write(index, 1, str(wmsession[wm]["totalHardCash"]))
                     wmsession[wm]["sheet"].write(index, 2, str(wmsession[wm]["updated"]))
-                    print(wmsession[wm])
         except KeyError as e:
             ID = "ID " + str(wm)
 
