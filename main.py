@@ -301,9 +301,8 @@ def handle_start(message):
     # Write to the sheet of the workbook 
 
     wmsession = {}
-    sheet = {}
     book = xlwt.Workbook(encoding="utf-8")
-
+    sheet = []
     for session in response:
         wm = session["wm"]
         try:
@@ -324,22 +323,21 @@ def handle_start(message):
                     sheet.write(index, 2, str(wmsession[wm]["updated"]))
         except KeyError as e:
             ID = "ID " + str(wm)
-            sheet.update({wm: book.add_sheet(ID)})
-            sheet[wm].write(0, 0, "Продажи")
-            sheet[wm].write(0, 1, "Наличка в водомате")
-            sheet[wm].write(0, 2, "Дата/время")
-            sheet[wm].write(1, 0, str(session["totalPaid"]))
-            sheet[wm].write(1, 1, str(session["totalHardCash"]))
-            sheet[wm].write(1, 2, str(session["updated"]))
+            sheet.append(book.add_sheet(ID))
+            sheet.write(0, 0, "Продажи")
+            sheet.write(0, 1, "Наличка в водомате")
+            sheet.write(0, 2, "Дата/время")
+            sheet.write(1, 0, str(session["totalPaid"]))
+            sheet.write(1, 1, str(session["totalHardCash"]))
+            sheet.write(1, 2, str(session["updated"]))
             properties = {
-                "sheet": sheet,
+                "sheet": sheet[-1],
                 "index": 1,
                 "totalPaid": str(session["totalPaid"]),
                 "totalHardCash": str(session["totalHardCash"]),
                 "updated": str(session["updated"])
             }
             wmsession.update({wm: properties})
-            print(wmsession)
 
     book.save("state.xls")
     path = os.curdir + "/state.xls"
