@@ -307,7 +307,7 @@ def handle_start(message):
         try:
             if wmsession[wm]:
                 if wmsession[wm]["totalPaid"] != session["totalPaid"] or wmsession[wm]["totalHardCash"] != session["totalHardCash"]:
-                    sheet = wmsession[wm]["sheet"]
+                    print(wm)
                     properties = {
                         "index": wmsession[wm]["index"] + 1,
                         "totalPaid": str(session["totalPaid"]),
@@ -321,7 +321,6 @@ def handle_start(message):
                     wmsession[wm]["sheet"].write(index, 1, str(wmsession[wm]["totalHardCash"]))
                     wmsession[wm]["sheet"].write(index, 2, str(wmsession[wm]["updated"]))
         except KeyError as e:
-            print(wm)
             ID = "ID " + str(wm)
 
             book = xlwt.Workbook(encoding="utf-8")
