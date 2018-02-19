@@ -307,7 +307,6 @@ def handle_start(message):
             if wmsession[wm]:
                 if wmsession[wm]["totalPaid"] != session["totalPaid"] or wmsession[wm]["totalHardCash"] != session["totalHardCash"]:
                     index = wmsession[wm]["index"] + 1
-                    sheet = wmsession[wm]["sheet"]
                     properties = {
                         "index": index,
                         "totalPaid": str(session["totalPaid"]),
@@ -315,11 +314,11 @@ def handle_start(message):
                         "updated": str(session["updated"])
                     }
                     wmsession.update({wm: properties})
-                    print(wmsession)
+                    print(wmsession[321][index])
 
-                    sheet.write(index, 0, str(session["totalPaid"]))
-                    sheet.write(index, 1, str(session["totalHardCash"]))
-                    sheet.write(index, 2, str(session["updated"]))
+                    wmsession[wm]["sheet"].write(index, 0, str(wmsession[wm]["totalPaid"]))
+                    wmsession[wm]["sheet"].write(index, 1, str(wmsession[wm]["totalHardCash"]))
+                    wmsession[wm]["sheet"].write(index, 2, str(wmsession[wm]["updated"]))
 
         except KeyError as e:
             ID = "ID " + str(wm)
