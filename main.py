@@ -313,11 +313,11 @@ def handle_start(message):
                         "totalHardCash": str(session["totalHardCash"]),
                         "updated": str(session["updated"])
                     }
-                    wmsession.update({wm: properties})
+                    wmsession[wm].update(properties)
 
-                    # wmsession[wm]["sheet"].write(index, 0, str(wmsession[wm]["totalPaid"]))
-                    # wmsession[wm]["sheet"].write(index, 1, str(wmsession[wm]["totalHardCash"]))
-                    # wmsession[wm]["sheet"].write(index, 2, str(wmsession[wm]["updated"]))
+                    wmsession[wm]["sheet"].write(index, 0, str(wmsession[wm]["totalPaid"]))
+                    wmsession[wm]["sheet"].write(index, 1, str(wmsession[wm]["totalHardCash"]))
+                    wmsession[wm]["sheet"].write(index, 2, str(wmsession[wm]["updated"]))
         except Exception as e:
             ID = "ID " + str(wm)
             properties = {
