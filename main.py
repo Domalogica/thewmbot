@@ -316,7 +316,7 @@ def handle_start(message):
                     wmsession[wm].update(properties)
                     wmsession[wm]["sheet"].write(index, 0, str(session["totalPaid"]))
                     wmsession[wm]["sheet"].write(index, 1, str(session["totalHardCash"]))
-                    wmsession[wm]["sheet"].write(index, 2, str(session["updated"]))
+                    wmsession[wm]["sheet"].write(index, 2, str(session["updated"][0]) + "." + str(session["updated"][1]) + "." + str(session["updated"][2]) + " " + str(session["updated"][3]) + ":" + str(session["updated"][4]))
         except Exception as e:
             ID = "ID " + str(wm)
             properties = {
@@ -332,7 +332,7 @@ def handle_start(message):
             wmsession[wm]["sheet"].write(0, 2, "Дата/время")
             wmsession[wm]["sheet"].write(1, 0, str(wmsession[wm]["totalPaid"]))
             wmsession[wm]["sheet"].write(1, 1, str(wmsession[wm]["totalHardCash"]))
-            wmsession[wm]["sheet"].write(1, 2, str(wmsession[wm]["updated"]))
+            wmsession[wm]["sheet"].write(1, 2, str(wmsession[wm]["updated"][0]) + "." + str(wmsession[wm]["updated"][1]) + "." + str(wmsession[wm]["updated"][2]) + " " + str(wmsession[wm]["updated"][3]) + ":" + str(session["updated"][4]))
             
     print(wmsession)
     book.save("state.xls")
