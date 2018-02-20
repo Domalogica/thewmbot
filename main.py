@@ -301,7 +301,6 @@ def handle_start(message):
 
     book = xlwt.Workbook(encoding="utf-8")
     wmsession = {}
-    sheet = []
     for session in response:
         wm = session['wm']
         if wmsession[wm]:
