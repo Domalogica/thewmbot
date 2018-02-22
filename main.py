@@ -26,7 +26,7 @@ t.start()
 
 token = "321273335:AAEPNNqf3TFGmmekxF4pKzgDEO90Isl6d3k"
 
-WEBHOOK_HOST = '194.67.217.180'
+WEBHOOK_HOST = '5.101.179.191'
 WEBHOOK_PORT = 8443  # 443, 80, 88 или 8443 (порт должен быть открыт!)
 WEBHOOK_LISTEN = '0.0.0.0'  # На некоторых серверах придется указывать такой же IP, что и выше
 
