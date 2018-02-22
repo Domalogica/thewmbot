@@ -194,6 +194,7 @@ def startWM(message):
         }
         a.param(**Start)
         result = a.transfer()
+        print(result)
         if result["situation"]:
             a = Method("score")
             Score = {
