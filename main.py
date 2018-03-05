@@ -4,7 +4,7 @@ import cherrypy
 import requests, json
 from settings import *
 import threading
-import server 
+import server
 from requests.exceptions import ConnectionError
 import logging
 import xlwt
@@ -13,46 +13,47 @@ from datetime import datetime, timedelta
 import copy
 
 
-
 def response(param):
     return param["status"]
 
-logging.basicConfig(format = u'%(levelname)-8s [%(asctime)s] %(message)s', level = logging.DEBUG, filename = u'out.log')
+
+logging.basicConfig(format=u'%(levelname)-8s [%(asctime)s] %(message)s', level=logging.DEBUG, filename=u'out.log')
 
 logging.info('Started')
 t = threading.Thread(target=server.run)
 t.start()
 
-
 token = "321273335:AAEPNNqf3TFGmmekxF4pKzgDEO90Isl6d3k"
 
-# WEBHOOK_HOST = '194.67.217.180'
-# WEBHOOK_PORT = 8443  # 443, 80, 88 или 8443 (порт должен быть открыт!)
-# WEBHOOK_LISTEN = '0.0.0.0'  # На некоторых серверах придется указывать такой же IP, что и выше
+WEBHOOK_HOST = '5.101.179.191'
+WEBHOOK_PORT = 8443  # 443, 80, 88 или 8443 (порт должен быть открыт!)
+WEBHOOK_LISTEN = '5.101.179.191'  # На некоторых серверах придется указывать такой же IP, что и выше
 
-# WEBHOOK_SSL_CERT = './webhook_cert.pem'  # Путь к сертификату
-# WEBHOOK_SSL_PRIV = './webhook_pkey.pem'  # Путь к приватному ключу
+WEBHOOK_SSL_CERT = './webhook_cert.pem'  # Путь к сертификату
+WEBHOOK_SSL_PRIV = './webhook_pkey.pem'  # Путь к приватному ключу
 
-# WEBHOOK_URL_BASE = "https://%s:%s" % (WEBHOOK_HOST, WEBHOOK_PORT)
-# WEBHOOK_URL_PATH = "/%s/" % token
+WEBHOOK_URL_BASE = "https://%s:%s" % (WEBHOOK_HOST, WEBHOOK_PORT)
+WEBHOOK_URL_PATH = "/%s/" % token
 
 bot = telebot.TeleBot(token)
 
+
 # Наш вебхук-сервер
-# class WebhookServer(object):
-#     @cherrypy.expose
-#     def index(self):
-#         if 'content-length' in cherrypy.request.headers and \
-#                         'content-type' in cherrypy.request.headers and \
-#                         cherrypy.request.headers['content-type'] == 'application/json':
-#             length = int(cherrypy.request.headers['content-length'])
-#             json_string = cherrypy.request.body.read(length).decode("utf-8")
-#             update = telebot.types.Update.de_json(json_string)
-#             # Эта функция обеспечивает проверку входящего сообщения
-#             bot.process_new_updates([update])
-#             return ''
-#         else:
-#             raise cherrypy.HTTPError(403)
+class WebhookServer(object):
+    @cherrypy.expose
+    def index(self):
+        if 'content-length' in cherrypy.request.headers and \
+                'content-type' in cherrypy.request.headers and \
+                cherrypy.request.headers['content-type'] == 'application/json':
+            length = int(cherrypy.request.headers['content-length'])
+            json_string = cherrypy.request.body.read(length).decode("utf-8")
+            update = telebot.types.Update.de_json(json_string)
+            # Эта функция обеспечивает проверку входящего сообщения
+            bot.process_new_updates([update])
+            return ''
+        else:
+            raise cherrypy.HTTPError(403)
+
 
 class MethodGet:
     def __init__(self, method):
@@ -62,12 +63,13 @@ class MethodGet:
     def transfer(self):
         try:
             print(self.request)
-            response = requests.get('http://194.67.217.180:8484/get_state', json=self.request)
+            response = requests.get('http://5.101.179.191:8484/get_state', json=self.request)
             logging.debug(response.text)
         except ConnectionError as e:
             logging.error(self.request)
             logging.error(u'ConnectionError')
-            response = {'param': "Извините, произошла ошибка, мы работаем над её устранением. Пожалуйста, повторите попытку позже.", 'situation': False}
+            response = {'param': "Извините, произошла ошибка, мы работаем над её устранением. Пожалуйста, повторите "
+                                 "попытку позже.", 'situation': False}
         else:
             response = json.loads(response.content.decode("utf-8"))
         return response
@@ -75,6 +77,7 @@ class MethodGet:
     def param(self, **kwargs):
         self.request["param"] = kwargs
         return True
+
 
 class Method:
     def __init__(self, method):
@@ -83,12 +86,13 @@ class Method:
 
     def transfer(self):
         try:
-            response = requests.post('http://194.67.217.180:8484/bot/param', json=self.request)
+            response = requests.post('http://5.101.179.191:8484/bot/param', json=self.request)
             logging.debug(response.text)
         except ConnectionError as e:
             logging.error(self.request)
             logging.error(u'ConnectionError')
-            response = {'param': "Извините, произошла ошибка, мы работаем над её устранением. Пожалуйста, повторите попытку позже.", 'situation': False}
+            response = {'param': "Извините, произошла ошибка, мы работаем над её устранением. Пожалуйста, повторите "
+                                 "попытку позже.", 'situation': False}
         else:
             response = json.loads(response.content.decode("utf-8"))
         return response
@@ -96,7 +100,6 @@ class Method:
     def param(self, **kwargs):
         self.request["param"] = kwargs
         return True
-
 
 
 def generator_menu(menu_list, dop=None):
@@ -106,6 +109,7 @@ def generator_menu(menu_list, dop=None):
     if dop is not None:
         user_markup.row(dop)
     return user_markup
+
 
 @bot.message_handler(commands=['start'])
 def handle_start(message):
@@ -178,28 +182,6 @@ def handle_start(message):
     else:
         sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
         bot.register_next_step_handler(sent, startWM)
-    
-# @bot.callback_query_handler(func=lambda call: True)
-# def callback_data(call):
-#     a = Method("start")
-#     Start = {
-#         "telegram": call.message.chat.id,
-#         "wm": int(call.data)
-#     }
-#     a.param(**Start)
-#     result = a.transfer()
-#     if result["situation"]:
-#         a = Method("score")
-#         Score = {
-#             "telegram": call.message.chat.id
-#         }
-#         a.param(**Score)
-#         result1 = a.transfer()
-#         result1 = str(result1["score"] / 400)
-#         send = bot.send_message(call.message.chat.id, response(result) + text_water + str(result1)[:5:] + " литров", reply_markup=generator_menu(stop_menu_list))
-#     else:
-#         bot.send_message(call.message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
-
 
 
 def startWM(message):
@@ -212,6 +194,7 @@ def startWM(message):
         }
         a.param(**Start)
         result = a.transfer()
+        print(result)
         if result["situation"]:
             a = Method("score")
             Score = {
@@ -220,9 +203,8 @@ def startWM(message):
             a.param(**Score)
             result1 = a.transfer()
             result1 = str(result1["score"] / 400)
-            send = bot.send_message(message.chat.id, response(result) + text_water + str(result1)[:5:] + " литров", reply_markup=generator_menu(stop_menu_list))
-            # chatID = message.chat.id
-            # server.message_id.update({chatID: {'message_id': send.message_id}})
+            bot.send_message(message.chat.id, response(result) + text_water + str(result1)[:5:] + " литров",
+                             reply_markup=generator_menu(stop_menu_list))
         else:
             bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
     elif message.text == "Назад":
@@ -246,7 +228,8 @@ def handle_start(message):
     a.param(**Score)
     result1 = a.transfer()
     result1 = str(result1["score"] / 400)
-    bot.send_message(message.chat.id, "Ваш баланс: " + str(result1)[:5:] + " литров", reply_markup=generator_menu(stop_menu_list))
+    bot.send_message(message.chat.id, "Ваш баланс: " + str(result1)[:5:] + " литров",
+                     reply_markup=generator_menu(stop_menu_list))
     bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(main_menu_list))
 
 
@@ -257,9 +240,11 @@ def handle_start(message):
     result = a.transfer()
     print(result['param'])
     if message.chat.id in result['param']:
-        bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(personal_menu_list + admin_menu_list + back_menu_list))
+        bot.send_message(message.chat.id, text_get,
+                         reply_markup=generator_menu(personal_menu_list + admin_menu_list + back_menu_list))
     else:
-        bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(personal_menu_list + back_menu_list))
+        bot.send_message(message.chat.id, text_get,
+                         reply_markup=generator_menu(personal_menu_list + back_menu_list))
 
 
 @bot.message_handler(regexp='Назад')
@@ -283,29 +268,28 @@ def handle_start(message):
 @bot.message_handler(regexp='За сутки')
 def handle_start(message):
     logging.info(message.text)
-    #за сутки
+    # за сутки
     before = datetime.today() - timedelta(days=1)
     before = str(before)[:19]
     now = str(datetime.today())[:19]
 
     data = {
-      'method': 'get_state',
-      'param':{
-      'from': before,
-      'to': now
-      }
+        'method': 'get_state',
+        'param': {
+            'from': before,
+            'to': now
+        }
     }
 
-    response = requests.get('http://194.67.217.180:8484/get_state', json=data)
-    response = json.loads(response.content.decode("utf-8"))
-
+    response = requests.get('http://5.101.179.191:8484/get_state', json=data).json()
     book = xlwt.Workbook(encoding="utf-8")
     wmsession = {}
     for session in response:
         wm = session['wm']
         try:
             if wmsession[wm]:
-                if str(wmsession[wm]["totalPaid"]) != str(session["totalPaid"]) or str(wmsession[wm]["totalHardCash"]) != str(session["totalHardCash"]):
+                if str(wmsession[wm]["totalPaid"]) != str(session["totalPaid"]) or \
+                        str(wmsession[wm]["totalHardCash"]) != str(session["totalHardCash"]):
                     index = wmsession[wm]["index"] + 1
                     properties = {
                         "index": index,
@@ -316,7 +300,9 @@ def handle_start(message):
                     wmsession[wm].update(properties)
                     wmsession[wm]["sheet"].write(index, 0, str(session["totalPaid"]))
                     wmsession[wm]["sheet"].write(index, 1, str(session["totalHardCash"]))
-                    wmsession[wm]["sheet"].write(index, 2, str(session["updated"][0]) + "." + str(session["updated"][1]) + "." + str(session["updated"][2]) + " " + str(session["updated"][3]) + ":" + str(session["updated"][4]))
+                    wmsession[wm]["sheet"].write(index, 2, str(session["updated"][0]) + "."
+                                                 + str(session["updated"][1]) + "." + str(session["updated"][2]) + " "
+                                                 + str(session["updated"][3]) + ":" + str(session["updated"][4]))
         except Exception as e:
             ID = "ID " + str(wm)
             properties = {
@@ -332,8 +318,10 @@ def handle_start(message):
             wmsession[wm]["sheet"].write(0, 2, "Дата/время")
             wmsession[wm]["sheet"].write(1, 0, str(wmsession[wm]["totalPaid"]))
             wmsession[wm]["sheet"].write(1, 1, str(wmsession[wm]["totalHardCash"]))
-            wmsession[wm]["sheet"].write(1, 2, str(session["updated"][0]) + "." + str(session["updated"][1]) + "." + str(session["updated"][2]) + " " + str(session["updated"][3]) + ":" + str(session["updated"][4]))
-            
+            wmsession[wm]["sheet"].write(1, 2, str(session["updated"][0]) + "." + str(session["updated"][1]) + "."
+                                         + str(session["updated"][2]) + " " + str(session["updated"][3]) + ":"
+                                         + str(session["updated"][4]))
+
     print(wmsession)
     book.save("state.xls")
     path = os.curdir + "/state.xls"
@@ -344,8 +332,7 @@ def handle_start(message):
 def handle_start(message):
     logging.info(message.text)
 
-
-    #за неделю
+    # за неделю
     before = datetime.today() - timedelta(days=7)
     before = str(before)[:19]
     now = str(datetime.today())[:19]
@@ -353,19 +340,15 @@ def handle_start(message):
     # Initialize a workbook 
     book = xlwt.Workbook(encoding="utf-8")
 
-    # Add a sheet to the workbook 
-    sheet1 = book.add_sheet("Python Sheet 1") 
-
-
     data = {
-      'method': 'get_state',
-      'param':{
-      'from': before,
-      'to': now
-      }
+        'method': 'get_state',
+        'param': {
+            'from': before,
+            'to': now
+        }
     }
 
-    response = requests.get('http://194.67.217.180:8484/get_state', json=data)
+    response = requests.get('http://5.101.179.191:8484/get_state', json=data)
     response = json.loads(response.content.decode("utf-8"))
 
     book = xlwt.Workbook(encoding="utf-8")
@@ -374,7 +357,8 @@ def handle_start(message):
         wm = session['wm']
         try:
             if wmsession[wm]:
-                if str(wmsession[wm]["totalPaid"]) != str(session["totalPaid"]) or str(wmsession[wm]["totalHardCash"]) != str(session["totalHardCash"]):
+                if str(wmsession[wm]["totalPaid"]) != str(session["totalPaid"]) or str(
+                        wmsession[wm]["totalHardCash"]) != str(session["totalHardCash"]):
                     index = wmsession[wm]["index"] + 1
                     properties = {
                         "index": index,
@@ -385,7 +369,9 @@ def handle_start(message):
                     wmsession[wm].update(properties)
                     wmsession[wm]["sheet"].write(index, 0, str(session["totalPaid"]))
                     wmsession[wm]["sheet"].write(index, 1, str(session["totalHardCash"]))
-                    wmsession[wm]["sheet"].write(index, 2, str(session["updated"][0]) + "." + str(session["updated"][1]) + "." + str(session["updated"][2]) + " " + str(session["updated"][3]) + ":" + str(session["updated"][4]))
+                    wmsession[wm]["sheet"].write(index, 2, str(session["updated"][0]) + "." + str(session["updated"][1])
+                                                 + "." + str(session["updated"][2]) + " " + str(session["updated"][3])
+                                                 + ":" + str(session["updated"][4]))
         except Exception as e:
             ID = "ID " + str(wm)
             properties = {
@@ -401,8 +387,10 @@ def handle_start(message):
             wmsession[wm]["sheet"].write(0, 2, "Дата/время")
             wmsession[wm]["sheet"].write(1, 0, str(wmsession[wm]["totalPaid"]))
             wmsession[wm]["sheet"].write(1, 1, str(wmsession[wm]["totalHardCash"]))
-            wmsession[wm]["sheet"].write(1, 2, str(session["updated"][0]) + "." + str(session["updated"][1]) + "." + str(session["updated"][2]) + " " + str(session["updated"][3]) + ":" + str(session["updated"][4]))
-            
+            wmsession[wm]["sheet"].write(1, 2, str(session["updated"][0]) + "." + str(session["updated"][1]) + "."
+                                         + str(session["updated"][2]) + " " + str(session["updated"][3]) + ":"
+                                         + str(session["updated"][4]))
+
     print(wmsession)
     book.save("state.xls")
     path = os.curdir + "/state.xls"
@@ -431,19 +419,10 @@ def handle_start(message):
     bot.send_message(message.chat.id, response(result), reply_markup=generator_menu(back_menu_list))
 
 
-
-
 @bot.message_handler(regexp='Статистика по водоматам')
 def handle_start(message):
     logging.info(message.text)
     bot.send_message(message.chat.id, text_get, reply_markup=generator_menu(stat_menu + back_menu_list))
-
-
-# @bot.message_handler(regexp='Рекомендовать место')
-# def handle_start(message):
-#     button = types.KeyboardButton(text='Рекомендовать место', request_location=True)
-#     keypad.add(button)
-#     bot.send_message(message.chat.id, location, reply_markup=generator_menu(back_menu_list))
 
 
 @bot.message_handler(content_types=['location'])
@@ -484,29 +463,21 @@ def handle_start(message):
     bot.send_message(message.chat.id, text_get, reply_markup=keypad)
 
 
-
 # Снимаем вебхук перед повторной установкой (избавляет от некоторых проблем)
 bot.remove_webhook()
 
 # Ставим заново вебхук
-# bot.set_webhook(url=WEBHOOK_URL_BASE + WEBHOOK_URL_PATH,
-#                 certificate=open(WEBHOOK_SSL_CERT, 'r'))
+bot.set_webhook(url=WEBHOOK_URL_BASE + WEBHOOK_URL_PATH,
+                certificate=open(WEBHOOK_SSL_CERT, 'r'))
 
 # Указываем настройки сервера CherryPy
-# cherrypy.config.update({
-#     'server.socket_host': WEBHOOK_LISTEN,
-#     'server.socket_port': WEBHOOK_PORT,
-#     'server.ssl_module': 'builtin',
-#     'server.ssl_certificate': WEBHOOK_SSL_CERT,
-#     'server.ssl_private_key': WEBHOOK_SSL_PRIV
-# })
+cherrypy.config.update({
+    'server.socket_host': WEBHOOK_LISTEN,
+    'server.socket_port': WEBHOOK_PORT,
+    'server.ssl_module': 'builtin',
+    'server.ssl_certificate': WEBHOOK_SSL_CERT,
+    'server.ssl_private_key': WEBHOOK_SSL_PRIV
+})
 
 # Собственно, запуск!
-# cherrypy.quickstart(WebhookServer(), WEBHOOK_URL_PATH, {'/': {}})
-
-
-
-logging.info('Finished')
-
-
-bot.polling(none_stop=True, interval = 0)
+cherrypy.quickstart(WebhookServer(), WEBHOOK_URL_PATH, {'/': {}})
