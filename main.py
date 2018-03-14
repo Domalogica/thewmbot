@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import telebot
 import cherrypy
 import requests, json
@@ -281,7 +282,11 @@ def handle_start(message):
         }
     }
 
+<<<<<<< HEAD
     response = requests.get('http://5.101.179.191:8484/get_state', json=data).json()
+=======
+    response = requests.get('http://5.101.179.191:8484/get_state', json=data)
+>>>>>>> 724c42d47b6621fdc68f67843fb8e5f1bea8f71c
     book = xlwt.Workbook(encoding="utf-8")
     wmsession = {}
     for session in response:
