@@ -282,6 +282,7 @@ def handle_start(message):
         }
     }
 
+
     response = requests.get('http://5.101.179.191:8484/get_state', json=data)
     book = xlwt.Workbook(encoding="utf-8")
     wmsession = {}
