@@ -169,7 +169,8 @@ def feedback(message):
 
 @bot.message_handler(regexp='Подключиться к водомату')
 def handle_start(message):
-    bot.send_message(message.chat.id, "Приносим свои извинения. На сервере ведутся технические работы. попробуйте попытку позже", reply_markup=generator_menu(main_menu_list))
+    bot.send_message(message.chat.id, "Приносим свои извинения. На сервере ведутся технические работы. Повторите "
+                                      "попытку позже.", reply_markup=generator_menu(main_menu_list))
     # logging.info(message.text)
     # a = MethodGet("get_last_connection")
     # a.param(telegram=message.from_user.id)
