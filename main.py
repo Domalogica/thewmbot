@@ -169,20 +169,18 @@ def feedback(message):
 
 @bot.message_handler(regexp='Подключиться к водомату')
 def handle_start(message):
-    logging.info(message.text)
-    a = MethodGet("get_last_connection")
-    get_last_connection = {
-        "telegram": message.from_user.id
-    }
-    a.param(**get_last_connection)
-    result = a.transfer()
-    wm = result["wm"]
-    if wm != 0 and wm.isdigit:
-        sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu([wm] + back_menu_list))
-        bot.register_next_step_handler(sent, startWM)
-    else:
-        sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
-        bot.register_next_step_handler(sent, startWM)
+    bot.send_message(message.chat.id, "Приносим свои извинения. На сервере ведутся технические работы. попробуйте попытку позже", reply_markup=generator_menu(main_menu_list))
+    # logging.info(message.text)
+    # a = MethodGet("get_last_connection")
+    # a.param(telegram=message.from_user.id)
+    # result = a.transfer()
+    # wm = result["wm"]
+    # if wm != 0 and wm.isdigit:
+    #     sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu([wm] + back_menu_list))
+    #     bot.register_next_step_handler(sent, startWM)
+    # else:
+    #     sent = bot.send_message(message.chat.id, text_id, reply_markup=generator_menu(back_menu_list))
+    #     bot.register_next_step_handler(sent, startWM)
 
 
 def startWM(message):
